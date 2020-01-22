@@ -30,7 +30,7 @@ import java.util.*;
 @Service
 public class IndexationSolr {
 
-    //private static Logger logger = Logger.getLogger(IndexationSolr.class);
+    //private static Logger logger = Logger.getLogger(IndexationSolr.class)
 
     private Logger logger = LogManager.getLogger(IndexationSolr.class);
 
