@@ -14,7 +14,6 @@ import org.apache.logging.log4j.LogManager;
 
 
 @RestController
-//
 public class IndexationSolrController {
 
     private Logger logger = LogManager.getLogger(IndexationSolrController.class);
