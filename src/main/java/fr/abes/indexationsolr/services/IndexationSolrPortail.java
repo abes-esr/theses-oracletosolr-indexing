@@ -1,15 +1,12 @@
 package fr.abes.indexationsolr.services;
 
-import fr.abes.indexationsolr.portail.repositories.PortailRepository;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.sql.Clob;
 
 @Getter
 @Setter
@@ -34,8 +31,6 @@ public class IndexationSolrPortail extends IndexationSolr {
 
     public String perimetre; //tout|principal|principalThese|principalSujet|personne|organisme|highlight
 
-    @Autowired
-    private PortailRepository portailRepository;
 
 
     IndexationSolrPortail() {
@@ -49,7 +44,7 @@ public class IndexationSolrPortail extends IndexationSolr {
     }
 
     @Transactional(transactionManager="portailTransactionManager")
-    public boolean indexation(int iddoc) throws Exception {
+    public boolean indexation(int iddoc, String doc, String texte, String dateInsertion) throws Exception {
 
         boolean res = false;
         try {
@@ -58,15 +53,9 @@ public class IndexationSolrPortail extends IndexationSolr {
             setUrlSolrHighlight(urlSolrHighlightp);
             setCheminXsl(cheminXslPortail);
             setIddoc(iddoc);
-            setTef(portailRepository.getTefByIddoc(iddoc));
+            setTef(doc);
             setPerimetre("tout");
             setLongueurPage(1000);
-            Clob texte = portailRepository.getTexteByIddoc(iddoc);
-            String dateInsertion = portailRepository.getOne(iddoc).getDateinsertion().toString();
-            //2019-11-22 00:00:00.0 ==> 2019-11-22T00:00:00Z
-            dateInsertion = dateInsertion.replace(" ","T");
-            dateInsertion = dateInsertion.substring(0, dateInsertion.length() - 2);
-            dateInsertion+="Z";
             logger.info("dateInsertion = " + dateInsertion);
             logger.info("urlSolr = " + urlSolrPortailp);
             logger.info("urlSolrHighlight = " + urlSolrHighlightp);

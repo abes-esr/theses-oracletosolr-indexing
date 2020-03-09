@@ -1,10 +1,8 @@
 package fr.abes.indexationsolr.services;
 
 
-import fr.abes.indexationsolr.sujets.repositories.SujetsRepository;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,22 +18,20 @@ public class IndexationSolrSujet extends IndexationSolr {
     @Value("${cheminXsl.sujets}")
     private String cheminXslSujets;
 
-    @Autowired
-    private SujetsRepository sujetsRepository;
 
     IndexationSolrSujet() {
         super();
     }
 
     @Transactional(transactionManager="sujetsTransactionManager")
-    public boolean indexation(int iddoc) throws Exception {
+    public boolean indexation(int iddoc, String doc) throws Exception {
 
         boolean res = false;
         try {
             setUrlSolr(urlSolrSujets);
             setCheminXsl(cheminXslSujets);
             setIddoc(iddoc);
-            setTef(sujetsRepository.getTefByIddoc(iddoc));
+            setTef(doc);
             if (indexerDansSolr(this.getIddoc(), this.getTef())) {
                 res = true;
             }
@@ -54,7 +50,6 @@ public class IndexationSolrSujet extends IndexationSolr {
             setUrlSolr(urlSolrSujets);
             setCheminXsl(cheminXslSujets);
             setIddoc(iddoc);
-            //setTef(sujetsRepository.getTefByIddoc(iddoc));
             if (supprimerDeSolr(this.getIddoc())) {
                 res = true;
             }

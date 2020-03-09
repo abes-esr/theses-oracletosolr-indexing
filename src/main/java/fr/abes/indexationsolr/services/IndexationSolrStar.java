@@ -1,9 +1,7 @@
 package fr.abes.indexationsolr.services;
 
-import fr.abes.indexationsolr.star.repositories.StarRepository;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,22 +18,20 @@ public class IndexationSolrStar extends IndexationSolr {
     @Value("${cheminXsl.star}")
     private String cheminXslStar;
 
-    @Autowired
-    private StarRepository starRepository;
 
     IndexationSolrStar() {
         super();
     }
 
     @Transactional(transactionManager="starTransactionManager")
-    public boolean indexation(int iddoc) throws Exception {
+    public boolean indexation(int iddoc, String doc) throws Exception {
 
         boolean res = false;
         try {
             setUrlSolr(urlSolrStar);
             setCheminXsl(cheminXslStar);
             setIddoc(iddoc);
-            setTef(starRepository.getTefByIddoc(iddoc));
+            setTef(doc);
             if (indexerDansSolr(this.getIddoc(), this.getTef())) {
                 res = true;
             }

@@ -1,9 +1,6 @@
 package fr.abes.indexationsolr.services;
 
 
-import fr.abes.indexationsolr.controller.IndexationSolrController;
-import lombok.Getter;
-import lombok.Setter;
 import org.apache.commons.text.StringEscapeUtils;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
@@ -26,11 +23,8 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 
-//@Getter @Setter
 @Service
 public class IndexationSolr {
-
-    //private static Logger logger = Logger.getLogger(IndexationSolr.class)
 
     private Logger logger = LogManager.getLogger(IndexationSolr.class);
 
@@ -105,23 +99,19 @@ public class IndexationSolr {
     }
 
 
-    /*public IndexationSolr(String cheminXsl, String urlSolr, int iddoc, String tef) {
-        this.cheminXsl = cheminXsl;
-        this.urlSolr = urlSolr;
-        this.iddoc = iddoc;
-        this.tef = tef;
-    }*/
-
 
     public boolean indexerDansSolr(int iddoc, String tef) throws Exception {
 
         boolean res = false;
+        final StringWriter sw = new StringWriter();
         try {
+            logger.info("indexerDansSolr pour Step ou Star");
             logger.info("tef = " + tef + "; iddoc = " + iddoc);
             String docSolr = transfoXSL(tef, iddoc);
             logger.info("transfoXSL ok");
             envoieSurSolr(docSolr, urlSolr);
             logger.info("envoieSurSolr ok");
+            postData(new StringReader("<commit/>"), sw, urlSolr);
             res = true;
 
         } catch (Exception e) {
@@ -146,22 +136,12 @@ public class IndexationSolr {
             res = true;
         }
         catch (Exception e) {
-        logger.info("Erreur dans supprimerDeSolr :"+e.getMessage());
-        throw new Exception(e);
-    }
+            logger.info("Erreur dans supprimerDeSolr :"+e.getMessage());
+            throw new Exception(e);
+        }
         return res;
     }
 
-    /*public void envoieSurSolr(String docSolr) throws Exception {
-        logger.info("String docSolr = " + docSolr);
-        final StringWriter sw = new StringWriter();
-        postData(new StringReader(docSolr), sw);
-        logger.info("Retour solr: "+ sw.toString());
-        if (sw.toString().indexOf("<int name=\"status\">0</int>") < 0) {
-            logger.info("unexpected response from solr...");
-        }
-        postData(new StringReader("<commit/>"), sw);
-    }*/
 
     /**
      * Pour la transformation XSL :
@@ -176,13 +156,13 @@ public class IndexationSolr {
         InputStream stream = new ByteArrayInputStream(tef.getBytes(StandardCharsets.UTF_8));
         logger.info("transfoXsl idDoc = " + idDoc);
         logger.info("cheminXsl = " + cheminXsl);
-        logger.info("idDeLaBase = " + idDoc);
         TransformerFactory tFactory = new net.sf.saxon.TransformerFactoryImpl();
         Transformer transformer = tFactory.newTransformer(new javax.xml.transform.stream.StreamSource(cheminXsl));
         transformer.setParameter("idDeLaBase", idDoc);
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         //transformer.transform(new javax.xml.transform.stream.StreamSource(String.valueOf(tef)), new javax.xml.transform.stream.StreamResult(out));
         transformer.transform(new javax.xml.transform.stream.StreamSource(stream), new javax.xml.transform.stream.StreamResult(out));
+        logger.info("res transfo xsl = " + out.toString());
         return out.toString();
 
     }
@@ -192,7 +172,7 @@ public class IndexationSolr {
 
     //-----------------------------------pour Portail------------------------------------//
 
-    public boolean indexerDansSolr(String tef, int iddoc, Clob texte, String dateInsertion, int envoiSolr, String perimetre, int longueurPage) throws Exception {
+    public boolean indexerDansSolr(String tef, int iddoc, String texte, String dateInsertion, int envoiSolr, String perimetre, int longueurPage) throws Exception {
         boolean res = false;
         try {
             logger.info("SolrPortail.indexerDansSolr");
@@ -204,8 +184,9 @@ public class IndexationSolr {
             logger.info("urlSolrPersonne = " + urlSolrPersonne);
 
             if (envoiSolr == 1) {
-                String strTexte = StringEscapeUtils.escapeXml10(clobToString(texte));
-                String docSolr = transfoXSL(tef, iddoc, strTexte, dateInsertion);
+                //String strTexte = StringEscapeUtils.escapeXml10(clobToString(texte));
+                //String docSolr = transfoXSL(tef, iddoc, strTexte, dateInsertion);
+                String docSolr = transfoXSL(tef, iddoc, texte, dateInsertion);
                 logger.info("transfoXSLportail ok");
                 final StringWriter sw = new StringWriter();
 
@@ -217,7 +198,8 @@ public class IndexationSolr {
                 }
 
                 if (perimetre.equals("tout") || perimetre.equals("highlight")) {
-                    decouperIndexerSolrHighlight(strTexte, iddoc, longueurPage);
+                    //decouperIndexerSolrHighlight(strTexte, iddoc, longueurPage);
+                    decouperIndexerSolrHighlight(texte, iddoc, longueurPage);
                     postData(new StringReader("<commit/>"), sw, urlSolrHighlight);
                 }
 
@@ -753,15 +735,6 @@ public class IndexationSolr {
         return res;
     }
 
-    public void envoieSurSolr(String docSolr, String urlSolr) throws Exception {
-        final StringWriter sw = new StringWriter();
-        postData(new StringReader(docSolr), sw, urlSolr);
-        if (sw.toString().indexOf("<int name=\"status\">0</int>") < 0) {
-            System.out.println("unexpected reponse from solr...");
-            logger.error("unexpected response from solr...");
-        }
-    }
-
     /**
      * Pour la transformation XSL :
      * chargement de saxon dans oracle
@@ -846,6 +819,31 @@ public class IndexationSolr {
     }
     // ************************* SOLR HIGHLIGHT FIN ********************************
 
+
+
+
+    public String clobToString(Clob cl) throws IOException, SQLException {
+        if (cl == null) {
+            return "";
+        }
+        StringBuffer bufCLOB = new StringBuffer();
+        int nbytes = 0;
+        char[] buffer = new char[32768];
+        java.io.Reader clobReader = cl.getCharacterStream();
+        int len = 0;
+        int i = 0;
+        while ((len = clobReader.read(buffer)) != -1 && i < 52) {
+            i++;
+            bufCLOB.append(buffer, 0, len);
+            System.gc();
+        }
+        clobReader.close();
+        return bufCLOB.toString();
+    }
+
+
+    //-----------------------------------fin methodes pour Portail------------------------------------//
+
     /**
      * Reads data from the data reader and posts it to solr,
      * writes to the response to output
@@ -908,13 +906,30 @@ public class IndexationSolr {
         }
     }*/
 
+    public void envoieSurSolr(String docSolr, String urlSolr) throws Exception {
+        final StringWriter sw = new StringWriter();
+        logger.info("envoieSurSolr => urlSolr = " + urlSolr);
+        postData(new StringReader(docSolr), sw, urlSolr);
+        logger.info( "sw.toString() = " + sw.toString());
+        logger.info( "res sw = " + sw.toString().indexOf("<int name=\"status\">0</int>"));
+        if (sw.toString().indexOf("<int name=\"status\">0</int>") < 0) {
+            System.out.println("unexpected reponse from solr...");
+            logger.error("unexpected response from solr...");
+        }
+        //postData(new StringReader("<commit/>"), sw, urlSolr);
+    }
+
+
     /**
      * Reads data from the data reader and posts it to solr,
      * writes to the response to output
      * @throws Exception
      */
     public void postData(Reader data, Writer output, String url) throws Exception {
+
+        logger.info("postData");
         URL solrUrl = new URL(url);
+        logger.info("url solr dans postData = " + url);
         HttpURLConnection urlc = null;
         try {
             urlc = (HttpURLConnection) solrUrl.openConnection();
@@ -958,12 +973,12 @@ public class IndexationSolr {
 
         } catch (IOException e) {
             try {
-                System.err.println("Solr returned an error: " + urlc.getResponseMessage());
+                logger.info("Solr returned an error: " + urlc.getResponseMessage());
                 throw new Exception("Erreur lors du post sur solr : "
                         + urlc.getResponseMessage(), e);
             } catch (IOException f) {
             }
-            System.err.println("Connection error (is Solr running at " + solrUrl + " ?): " + e);
+            logger.info("Connection error (is Solr running at " + solrUrl + " ?): " + e);
             throw new Exception("Erreur de connexion à solr", e);
         } finally {
             if (urlc != null) {
@@ -980,31 +995,11 @@ public class IndexationSolr {
         int read = 0;
         while ((read = reader.read(buf)) >= 0) {
             writer.write(buf, 0, read);
+            logger.info("buf dans pipe = " + buf);
         }
         writer.flush();
+
     }
 
-    public String clobToString(Clob cl) throws IOException, SQLException {
-        if (cl == null) {
-            return "";
-        }
-        StringBuffer bufCLOB = new StringBuffer();
-        int nbytes = 0;
-        char[] buffer = new char[32768];
-        java.io.Reader clobReader = cl.getCharacterStream();
-        int len = 0;
-        int i = 0;
-        while ((len = clobReader.read(buffer)) != -1 && i < 52) {
-            i++;
-            bufCLOB.append(buffer, 0, len);
-            System.gc();
-        }
-        clobReader.close();
-        return bufCLOB.toString();
-    }
+
 }
-
-
-
-
-
