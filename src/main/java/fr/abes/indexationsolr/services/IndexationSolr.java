@@ -765,14 +765,17 @@ public class IndexationSolr {
     // ************************* SOLR HIGHLIGHT ********************************
     private void decouperIndexerSolrHighlight(String texte, int idDoc, int longueurPage) throws Exception {
         logger.info("IndexationSolrDansOraclePortail decouperIndexerSolrHighlight debut de decoupage du texte + envoi sur solrhighlight");
+        logger.info("texte = " + texte);
+        logger.info("iddoc = " + idDoc);
+        logger.info("longueurPage = " + longueurPage);
         try {
             int numPage = 1;
             String idNumPage = String.valueOf(idDoc) + "_" + String.valueOf(numPage);
             int borneInf = 0;
             int borneSup = longueurPage;
             while (borneInf + longueurPage < texte.length()) {
-                //logger.info("inf = " + String.valueOf(borneInf));
-                //logger.info("sup = " + String.valueOf(borneSup));
+                logger.info("inf = " + String.valueOf(borneInf));
+                logger.info("sup = " + String.valueOf(borneSup));
 
                 String page = texte.substring(borneInf, borneSup);
                 int point = page.lastIndexOf('.');
@@ -787,6 +790,8 @@ public class IndexationSolr {
 //                java.io.BufferedWriter out = new java.io.BufferedWriter(fstream);
 //                out.write(docSolr);
 //                out.close();
+
+                logger.info("docSolr = " + docSolr);
                 envoieSurSolr(docSolr, urlSolrHighlight);
                 borneInf = borneSup;
                 borneSup = borneSup + longueurPage;
@@ -794,6 +799,7 @@ public class IndexationSolr {
             }
             String dernierePage = texte.substring(borneInf, texte.length());
             String docSolr = getDocSolrHighlight(idNumPage, idDoc, dernierePage);
+            logger.info("docSolr = " + docSolr);
             envoieSurSolr(docSolr, urlSolrHighlight);
             logger.info("Fin de decouperIndexerSolrHighlight iddoc="+idDoc);
         } catch (Exception e) {

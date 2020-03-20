@@ -35,13 +35,13 @@ public class IndexationSolrController {
 
         logger.info("indexationSolrController - indexation début " + indexation);
 
-        String contexte = StringUtils.substringBetween(indexation, "contexte\":\"", "\",\"iddoc");
-        int iddoc = Integer.parseInt(StringUtils.substringBetween(indexation, "iddoc\":\"", "\",\"doc"));
-        StringBuilder docBuilt = new StringBuilder(StringUtils.substringBetween(indexation, "\"doc\":\"", "mets>"));
+        String contexte = StringUtils.substringBetween(indexation, "$contexte$\":\"", "\",\"$iddoc$");
+        int iddoc = Integer.parseInt(StringUtils.substringBetween(indexation, "$iddoc$\":\"", "\",\"$doc$"));
+        StringBuilder docBuilt = new StringBuilder(StringUtils.substringBetween(indexation, "\"$doc$\":\"", "mets>"));
         docBuilt.append("mets>");
         String doc = docBuilt.toString();
-        String texte = StringUtils.substringBetween(indexation, "texte\":\"", "\",\"dateinsertion");
-        String dateInsertion = StringUtils.substringBetween(indexation, "dateinsertion\":\"", "\",\"$");
+        String texte = StringUtils.substringBetween(indexation, "$texte$\":\"", "\",\"$dateinsertion$");
+        String dateInsertion = StringUtils.substringBetween(indexation, "$dateinsertion$\":\"", "\",\"$");
         logger.info("contexte = " + contexte);
         logger.info("iddoc = " + iddoc);
         logger.info("doc = " + doc);
