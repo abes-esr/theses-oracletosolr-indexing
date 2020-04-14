@@ -6,7 +6,7 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
 
 @Getter
 @Setter
@@ -43,7 +43,7 @@ public class IndexationSolrPortail extends IndexationSolr {
         this.perimetre = perimetre;
     }
 
-    @Transactional(transactionManager="portailTransactionManager")
+    //@Transactional(transactionManager="portailTransactionManager")
     public boolean indexation(int iddoc, String doc, String texte, String dateInsertion) throws Exception {
 
         boolean res = false;

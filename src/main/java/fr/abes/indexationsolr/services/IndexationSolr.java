@@ -106,7 +106,7 @@ public class IndexationSolr {
         final StringWriter sw = new StringWriter();
         try {
             logger.info("indexerDansSolr pour Step ou Star");
-            logger.info("tef = " + tef + "; iddoc = " + iddoc);
+            //logger.info("tef = " + tef + "; iddoc = " + iddoc);
             String docSolr = transfoXSL(tef, iddoc);
             logger.info("transfoXSL ok");
             envoieSurSolr(docSolr, urlSolr);
@@ -160,9 +160,8 @@ public class IndexationSolr {
         Transformer transformer = tFactory.newTransformer(new javax.xml.transform.stream.StreamSource(cheminXsl));
         transformer.setParameter("idDeLaBase", idDoc);
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        //transformer.transform(new javax.xml.transform.stream.StreamSource(String.valueOf(tef)), new javax.xml.transform.stream.StreamResult(out));
         transformer.transform(new javax.xml.transform.stream.StreamSource(stream), new javax.xml.transform.stream.StreamResult(out));
-        logger.info("res transfo xsl = " + out.toString());
+        //logger.info("res transfo xsl = " + out.toString());
         return out.toString();
 
     }
@@ -184,8 +183,6 @@ public class IndexationSolr {
             logger.info("urlSolrPersonne = " + urlSolrPersonne);
 
             if (envoiSolr == 1) {
-                //String strTexte = StringEscapeUtils.escapeXml10(clobToString(texte));
-                //String docSolr = transfoXSL(tef, iddoc, strTexte, dateInsertion);
                 String docSolr = transfoXSL(tef, iddoc, texte, dateInsertion);
                 logger.info("transfoXSLportail ok");
                 final StringWriter sw = new StringWriter();
@@ -198,7 +195,6 @@ public class IndexationSolr {
                 }
 
                 if (perimetre.equals("tout") || perimetre.equals("highlight")) {
-                    //decouperIndexerSolrHighlight(strTexte, iddoc, longueurPage);
                     decouperIndexerSolrHighlight(texte, iddoc, longueurPage);
                     postData(new StringReader("<commit/>"), sw, urlSolrHighlight);
                 }
@@ -791,7 +787,7 @@ public class IndexationSolr {
 //                out.write(docSolr);
 //                out.close();
 
-                logger.info("docSolr = " + docSolr);
+                //logger.info("docSolr = " + docSolr);
                 envoieSurSolr(docSolr, urlSolrHighlight);
                 borneInf = borneSup;
                 borneSup = borneSup + longueurPage;
@@ -799,7 +795,7 @@ public class IndexationSolr {
             }
             String dernierePage = texte.substring(borneInf, texte.length());
             String docSolr = getDocSolrHighlight(idNumPage, idDoc, dernierePage);
-            logger.info("docSolr = " + docSolr);
+            //logger.info("docSolr = " + docSolr);
             envoieSurSolr(docSolr, urlSolrHighlight);
             logger.info("Fin de decouperIndexerSolrHighlight iddoc="+idDoc);
         } catch (Exception e) {
@@ -1001,7 +997,7 @@ public class IndexationSolr {
         int read = 0;
         while ((read = reader.read(buf)) >= 0) {
             writer.write(buf, 0, read);
-            logger.info("buf dans pipe = " + buf);
+            //logger.info("buf dans pipe = " + buf);
         }
         writer.flush();
 

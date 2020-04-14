@@ -3,51 +3,34 @@ package fr.abes.indexationsolr.portail.entities;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnTransformer;
-
-import javax.persistence.*;
-import java.io.Serializable;
 import java.sql.Clob;
 import java.util.Date;
 
-@Entity
-@Table(name = "DOCUMENT")
+
 @NoArgsConstructor
 @Getter
 @Setter
-public class DocumentPortail implements Serializable{
+public class DocumentPortail {
 
-    @Id
-    @Column(name = "IDDOC")
+
     private Integer iddoc;
 
-    @Column(name = "NNT")
     private String nnt;
 
-    @ColumnTransformer(read = "NVL2(DOC, (DOC).getClobVal(), NULL)", write = "NULLSAFE_XMLTYPE(?)")
-    @Lob
-    @Column(name = "DOC")
     private String doc;
 
-    @Column(name = "TEXTE")
     private Clob texte;
 
-    @Column(name = "CODEETAB")
     private String codeEtab;
 
-    @Column(name = "DATEINSERTION")
     private Date dateinsertion;
 
-    @Column(name = "DATEDIFFUSION")
     private Date datediffusion;
 
-    @Column(name = "DROITS")
     private String droits;
 
-    @Column(name = "NUMSUJET")
     private String numsujet;
 
-    @Column(name = "ENVOISOLR")
     private Integer envoiSolr;
 
 

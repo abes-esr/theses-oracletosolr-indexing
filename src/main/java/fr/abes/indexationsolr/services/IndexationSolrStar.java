@@ -4,7 +4,7 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
 
 @Service
 public class IndexationSolrStar extends IndexationSolr {
@@ -23,7 +23,7 @@ public class IndexationSolrStar extends IndexationSolr {
         super();
     }
 
-    @Transactional(transactionManager="starTransactionManager")
+    //@Transactional(transactionManager="starTransactionManager")
     public boolean indexation(int iddoc, String doc) throws Exception {
 
         boolean res = false;
