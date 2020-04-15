@@ -33,7 +33,7 @@ public class IndexationSolrController {
     @RequestMapping(method = RequestMethod.POST, value="/GetIndexationSolr")
     public boolean indexation(@RequestBody String indexation) throws Exception {
 
-        logger.info("indexationSolrController - indexation début " + indexation);
+        //logger.info("indexationSolrController - indexation début " + indexation);
 
         String contexte = StringUtils.substringBetween(indexation, "$contexte$\":\"", "\",\"$iddoc$");
         int iddoc = Integer.parseInt(StringUtils.substringBetween(indexation, "$iddoc$\":\"", "\",\"$doc$"));
@@ -44,7 +44,7 @@ public class IndexationSolrController {
         String dateInsertion = StringUtils.substringBetween(indexation, "$dateinsertion$\":\"", "\",\"$");
         logger.info("contexte = " + contexte);
         logger.info("iddoc = " + iddoc);
-        logger.info("doc = " + doc);
+        //logger.info("doc = " + doc);
         logger.info("texte = " + texte);
         logger.info("dateInsertion = " + dateInsertion);
 
