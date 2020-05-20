@@ -6,8 +6,7 @@ import lombok.Setter;
 
 
 @NoArgsConstructor
-@Getter
-@Setter
+@Getter @Setter
 public class DocumentSujets  {
 
     private Integer iddoc;

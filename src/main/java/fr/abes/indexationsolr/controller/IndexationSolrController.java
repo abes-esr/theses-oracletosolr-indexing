@@ -15,7 +15,6 @@ import org.apache.logging.log4j.LogManager;
 
 
 @RestController
-//
 public class IndexationSolrController {
 
     private Logger logger = LogManager.getLogger(IndexationSolrController.class);
@@ -50,34 +49,27 @@ public class IndexationSolrController {
 
         boolean res = false;
 
-        if(contexte.contains("sujets"))
-        {
+        if(contexte.contains("sujets")) {
             logger.info("indexation contexte sujets");
-
             res = indexationSolrSujet.indexation(iddoc, doc);
             logger.info("indexation sujets iddoc " + iddoc + " = " + res);
             return res;
         }
-        else if(contexte.contains("star"))
-        {
+        if(contexte.contains("star")) {
             logger.info("indexation contexte star");
-
             res = indexationSolrStar.indexation(iddoc, doc);
             logger.info("indexation star iddoc " + iddoc + " = " + res);
             return res;
         }
-        else if(contexte.contains("portail"))
-        {
+        if(contexte.contains("portail")) {
             logger.info("indexation contexte portail");
             res = indexationSolrPortail.indexation(iddoc, doc, texte, dateInsertion);
             logger.info("indexation portail iddoc " + iddoc + " = " + res);
-            return res;
         }
-        else
-        {
+        else {
             logger.info("indexation " + contexte + " iddoc " + iddoc + " = " + res);
-            return res;
         }
+        return res;
     }
 
 
@@ -93,34 +85,27 @@ public class IndexationSolrController {
         logger.info("iddoc = " + iddoc);
         boolean res = false;
 
-        if(contexte.contains("sujets"))
-        {
+        if(contexte.contains("sujets")) {
             logger.info("supression contexte sujets");
-
             res = indexationSolrSujet.suppression(iddoc);
             logger.info("suppression sujets iddoc " + iddoc + " = " + res);
             return res;
         }
-        else if(contexte.contains("star"))
-        {
+        if(contexte.contains("star")) {
             logger.info("supression contexte star");
-
             res = indexationSolrStar.suppression(iddoc);
             logger.info("suppression star iddoc " + iddoc + " = " + res);
             return res;
         }
-        else if(contexte.contains("portail"))
-        {
+        if(contexte.contains("portail")){
             logger.info("supression contexte portail");
             res = indexationSolrPortail.suppression(iddoc);
             logger.info("suppression portail iddoc " + iddoc + " = " + res);
-            return res;
         }
-        else
-        {
+        else {
             logger.info("suppression " + contexte + " iddoc " + iddoc + " = " + res);
-            return res;
         }
+        return res;
     }
 
 }

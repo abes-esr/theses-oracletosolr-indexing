@@ -1,14 +1,17 @@
 package fr.abes.indexationsolr.services;
 
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.apache.commons.text.StringEscapeUtils;
-import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.boot.configurationprocessor.json.JSONArray;
+import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Service;
-import org.xml.sax.SAXException;
-import javax.xml.parsers.ParserConfigurationException;
+
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
@@ -17,13 +20,14 @@ import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.sql.Clob;
-import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 
 @Service
+@Getter @Setter
+@NoArgsConstructor
 public class IndexationSolr {
 
     private Logger logger = LogManager.getLogger(IndexationSolr.class);
@@ -34,60 +38,6 @@ public class IndexationSolr {
     private String urlSolrPersonne;
     private int iddoc;
     private String tef;
-    private String contexte;
-
-    public String getCheminXsl() {
-        return cheminXsl;
-    }
-
-    public void setCheminXsl(String cheminXsl) {
-        this.cheminXsl = cheminXsl;
-    }
-
-    public String getUrlSolr() {
-        return urlSolr;
-    }
-
-    public void setUrlSolr(String urlSolr) {
-        this.urlSolr = urlSolr;
-    }
-
-    public String getUrlSolrHighlight() {
-        return urlSolrHighlight;
-    }
-
-    public void setUrlSolrHighlight(String urlSolrHighlight) {
-        this.urlSolrHighlight = urlSolrHighlight;
-    }
-
-    public String getUrlSolrPersonne() {
-        return urlSolrPersonne;
-    }
-
-    public void setUrlSolrPersonne(String urlSolrPersonne) {
-        this.urlSolrPersonne = urlSolrPersonne;
-    }
-
-    public int getIddoc() {
-        return iddoc;
-    }
-
-    public void setIddoc(int iddoc) {
-        this.iddoc = iddoc;
-    }
-
-    public String getTef() {
-        return tef;
-    }
-
-    public void setTef(String tef) {
-        this.tef = tef;
-    }
-
-    //-------CONSTRUCTEUR VIDE ET AVEC PARAM ------------
-    public IndexationSolr() {
-        super();
-    }
 
     public IndexationSolr(String cheminXsl, String urlSolr, String urlSolrHighlight, String urlSolrPersonne, int iddoc, String tef) {
         this.cheminXsl = cheminXsl;
@@ -98,37 +48,31 @@ public class IndexationSolr {
         this.tef = tef;
     }
 
-
-
-    public boolean indexerDansSolr(int iddoc, String tef) throws Exception {
-
+    public boolean indexerDansSolr(int iddoc, String tef) throws TransformerException, IOException {
         boolean res = false;
         final StringWriter sw = new StringWriter();
         try {
             logger.info("indexerDansSolr pour Step ou Star");
-            //logger.info("tef = " + tef + "; iddoc = " + iddoc);
             String docSolr = transfoXSL(tef, iddoc);
             logger.info("transfoXSL ok");
             envoieSurSolr(docSolr, urlSolr);
             logger.info("envoieSurSolr ok");
             postData(new StringReader("<commit/>"), sw, urlSolr);
             res = true;
-
         } catch (Exception e) {
             logger.info("Erreur dans indexerDansSolr :"+e.getMessage());
-            throw new Exception(e);
+            throw e;
         }
         return res;
     }
 
 
-    public boolean supprimerDeSolr(int idDoc) throws Exception {
-
+    public boolean supprimerDeSolr(int idDoc) throws IOException {
         boolean res = false;
         final StringWriter sw = new StringWriter();
         try
         {
-            postData(new StringReader("<delete><id>" + String.valueOf(idDoc) + "</id></delete>"), sw, urlSolr);
+            postData(new StringReader("<delete><id>" + idDoc + "</id></delete>"), sw, urlSolr);
             if (sw.toString().indexOf("<int name=\"status\">0</int>") < 0) {
                 logger.info("unexpected response from solr...");
             }
@@ -137,7 +81,7 @@ public class IndexationSolr {
         }
         catch (Exception e) {
             logger.info("Erreur dans supprimerDeSolr :"+e.getMessage());
-            throw new Exception(e);
+            throw e;
         }
         return res;
     }
@@ -151,8 +95,7 @@ public class IndexationSolr {
      * pour saxon pour charger l'xsl
      * note: il faut preciser que le tef (xmltype) est encode en utf-8 = InputStreamReader(tef.getInputStream(), "UTF-8"))
      */
-    public String transfoXSL(String tef, int idDoc)
-            throws SQLException, ParserConfigurationException, FileNotFoundException, SAXException, IOException, TransformerException {
+    public String transfoXSL(String tef, int idDoc) throws TransformerException {
         InputStream stream = new ByteArrayInputStream(tef.getBytes(StandardCharsets.UTF_8));
         logger.info("transfoXsl idDoc = " + idDoc);
         logger.info("cheminXsl = " + cheminXsl);
@@ -161,9 +104,7 @@ public class IndexationSolr {
         transformer.setParameter("idDeLaBase", idDoc);
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         transformer.transform(new javax.xml.transform.stream.StreamSource(stream), new javax.xml.transform.stream.StreamResult(out));
-        //logger.info("res transfo xsl = " + out.toString());
         return out.toString();
-
     }
 
 
@@ -171,7 +112,7 @@ public class IndexationSolr {
 
     //-----------------------------------pour Portail------------------------------------//
 
-    public boolean indexerDansSolr(String tef, int iddoc, String texte, String dateInsertion, int envoiSolr, String perimetre, int longueurPage) throws Exception {
+    public boolean indexerDansSolr(String tef, int iddoc, String texte, String dateInsertion, int envoiSolr, String perimetre, int longueurPage) throws IOException, ParseException, TransformerException, JSONException {
         boolean res = false;
         try {
             logger.info("SolrPortail.indexerDansSolr");
@@ -210,30 +151,20 @@ public class IndexationSolr {
             } else {
                 logger.info("pas d'envoi sur Solr");
             }
-        } catch (Exception e) {
+        } catch (IOException | TransformerException | JSONException | ParseException e) {
             logger.error(e.getMessage());
-            throw new Exception(e);
+            throw e;
         }
         return res;
     }
 
     //FONCTIONS PERSONNES
     //Envoi la requete de suppression de(s) personne(s)
-    public HashMap deletePersonne(int iddoc) throws Exception {
-
+    public Map<String, String> deletePersonne(int iddoc) throws IOException, JSONException {
         //Recuperation de tous les ppn/id personne du TEF
-
-        HashMap ppnPersonne = new HashMap(); //Liste des ppns/personnes trouvés : sert dans le cas d'une suppression du TEF, il faut alors mettre a jour toutes les personnes concernees
+        HashMap<String, String> ppnPersonne = new HashMap<>(); //Liste des ppns/personnes trouvés : sert dans le cas d'une suppression du TEF, il faut alors mettre a jour toutes les personnes concernees
         URL urlPPN = new URL(urlSolr.replace("update", "select/?q=id:") + iddoc + "&fl=auteur,auteurNP,auteurPpn,coAuteur,coAuteurPpn,coAuteurNP,directeurThese,directeurTheseNP,directeurThesePpn,rapporteur,rapporteurNP,rapporteurPpn&rows=1000&wt=json");
-        BufferedReader reader = new BufferedReader(new InputStreamReader(urlPPN.openStream(), "UTF-8"));
-        String line = "";
-        StringBuilder builder = new StringBuilder();
-        while ((line = reader.readLine()) != null) {
-            builder.append(line);
-        }
-        reader.close();
-        JSONObject json = new JSONObject(builder.toString());
-        JSONObject doc = json.optJSONObject("response").optJSONArray("docs").optJSONObject(0);
+        JSONObject doc = getJsonObject(urlPPN).optJSONObject(0);
 
         if (doc != null) {
             StringBuilder ppnSuppr = new StringBuilder("<delete>");
@@ -251,60 +182,14 @@ public class IndexationSolr {
             ppnSuppr.append("<id>");
             ppnSuppr.append(auteurPpn);
             ppnSuppr.append("</id>");
-
             //COAUTEUR
-            JSONArray coAuteurPpn = doc.optJSONArray("coAuteurPpn");
-            if (coAuteurPpn != null) {
-                for (int i = 0; i < coAuteurPpn.length(); i++) {
-                    String ppn = coAuteurPpn.optString(i);
-                    if (ppn.equals("") || ppn.contains("?")) {//Si pas ppn
-                        ppn = iddoc + "_" + indexPersonne; //construction : iddoc+"_"+i
-                        indexPersonne++;
-                    } else {
-                        ppnPersonne.put(ppn, doc.optJSONArray("coAuteur").optString(i) + "-||-" + doc.optJSONArray("coAuteurNP").optString(i));
-                    }
-                    ppnSuppr.append("<id>");
-                    ppnSuppr.append(ppn);
-                    ppnSuppr.append("</id>");
-                }
-            }
+            ppnSuppr.append(getPpnSuppr("coAuteurPpn", "coAuteur", "coAuteurNP", doc, iddoc, indexPersonne, ppnPersonne));
 
             //DIRECTEURTHESE
-            JSONArray directeurThesePpn = doc.optJSONArray("directeurThesePpn");
-            if (directeurThesePpn != null) {
-                for (int i = 0; i < directeurThesePpn.length(); i++) {
-                    String ppn = directeurThesePpn.optString(i);
-                    if (ppn.equals("") || ppn.contains("?")) {//Si pas ppn
-                        ppn = iddoc + "_" + indexPersonne; //construction : iddoc+"_"+i
-                        indexPersonne++;
-                    } else {
-                        ppnPersonne.put(ppn, doc.optJSONArray("directeurThese").optString(i) + "-||-" + doc.optJSONArray("directeurTheseNP").optString(i));
-                    }
-
-                    ppnSuppr.append("<id>");
-                    ppnSuppr.append(ppn);
-                    ppnSuppr.append("</id>");
-                }
-            }
+            ppnSuppr.append(getPpnSuppr("directeurThesePpn", "directeurThese", "directeurTheseNP", doc, iddoc, indexPersonne, ppnPersonne));
 
             //RAPPORTEUR
-            JSONArray rapporteurPpn = doc.optJSONArray("rapporteurPpn");
-            if (rapporteurPpn != null) {
-                for (int i = 0; i < rapporteurPpn.length(); i++) {
-                    String ppn = rapporteurPpn.optString(i);
-                    if (ppn.equals("") || ppn.contains("?")) {//Si pas ppn
-                        ppn = iddoc + "_" + indexPersonne; //construction : iddoc+"_"+i
-                        indexPersonne++;
-                    } else {
-                        ppnPersonne.put(ppn, doc.optJSONArray("rapporteur").optString(i) + "-||-" + doc.optJSONArray("rapporteurNP").optString(i));
-                    }
-
-                    ppnSuppr.append("<id>");
-                    ppnSuppr.append(ppn);
-                    ppnSuppr.append("</id>");
-                }
-            }
-
+            ppnSuppr.append(getPpnSuppr("rapporteurPpn", "rapporteur", "rapporteurNP", doc, iddoc, indexPersonne, ppnPersonne));
 
             ppnSuppr.append("</delete>");
             if (ppnSuppr.toString().contains("id")) {//Si il y a des ppns/id à supprimer
@@ -322,20 +207,48 @@ public class IndexationSolr {
         return ppnPersonne;
     }
 
+    private String getPpnSuppr(String fieldPpn, String field, String fieldNp, JSONObject doc, int iddoc, int indexPersonne, HashMap<String, String> ppnPersonne) {
+        JSONArray fieldArrayPpn = doc.optJSONArray(fieldPpn);
+        StringBuilder ppnSuppr = new StringBuilder();
+        if (fieldArrayPpn != null) {
+            for (int i = 0; i < fieldArrayPpn.length(); i++) {
+                String ppn = fieldArrayPpn.optString(i);
+                if (ppn.equals("") || ppn.contains("?")) {//Si pas ppn
+                    ppn = iddoc + "_" + indexPersonne; //construction : iddoc+"_"+i
+                    indexPersonne++;
+                } else {
+                    ppnPersonne.put(ppn, doc.optJSONArray(field).optString(i) + "-||-" + doc.optJSONArray(fieldNp).optString(i));
+                }
+                ppnSuppr.append("<id>");
+                ppnSuppr.append(ppn);
+                ppnSuppr.append("</id>");
+            }
+        }
+        return ppnSuppr.toString();
+    }
+
+    private JSONArray getJsonObject(URL urlPPN) throws IOException, JSONException {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(urlPPN.openStream(), StandardCharsets.UTF_8))) {
+            String line;
+            StringBuilder builder = new StringBuilder();
+            while ((line = reader.readLine()) != null) {
+                builder.append(line);
+            }
+            JSONObject json = new JSONObject(builder.toString());
+            return json.optJSONObject("response").optJSONArray("docs");
+        } catch (IOException e) {
+            logger.error("Erreur dans récupération de l'objet JSON");
+            throw e;
+        }
+
+    }
+
     //Envoi les requetes d'ajout des personnes trouvees
-    public void addPersonne(int iddoc) throws Exception {
+    public void addPersonne(int iddoc) throws IOException, JSONException, ParseException {
 
         //Recuperation de toutes les personnes du TEF
         URL urlPPN = new URL(urlSolr.replace("update", "select/?q=id:") + iddoc + "&rows=1000&wt=json");
-        BufferedReader reader = new BufferedReader(new InputStreamReader(urlPPN.openStream(), "UTF-8"));
-        String line = "";
-        StringBuilder builder = new StringBuilder();
-        while ((line = reader.readLine()) != null) {
-            builder.append(line);
-        }
-        reader.close();
-        JSONObject json = new JSONObject(builder.toString());
-        JSONObject doc = json.optJSONObject("response").optJSONArray("docs").optJSONObject(0);
+        JSONObject doc = getJsonObject(urlPPN).optJSONObject(0);
 
         int indexPersonne = 0; //Sert pr la génération des id qd pas de ppn
 
@@ -366,34 +279,27 @@ public class IndexationSolr {
     }
 
     //Envoi les requetes d'ajout des personnes à partir de la liste ppns/personnes : appele dans le cas d'une suppression d'un TEF
-    public void addPersonne(HashMap ppnPersonne) throws Exception {
+    public void addPersonne(HashMap<String, String> ppnPersonne) throws ParseException, JSONException, IOException {
         Iterator<String> itr = ppnPersonne.keySet().iterator();
-        int i = 0;
         while (itr.hasNext()) {
             String ppn = itr.next();
             String nomEtnomNP = (String) ppnPersonne.get(ppn);
             String nom = nomEtnomNP.substring(0, nomEtnomNP.indexOf("-||-"));
             String nomNP = nomEtnomNP.substring(nomEtnomNP.indexOf("-||-") + 4);
             logger.info("nom:" + nom + " nomNP:" + nomNP);
-            int retour = postPersonne(0, ppn, nom, nomNP, "", null, 0 );
-            i++;
+            postPersonne(0, ppn, nom, nomNP, "", null, 0 );
         }
     }
 
     //Envoi le cumul des infos de la personne/ppn
-    public int postPersonne(int idDoc, String ppn, String nom, String nomNP, String role, JSONObject doc, int indexPersonne) throws Exception {
-
-
-        StringBuilder cumul = new StringBuilder("");
+    public int postPersonne(int idDoc, String ppn, String nom, String nomNP, String role, JSONObject doc, int indexPersonne) throws ParseException, IOException, JSONException {
+        StringBuilder cumul;
         SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 
         if (!nom.trim().equals("")) { //Si on a bien une personne (pas de nom/prenom "vide")
             if (ppn == null || ppn.equals("") || ppn.contains("?")) { //Si pas de PPN, on genere un id et on prend les valeurs du TEF insere
                 ppn = idDoc + "_" + indexPersonne;
                 indexPersonne++;
-
-
-
 
                 cumul = new StringBuilder("<field name=\"id\">");
                 cumul.append(ppn);
@@ -416,8 +322,6 @@ public class IndexationSolr {
                     dateThese = sujDatePremiereInscription;
                 }
 
-                Date minDateInsert = new Date();
-                Date minDateMaj = simpleFormat.parse("1900-01-01T23:59:59Z");
                 if (dateInsert == null || dateInsert.length()<=0) {
                     dateInsert = simpleFormat.format(new Date());
                 }
@@ -439,18 +343,7 @@ public class IndexationSolr {
                 Calendar calDateThese = Calendar.getInstance();
                 calDateThese.setTime(simpleFormat.parse(dateThese));
 
-                Date now = new Date();
-                Calendar calNow = Calendar.getInstance();
-                calNow.setTime(now);
-                calNow.add(Calendar.YEAR, -5);
-
-                if (calNow.before(calDateThese)) {
-                    actif = "oui";
-                }
-
-
-
-
+                actif = getCalendar(actif, calDateThese);
                 cumul.append("<field name=\"dateInsert\">");
                 cumul.append(dateInsert);
                 cumul.append("</field>");
@@ -465,10 +358,6 @@ public class IndexationSolr {
 
                 cumul.append(mappingSolr2solrPersonne(role, doc));
             } else { //Sinon, recuperation de tous les docs associes à ce ppn
-
-
-
-
                 cumul = new StringBuilder("<field name=\"id\">");
                 cumul.append(ppn);
                 cumul.append("</field>");
@@ -487,15 +376,7 @@ public class IndexationSolr {
 
                 //On récupère la date d'insertion (la plus vieille) et la date de maj (la plus recente) des theses liees
                 URL urlDate = new URL(urlSolr.replace("update", "select/?q=") + "auteurPpn:" + ppn + "+OR+coAuteurPpn:" + ppn + "+OR+directeurThesePpn:" + ppn + "+OR+rapporteurPpn:" + ppn + "&fl=dateInsert,dateMaj,dateSoutenance,sujDatePremiereInscription&rows=1000&wt=json");
-                BufferedReader readerDate = new BufferedReader(new InputStreamReader(urlDate.openStream(), "UTF-8"));
-                String lineDate = "";
-                StringBuilder builderDate = new StringBuilder();
-                while ((lineDate = readerDate.readLine()) != null) {
-                    builderDate.append(lineDate);
-                }
-                readerDate.close();
-                JSONObject jsonDate = new JSONObject(builderDate.toString());
-                JSONArray docs = jsonDate.optJSONObject("response").optJSONArray("docs");
+                JSONArray docs = getJsonObject(urlDate);
 
 
                 Date minDateInsert = new Date();
@@ -534,26 +415,14 @@ public class IndexationSolr {
                 if (minDateMaj.before(minDateInsert)) {
                     minDateMaj = minDateInsert;
                 }
-                //if (minDateThese.before(minDateInsert))
-                //minDateThese=minDateInsert;
+
 
                 //Si (aujourd'hui - 5 ans) < à la + récente date de soutenance ou datePremiereInscription => alors personne active
                 String actif = "non";
                 Calendar calDateThese = Calendar.getInstance();
                 calDateThese.setTime(minDateThese);
 
-                Date now = new Date();
-                Calendar calNow = Calendar.getInstance();
-                calNow.setTime(now);
-                calNow.add(Calendar.YEAR, -5);
-
-                if (calNow.before(calDateThese)) {
-                    actif = "oui";
-                }
-
-
-
-
+                actif = getCalendar(actif, calDateThese);
                 cumul.append("<field name=\"dateInsert\">");
                 cumul.append(simpleFormat.format(minDateInsert));
                 cumul.append("</field>");
@@ -569,12 +438,10 @@ public class IndexationSolr {
                 cumul.append(cumulRolePpn(ppn));
             }
             //Envoi du doc dans solrPersonne
-
             StringBuilder cumulPost = new StringBuilder("<add><doc>");
             cumulPost.append(cumul);
             cumulPost.append("</doc></add>");
 
-            // System.out.println("ENVOI SOLR PR le role "+role+": "+cumul);
             if (cumulPost.toString().contains("titre_s")) //si contient au moins une these
             {
                 envoieSurSolr(cumulPost.toString(), urlSolrPersonne);
@@ -583,8 +450,20 @@ public class IndexationSolr {
         return indexPersonne;
     }
 
+    private String getCalendar(String actif, Calendar calDateThese) {
+        Date now = new Date();
+        Calendar calNow = Calendar.getInstance();
+        calNow.setTime(now);
+        calNow.add(Calendar.YEAR, -5);
+
+        if (calNow.before(calDateThese)) {
+            actif = "oui";
+        }
+        return actif;
+    }
+
     //Tous les resultats de tous les roles du ppn
-    public String cumulRolePpn(String ppn) throws Exception {
+    public String cumulRolePpn(String ppn) throws IOException, JSONException {
         StringBuilder cumulPersonne = new StringBuilder("");
         cumulPersonne.append(rolePpn(ppn, "auteur"));
         cumulPersonne.append(rolePpn(ppn, "coAuteur"));
@@ -595,19 +474,11 @@ public class IndexationSolr {
     }
     //Tous les resultats pour ce role, pour ce ppn
 
-    public String rolePpn(String ppn, String role) throws Exception {
+    public String rolePpn(String ppn, String role) throws IOException, JSONException {
         StringBuilder rolePersonne = new StringBuilder("");
         URL urlPPNCumul = new URL(urlSolr.replace("update", "select/?q=") + role + "Ppn:" + ppn + "&rows=1000&wt=json");
         logger.info(urlSolr.replace("update", "select/?q=") + role + "Ppn:" + ppn + "&rows=1000&wt=json");
-        BufferedReader readerCumul = new BufferedReader(new InputStreamReader(urlPPNCumul.openStream(), "UTF-8"));
-        String lineCumul = "";
-        StringBuilder builderCumul = new StringBuilder();
-        while ((lineCumul = readerCumul.readLine()) != null) {
-            builderCumul.append(lineCumul);
-        }
-        readerCumul.close();
-        JSONObject jsonCumul = new JSONObject(builderCumul.toString());
-        JSONArray docs = jsonCumul.optJSONObject("response").optJSONArray("docs");
+        JSONArray docs = getJsonObject(urlPPNCumul);
         for (int i = 0; i < docs.length(); i++) {
             if (role.contains("coAuteur"))
                 role="auteur";
@@ -617,9 +488,9 @@ public class IndexationSolr {
     }
 
     //Permet le mapping entre les donnees reçues de solr2, et celles a envoyer a solrPersonne
-    public String mappingSolr2solrPersonne(String role, JSONObject doc) throws Exception {
+    public String mappingSolr2solrPersonne(String role, JSONObject doc) {
 
-        StringBuilder cumul = new StringBuilder("");
+        StringBuilder cumul = new StringBuilder();
         cumul.append("<field name=\"role\">");
         cumul.append(role);
         cumul.append("</field>");
@@ -634,87 +505,67 @@ public class IndexationSolr {
                     for (int i = 0; i < doc.optJSONArray(field).length(); i++) {
                         String val = StringEscapeUtils.escapeXml10(doc.optJSONArray(field).optString(i));
                         //si le field doit etre ds la liste de resultat : _s (stocke et indexe) sinon : _z (pas stocke et pas indexe, mais sert pr les copyfields facettes et champs par defaut)
-                        if (field.equals("titre") || field.contains("discipline") || field.contains("etabSoutenance") || field.contains("num") || field.contains("accessible") || field.contains("status") || field.contains("dateSoutenance") || field.contains("sujDateSoutenancePrevue") || field.contains("sujDatePremiereInscription")) {
-
-                            cumul.append("<field name=\"");
-                            cumul.append(role);
-                            cumul.append("-");
-                            cumul.append(field);
-                            cumul.append("_s\">");
-                            cumul.append(val);
-                            cumul.append("</field>");
-                        } else {
-
-                            cumul.append("<field name=\"");
-                            cumul.append(role);
-                            cumul.append("-");
-                            cumul.append(field);
-                            cumul.append("_z\">");
-                            cumul.append(val);
-                            cumul.append("</field>");
-                        }
-                        //et tout dans text : _t
-
-                        cumul.append("<field name=\"");
-                        cumul.append(role);
-                        cumul.append("-");
-                        cumul.append(field);
-                        cumul.append("_t\">");
-                        cumul.append(val);
-                        cumul.append("</field>");
+                        cumul.append(getField(field, val, role));
                     }
                 } else {
                     String val = StringEscapeUtils.escapeXml10(doc.optString(field));
                     //si le field doit etre ds la liste de resultat : _s (stocke et indexe) sinon : _z (pas stocke et pas indexe, mais sert pr les copyfields facettes et champs par defaut)
-                    if (field.equals("titre") || field.contains("discipline") || field.contains("etabSoutenance") || field.contains("num") || field.contains("accessible") || field.contains("status") || field.contains("dateSoutenance") || field.contains("sujDateSoutenancePrevue") || field.contains("sujDatePremiereInscription")) {
-
-                        cumul.append("<field name=\"");
-                        cumul.append(role);
-                        cumul.append("-");
-                        cumul.append(field);
-                        cumul.append("_s\">");
-                        cumul.append(val);
-                        cumul.append("</field>");
-                    } else {
-
-                        cumul.append("<field name=\"");
-                        cumul.append(role);
-                        cumul.append("-");
-                        cumul.append(field);
-                        cumul.append("_z\">");
-                        cumul.append(val);
-                        cumul.append("</field>");
-                    }
-                    //et tout dans text : _t
-
-                    cumul.append("<field name=\"");
-                    cumul.append(role);
-                    cumul.append("-");
-                    cumul.append(field);
-                    cumul.append("_t\">");
-                    cumul.append(val);
-                    cumul.append("</field>");
+                    cumul.append(getField(field, val, role));
                 }
             }
         }
         return cumul.toString();
     }
+
+    private String getField(String field, String val, String role) {
+        StringBuilder cumul = new StringBuilder();
+        String header = "<field name=\"";
+        String footer = "</field>";
+        if (field.equals("titre") || field.contains("discipline") || field.contains("etabSoutenance") || field.contains("num") || field.contains("accessible") || field.contains("status") || field.contains("dateSoutenance") || field.contains("sujDateSoutenancePrevue") || field.contains("sujDatePremiereInscription")) {
+            cumul.append(header);
+            cumul.append(role);
+            cumul.append("-");
+            cumul.append(field);
+            cumul.append("_s\">");
+            cumul.append(val);
+            cumul.append(footer);
+        } else {
+            cumul.append(header);
+            cumul.append(role);
+            cumul.append("-");
+            cumul.append(field);
+            cumul.append("_z\">");
+            cumul.append(val);
+            cumul.append(footer);
+        }
+        //et tout dans text : _t
+
+        cumul.append(header);
+        cumul.append(role);
+        cumul.append("-");
+        cumul.append(field);
+        cumul.append("_t\">");
+        cumul.append(val);
+        cumul.append(footer);
+
+        return cumul.toString();
+    }
     //FIN DES FONCTIONS PERSONNES
 
-    public boolean supprimeDeSolr(int idDoc) throws Exception {
-        logger.info("IndexationSolrDansOraclePortail supprimeDeSolr debut de la suppression de " + String.valueOf(idDoc) + " sur solr portail...");
+    public boolean supprimeDeSolr(int idDoc) throws IOException, JSONException, ParseException {
+        logger.info("IndexationSolrDansOraclePortail supprimeDeSolr debut de la suppression de " + idDoc + " sur solr portail...");
         //Suppression des "personnes" attachées à ce doc, et recuperation des ppn/noms, pour re-générer les docs solrPersonne de ces ppns
         boolean res = false;
-        HashMap ppnPersonne = deletePersonne(idDoc);
+        HashMap<String, String> ppnPersonne = new HashMap<>(deletePersonne(idDoc));
         StringWriter sw = new StringWriter();
-        postData(new StringReader("<delete><id>" + String.valueOf(idDoc) + "</id></delete>"), sw, urlSolr);
+        postData(new StringReader("<delete><id>" + idDoc + "</id></delete>"), sw, urlSolr);
         if (sw.toString().indexOf("<int name=\"status\">0</int>") < 0) {
             logger.error("unexpected response from solr...");
         }
         postData(new StringReader("<commit/>"), sw, urlSolr);
 
         // solr highlight
-        postData(new StringReader("<delete><query>id:" + String.valueOf(idDoc) + "</query></delete>"), sw, urlSolrHighlight);
+        postData(new StringReader("<delete><query>id:" + idDoc + "</query></delete>"), sw, urlSolrHighlight);
         if (sw.toString().indexOf("<int name=\"status\">0</int>") < 0) {
             logger.info("unexpected reponse from solr...");
             logger.error("unexpected response from solr...");
@@ -740,7 +591,7 @@ public class IndexationSolr {
      * note: il faut preciser que le tef (xmltype) est encode en utf-8 = InputStreamReader(tef.getInputStream(), "UTF-8"))
      */
     public String transfoXSL(String tef, int idDoc, String texte, String dateInsertion)
-            throws SQLException, ParserConfigurationException, FileNotFoundException, SAXException, IOException, TransformerException {
+            throws TransformerException {
         InputStream stream = new ByteArrayInputStream(tef.getBytes(StandardCharsets.UTF_8));
         logger.info("transfoXsl idDoc = " + idDoc);
         logger.info("cheminXsl = " + cheminXsl);
@@ -752,26 +603,26 @@ public class IndexationSolr {
         transformer.setParameter("texte", texte);
         transformer.setParameter("dateInsertion", dateInsertion);
         transformer.transform(new javax.xml.transform.stream.StreamSource(stream), new javax.xml.transform.stream.StreamResult(out));
-        logger.info("sortie de indexationSolrDansOraclePortail transfoXsl" + new Integer(1));
+        logger.info("sortie de indexationSolrDansOraclePortail transfoXsl" + 1);
         transformer.reset();
         return out.toString();
     }
 
 
     // ************************* SOLR HIGHLIGHT ********************************
-    private void decouperIndexerSolrHighlight(String texte, int idDoc, int longueurPage) throws Exception {
+    private void decouperIndexerSolrHighlight(String texte, int idDoc, int longueurPage)  {
         logger.info("IndexationSolrDansOraclePortail decouperIndexerSolrHighlight debut de decoupage du texte + envoi sur solrhighlight");
         logger.info("texte = " + texte);
         logger.info("iddoc = " + idDoc);
         logger.info("longueurPage = " + longueurPage);
         try {
             int numPage = 1;
-            String idNumPage = String.valueOf(idDoc) + "_" + String.valueOf(numPage);
+            String idNumPage = idDoc + "_" + numPage;
             int borneInf = 0;
             int borneSup = longueurPage;
             while (borneInf + longueurPage < texte.length()) {
-                logger.info("inf = " + String.valueOf(borneInf));
-                logger.info("sup = " + String.valueOf(borneSup));
+                logger.info("inf = " + borneInf);
+                logger.info("sup = " + borneSup);
 
                 String page = texte.substring(borneInf, borneSup);
                 int point = page.lastIndexOf('.');
@@ -780,22 +631,16 @@ public class IndexationSolr {
                     point++;
                     borneSup = borneSup - (longueurPage - point);
                 }
-                idNumPage = String.valueOf(idDoc) + "_" + String.valueOf(numPage);
+                idNumPage = idDoc + "_" + numPage;
                 String docSolr = getDocSolrHighlight(idNumPage, idDoc, page);
-//                java.io.FileWriter fstream = new java.io.FileWriter("/tmp/dernierSolrHighlight.xml");
-//                java.io.BufferedWriter out = new java.io.BufferedWriter(fstream);
-//                out.write(docSolr);
-//                out.close();
 
-                //logger.info("docSolr = " + docSolr);
                 envoieSurSolr(docSolr, urlSolrHighlight);
                 borneInf = borneSup;
                 borneSup = borneSup + longueurPage;
                 numPage++;
             }
-            String dernierePage = texte.substring(borneInf, texte.length());
+            String dernierePage = texte.substring(borneInf);
             String docSolr = getDocSolrHighlight(idNumPage, idDoc, dernierePage);
-            //logger.info("docSolr = " + docSolr);
             envoieSurSolr(docSolr, urlSolrHighlight);
             logger.info("Fin de decouperIndexerSolrHighlight iddoc="+idDoc);
         } catch (Exception e) {
@@ -806,7 +651,7 @@ public class IndexationSolr {
     }
 
     public String getDocSolrHighlight(String idNumPage, int idDoc, String extrait) {
-        String docSolr = "<add><doc>"
+        return "<add><doc>"
                 + "<field name=\"idNumPage\">"
                 + idNumPage
                 + "</field>"
@@ -814,111 +659,24 @@ public class IndexationSolr {
                 + extrait
                 + "</field>"
                 + "<field name=\"id\">"
-                + String.valueOf(idDoc)
+                + idDoc
                 + "</field>"
                 + "</doc></add>";
-        return docSolr;
     }
     // ************************* SOLR HIGHLIGHT FIN ********************************
 
 
-
-
-    public String clobToString(Clob cl) throws IOException, SQLException {
-        if (cl == null) {
-            return "";
-        }
-        StringBuffer bufCLOB = new StringBuffer();
-        int nbytes = 0;
-        char[] buffer = new char[32768];
-        java.io.Reader clobReader = cl.getCharacterStream();
-        int len = 0;
-        int i = 0;
-        while ((len = clobReader.read(buffer)) != -1 && i < 52) {
-            i++;
-            bufCLOB.append(buffer, 0, len);
-            System.gc();
-        }
-        clobReader.close();
-        return bufCLOB.toString();
-    }
-
-
     //-----------------------------------fin methodes pour Portail------------------------------------//
 
-    /**
-     * Reads data from the data reader and posts it to solr,
-     * writes to the response to output
-     * @throws Exception
-     */
-    /*public void postData(Reader data, Writer output) throws Exception {
-
-        URL solrUrl = new URL(urlSolr);
-        HttpURLConnection urlc = null;
-        try {
-            urlc = (HttpURLConnection) solrUrl.openConnection();
-            try {
-                urlc.setRequestMethod("POST");
-            } catch (ProtocolException e) {
-                throw new Exception("Shouldn't happen: HttpURLConnection doesn't support POST??", e);
-            }
-            urlc.setDoOutput(true);
-            urlc.setDoInput(true);
-            urlc.setUseCaches(false);
-            urlc.setAllowUserInteraction(false);
-            urlc.setRequestProperty("Content-type", "text/xml; charset=UTF-8");
-            OutputStream out = urlc.getOutputStream();
-            try {
-                Writer writer = new OutputStreamWriter(out, "UTF-8");
-                pipe(data, writer);
-                writer.close();
-            } catch (IOException e) {
-                throw new Exception("IOException while posting data", e);
-            } finally {
-                if (out != null) {
-                    out.close();
-                }
-            }
-
-            InputStream in = urlc.getInputStream();
-            try {
-                Reader reader = new InputStreamReader(in);
-                pipe(reader, output);
-                reader.close();
-            } catch (IOException e) {
-                throw new Exception("IOException while reading response", e);
-            } finally {
-                if (in != null) {
-                    in.close();
-                }
-            }
-        } catch (IOException e) {
-            try {
-                logger.info("Solr returned an error: " + urlc.getResponseMessage());
-                throw new Exception("Erreur lors du post sur solr : "
-                        + urlc.getResponseMessage(), e);
-            } catch (IOException f) {
-            }
-            logger.info("Connection error (is Solr running at " + solrUrl + " ?): " + e);
-            throw new Exception("Erreur de connexion a solr", e);
-        } finally {
-            if (urlc != null) {
-                urlc.disconnect();
-            }
-        }
-    }*/
-
-    public void envoieSurSolr(String docSolr, String urlSolr) throws Exception {
+    public void envoieSurSolr(String docSolr, String urlSolr) throws IOException {
         final StringWriter sw = new StringWriter();
         logger.info("envoieSurSolr => urlSolr = " + urlSolr);
         postData(new StringReader(docSolr), sw, urlSolr);
         logger.info( "sw.toString() = " + sw.toString());
         logger.info( "res sw = " + sw.toString().indexOf("<int name=\"status\">0</int>"));
         if (sw.toString().indexOf("<int name=\"status\">0</int>") < 0) {
-            System.out.println("unexpected reponse from solr...");
             logger.error("unexpected response from solr...");
         }
-        //postData(new StringReader("<commit/>"), sw, urlSolr);
     }
 
 
@@ -927,8 +685,7 @@ public class IndexationSolr {
      * writes to the response to output
      * @throws Exception
      */
-    public void postData(Reader data, Writer output, String url) throws Exception {
-
+    public void postData(Reader data, Writer output, String url) throws IOException {
         logger.info("postData");
         URL solrUrl = new URL(url);
         logger.info("url solr dans postData = " + url);
@@ -938,7 +695,7 @@ public class IndexationSolr {
             try {
                 urlc.setRequestMethod("POST");
             } catch (ProtocolException e) {
-                throw new Exception("Shouldn't happen: HttpURLConnection doesn't support POST??", e);
+                throw new ProtocolException("Shouldn't happen: HttpURLConnection doesn't support POST??");
             }
             urlc.setDoOutput(true);
             urlc.setDoInput(true);
@@ -946,42 +703,32 @@ public class IndexationSolr {
             urlc.setAllowUserInteraction(false);
             urlc.setRequestProperty("Content-type", "text/xml; charset=UTF-8");
 
-            OutputStream out = urlc.getOutputStream();
-
-            try {
-                Writer writer = new OutputStreamWriter(out, "UTF-8");
+            try (OutputStream out = urlc.getOutputStream()) {
+                Writer writer = new OutputStreamWriter(out, StandardCharsets.UTF_8);
                 pipe(data, writer);
                 writer.close();
             } catch (IOException e) {
-                throw new Exception("IOException while posting data", e);
-            } finally {
-                if (out != null) {
-                    out.close();
-                }
+                throw new IOException("IOException while posting data", e);
             }
 
-            InputStream in = urlc.getInputStream();
-            try {
+            try (InputStream in = urlc.getInputStream()) {
                 Reader reader = new InputStreamReader(in);
                 pipe(reader, output);
                 reader.close();
             } catch (IOException e) {
-                throw new Exception("IOException while reading response", e);
-            } finally {
-                if (in != null) {
-                    in.close();
-                }
+                throw new IOException("IOException while reading response", e);
             }
 
         } catch (IOException e) {
             try {
+                assert urlc != null;
                 logger.info("Solr returned an error: " + urlc.getResponseMessage());
-                throw new Exception("Erreur lors du post sur solr : "
+                throw new IOException("Erreur lors du post sur solr : "
                         + urlc.getResponseMessage(), e);
             } catch (IOException f) {
+                logger.info("Connection error (is Solr running at " + solrUrl + " ?): " + e);
+                throw new IOException("Erreur de connexion à solr", e);
             }
-            logger.info("Connection error (is Solr running at " + solrUrl + " ?): " + e);
-            throw new Exception("Erreur de connexion à solr", e);
         } finally {
             if (urlc != null) {
                 urlc.disconnect();
@@ -997,7 +744,6 @@ public class IndexationSolr {
         int read = 0;
         while ((read = reader.read(buf)) >= 0) {
             writer.write(buf, 0, read);
-            //logger.info("buf dans pipe = " + buf);
         }
         writer.flush();
 

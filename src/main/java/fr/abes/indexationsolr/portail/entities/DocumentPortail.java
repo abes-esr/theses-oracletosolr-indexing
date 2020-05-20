@@ -8,8 +8,7 @@ import java.util.Date;
 
 
 @NoArgsConstructor
-@Getter
-@Setter
+@Getter @Setter
 public class DocumentPortail {
 
 

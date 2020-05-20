@@ -5,8 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @NoArgsConstructor
-@Getter
-@Setter
+@Getter @Setter
 public class DocumentStar {
 
     private Integer iddoc;
