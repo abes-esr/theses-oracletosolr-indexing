@@ -7,8 +7,8 @@
         </Console>
 
         <RollingFile name="RollingFile"
-                     fileName="./logs/theses-oracleToSolr-indexing.log"
-                     filePattern="./logs/$${date:yyyy-MM}/theses-oracleToSolr-indexing-log4j2-%d{-dd-MMMM-yyyy}-%i.log.gz">
+                     fileName="/usr/local/tomcat8-step/logs/indexationsolr.log"
+                     filePattern="/usr/local/tomcat8-step/logs/$${date:yyyy-MM}/theses-oracleToSolr-indexing-log4j2-%d{-dd-MMMM-yyyy}-%i.log.gz">
             <PatternLayout>
                 <pattern>%d %p %C{1.} [%t] %m%n</pattern>
             </PatternLayout>
