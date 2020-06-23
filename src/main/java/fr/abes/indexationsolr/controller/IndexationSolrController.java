@@ -52,8 +52,9 @@ public class IndexationSolrController {
         if(contexte.contains("sujets")) {
             logger.info("indexation contexte sujets");
             //res = indexationSolrSujet.indexation(iddoc, doc);
+            res = true;
             logger.info("indexation sujets iddoc " + iddoc + " = " + res);
-            //return res;
+            return res;
         }
         if(contexte.contains("star")) {
             logger.info("indexation contexte star");
