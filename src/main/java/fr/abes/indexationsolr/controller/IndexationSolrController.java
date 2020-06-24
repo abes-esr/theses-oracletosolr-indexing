@@ -5,10 +5,18 @@ import fr.abes.indexationsolr.services.IndexationSolrStar;
 import fr.abes.indexationsolr.services.IndexationSolrSujet;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 
 @RestController
@@ -25,12 +33,48 @@ public class IndexationSolrController {
     @Autowired
     private IndexationSolrPortail indexationSolrPortail;
 
+    @Value("${testFile}")
+    private String testFile;
 
     @RequestMapping(method = RequestMethod.GET, value="/tomcatTest")
     @ResponseBody
     public String test() {
         return "test tomcat";
     }
+
+    @RequestMapping(method = RequestMethod.POST, value="/tomcatTestFile")
+    public String testTomcatFile(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes)  {
+        logger.info("beginning of /upload");
+        if (file.isEmpty()) {
+            logger.info("file is empty");
+            redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
+            return "redirect:uploadStatus";
+        }
+
+        try {
+
+            // Get the file and save it somewhere
+            logger.info("beginning of try testFile = " + testFile);
+            byte[] bytes = file.getBytes();
+            Path path = Paths.get(testFile + file.getOriginalFilename());
+            logger.info("path = " + path);
+            Files.write(path, bytes);
+
+            redirectAttributes.addFlashAttribute("message",
+                    "You successfully uploaded '" + file.getOriginalFilename() + "'");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return "redirect:/uploadStatus";
+    }
+
+    @GetMapping("/uploadStatus")
+    public String uploadStatus() {
+        return "uploadStatus";
+    }
+
 
 
     @RequestMapping(method = RequestMethod.POST, value="/GetIndexationSolr")
