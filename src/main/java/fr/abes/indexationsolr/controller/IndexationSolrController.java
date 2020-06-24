@@ -6,10 +6,7 @@ import fr.abes.indexationsolr.services.IndexationSolrSujet;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
@@ -27,6 +24,13 @@ public class IndexationSolrController {
 
     @Autowired
     private IndexationSolrPortail indexationSolrPortail;
+
+
+    @RequestMapping(method = RequestMethod.GET, value="/tomcatTest")
+    @ResponseBody
+    public String test() {
+        return "test tomcat";
+    }
 
 
     @RequestMapping(method = RequestMethod.POST, value="/GetIndexationSolr")
