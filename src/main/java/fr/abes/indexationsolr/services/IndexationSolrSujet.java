@@ -33,15 +33,15 @@ public class IndexationSolrSujet extends IndexationSolr {
     }
 
     //@Transactional(transactionManager="sujetsTransactionManager")
-    public boolean indexation(int iddoc) throws Exception {
+    public boolean indexation() throws Exception {
 
         boolean res = false;
         try {
+            logger.info(("this.getIddoc()" + this.getIddoc()));
             setUrlSolr(env.getProperty("urlSolrSujets"));
             setCheminXsl(env.getProperty("cheminXsl.sujets"));
             logger.info("env.getProperty cheminXsl.sujets = " + env.getProperty("cheminXsl.sujets"));
-            setIddoc(iddoc);
-            setTef(sujetsRepository.getTefByIddoc(iddoc));
+            setTef(sujetsRepository.getTefByIddoc(this.getIddoc()));
             if (indexerDansSolr(this.getIddoc(),this.getTef())) {
                 res = true;
             }

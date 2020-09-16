@@ -1,9 +1,6 @@
 package fr.abes.indexationsolr.controller;
 
-import fr.abes.indexationsolr.services.DatabasePostRequest;
-import fr.abes.indexationsolr.services.IndexationSolrPortail;
-import fr.abes.indexationsolr.services.IndexationSolrStar;
-import fr.abes.indexationsolr.services.IndexationSolrSujet;
+import fr.abes.indexationsolr.services.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -86,13 +83,11 @@ public class IndexationSolrController {
         JSONObject indexationJson = new JSONObject(indexation);
         String contexte = indexationJson.getString("contexte");
         int iddoc = Integer.parseInt(indexationJson.getString("iddoc"));
-        String texte = indexationJson.getString("texte");
-        String dateInsertion = indexationJson.getString("dateinsertion");
+
         logger.info("contexte = " + contexte);
         logger.info("iddoc = " + iddoc);
         //logger.info("doc = " + doc);
-        logger.info("texte = " + texte);
-        logger.info("dateInsertion = " + dateInsertion);
+
         boolean res = false;
 
 
@@ -115,20 +110,30 @@ public class IndexationSolrController {
 
         if(contexte.contains("sujets")) {
             logger.info("indexation contexte sujets");
-            res = indexationSolrSujet.indexation(iddoc);
+            indexationSolrSujet.setIddoc(iddoc);
+            logger.info("indexation sujets iddoc " + indexationSolrSujet.getIddoc());
+            res = indexationSolrSujet.indexation();
             //res = true;
             logger.info("indexation sujets iddoc " + iddoc + " = " + res);
             return res;
         }
         if(contexte.contains("star")) {
             logger.info("indexation contexte star");
-            res = indexationSolrStar.indexation(iddoc);
+            indexationSolrStar.setIddoc(iddoc);
+            res = indexationSolrStar.indexation();
             logger.info("indexation star iddoc " + iddoc + " = " + res);
             return res;
         }
         if(contexte.contains("portail")) {
             logger.info("indexation contexte portail");
-            res = indexationSolrPortail.indexation(iddoc, texte, dateInsertion);
+            indexationSolrPortail.setIddoc(iddoc);
+            indexationSolrPortail.setTexte(indexationJson.getString("texte"));
+            indexationSolrPortail.setDateInsertion(indexationJson.getString("dateinsertion"));
+            String texte = indexationJson.getString("texte");
+            String dateInsertion = indexationJson.getString("dateinsertion");
+            logger.info("texte = " + texte);
+            logger.info("dateInsertion = " + dateInsertion);
+            res = indexationSolrPortail.indexation();
             logger.info("indexation portail iddoc " + iddoc + " = " + res);
         }
         else {

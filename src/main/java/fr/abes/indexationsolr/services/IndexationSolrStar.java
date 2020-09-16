@@ -32,15 +32,14 @@ public class IndexationSolrStar extends IndexationSolr {
     }
 
     //@Transactional(transactionManager="starTransactionManager")
-    public boolean indexation(int iddoc) throws Exception {
+    public boolean indexation() throws Exception {
 
         boolean res = false;
         String tef = "";
         try {
             setUrlSolr(env.getProperty("urlSolrStar"));
             setCheminXsl(env.getProperty("cheminXsl.star"));
-            setIddoc(iddoc);
-            setTef(starRepository.getTefByIddoc(iddoc));
+            setTef(starRepository.getTefByIddoc(this.getIddoc()));
             if (indexerDansSolr(this.getIddoc(), this.getTef())) {
                 res = true;
             }

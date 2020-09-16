@@ -45,14 +45,14 @@ public class IndexationSolrPortail extends IndexationSolr {
         super();
     }
 
-    public IndexationSolrPortail(String cheminXsl, String urlSolr, String urlSolrHighlight, String urlSolrPersonne, int iddoc, String tef, int longueurPage, String perimetre) {
-        super(cheminXsl, urlSolr, urlSolrHighlight, urlSolrPersonne, iddoc, tef);
+    public IndexationSolrPortail(String cheminXsl, String urlSolr, String urlSolrHighlight, String urlSolrPersonne, int iddoc, String tef, String texte, String dateInsertion, int longueurPage, String perimetre) {
+        super(cheminXsl, urlSolr, urlSolrHighlight, urlSolrPersonne, iddoc, tef, texte, dateInsertion);
         this.longueurPage = longueurPage;
         this.perimetre = perimetre;
     }
 
     //@Transactional(transactionManager="portailTransactionManager")
-    public boolean indexation(int iddoc, String texte, String dateInsertion) throws Exception {
+    public boolean indexation() throws Exception {
 
         boolean res = false;
         String tef = "";
@@ -61,15 +61,15 @@ public class IndexationSolrPortail extends IndexationSolr {
             setUrlSolrPersonne(env.getProperty("urlSolrPersonne"));
             setUrlSolrHighlight(env.getProperty("urlSolrHighlight"));
             setCheminXsl(env.getProperty("cheminXsl.portail"));
-            tef = portailRepository.getTefByIddoc(iddoc);
+            setTef(portailRepository.getTefByIddoc(this.getIddoc()));
             setPerimetre("tout");
             setLongueurPage(1000);
-            logger.info("dateInsertion = " + dateInsertion);
+            logger.info("dateInsertion = " + this.getDateInsertion());
             logger.info("urlSolr = " + env.getProperty("urlSolrPortail"));
             logger.info("urlSolrHighlight = " + env.getProperty("urlSolrHighlight"));
             logger.info("urlSolrPersonne = " +env.getProperty("urlSolrHighlight"));
 
-            if (indexerDansSolr(tef, iddoc, texte, dateInsertion ,1, perimetre, longueurPage)) {
+            if (indexerDansSolr(tef, this.getIddoc(), this.getTexte(), this.getDateInsertion() ,1, perimetre, longueurPage)) {
                 res = true;
             }
             logger.info("res dans indexation = " + res);
