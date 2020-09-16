@@ -1,10 +1,12 @@
 package fr.abes.indexationsolr.services;
 
+import fr.abes.indexationsolr.portail.repositories.PortailRepository;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 
@@ -15,7 +17,10 @@ public class IndexationSolrPortail extends IndexationSolr {
 
     private Logger logger = LogManager.getLogger(IndexationSolrPortail.class);
 
-    @Value("${urlSolrPortail}")
+    @Autowired
+    private Environment env;
+
+    /*@Value("${urlSolrPortail}")
     private String urlSolrPortailp;
 
     @Value("${urlSolrHighlight}")
@@ -25,7 +30,10 @@ public class IndexationSolrPortail extends IndexationSolr {
     private String urlSolrPersonnep;
 
     @Value("${cheminXsl.portail}")
-    private String cheminXslPortail;
+    private String cheminXslPortail;*/
+
+    @Autowired
+    private PortailRepository portailRepository;
 
     private int longueurPage;
 
@@ -44,24 +52,24 @@ public class IndexationSolrPortail extends IndexationSolr {
     }
 
     //@Transactional(transactionManager="portailTransactionManager")
-    public boolean indexation(int iddoc, String doc, String texte, String dateInsertion) throws Exception {
+    public boolean indexation(int iddoc, String texte, String dateInsertion) throws Exception {
 
         boolean res = false;
+        String tef = "";
         try {
-            setUrlSolr(urlSolrPortailp);
-            setUrlSolrPersonne(urlSolrPersonnep);
-            setUrlSolrHighlight(urlSolrHighlightp);
-            setCheminXsl(cheminXslPortail);
-            setIddoc(iddoc);
-            setTef(doc);
+            setUrlSolr(env.getProperty("urlSolrPortail"));
+            setUrlSolrPersonne(env.getProperty("urlSolrPersonne"));
+            setUrlSolrHighlight(env.getProperty("urlSolrHighlight"));
+            setCheminXsl(env.getProperty("cheminXsl.portail"));
+            tef = portailRepository.getTefByIddoc(iddoc);
             setPerimetre("tout");
             setLongueurPage(1000);
             logger.info("dateInsertion = " + dateInsertion);
-            logger.info("urlSolr = " + urlSolrPortailp);
-            logger.info("urlSolrHighlight = " + urlSolrHighlightp);
-            logger.info("urlSolrPersonne = " + urlSolrPersonnep);
+            logger.info("urlSolr = " + env.getProperty("urlSolrPortail"));
+            logger.info("urlSolrHighlight = " + env.getProperty("urlSolrHighlight"));
+            logger.info("urlSolrPersonne = " +env.getProperty("urlSolrHighlight"));
 
-            if (indexerDansSolr(this.getTef(), this.getIddoc(), texte, dateInsertion ,1, perimetre, longueurPage)) {
+            if (indexerDansSolr(tef, iddoc, texte, dateInsertion ,1, perimetre, longueurPage)) {
                 res = true;
             }
             logger.info("res dans indexation = " + res);
@@ -76,9 +84,9 @@ public class IndexationSolrPortail extends IndexationSolr {
 
         boolean res = false;
         try {
-            setUrlSolr(urlSolrPortailp);
-            setUrlSolrPersonne(urlSolrPersonnep);
-            setUrlSolrHighlight(urlSolrHighlightp);
+            setUrlSolr(env.getProperty("urlSolrPortail"));
+            setUrlSolrPersonne(env.getProperty("urlSolrPersonne"));
+            setUrlSolrHighlight(env.getProperty("urlSolrHighlight"));
 
             if (supprimeDeSolr(iddoc)) {
                 res = true;

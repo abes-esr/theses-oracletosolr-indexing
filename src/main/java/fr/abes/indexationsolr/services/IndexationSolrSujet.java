@@ -1,9 +1,11 @@
 package fr.abes.indexationsolr.services;
 
 
+import fr.abes.indexationsolr.sujets.repositories.SujetsRepository;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 
@@ -12,11 +14,18 @@ public class IndexationSolrSujet extends IndexationSolr {
 
     private Logger logger = LogManager.getLogger(IndexationSolrSujet.class);
 
-    @Value("${urlSolrSujets}")
+    /*@Value("${urlSolrSujets}")
     private String urlSolrSujets;
 
     @Value("${cheminXsl.sujets}")
-    private String cheminXslSujets;
+    private String cheminXslSujets;*/
+
+
+    @Autowired
+    private Environment env;
+
+    @Autowired
+    private SujetsRepository sujetsRepository;
 
 
     IndexationSolrSujet() {
@@ -24,15 +33,16 @@ public class IndexationSolrSujet extends IndexationSolr {
     }
 
     //@Transactional(transactionManager="sujetsTransactionManager")
-    public boolean indexation(int iddoc, String doc) throws Exception {
+    public boolean indexation(int iddoc) throws Exception {
 
         boolean res = false;
         try {
-            setUrlSolr(urlSolrSujets);
-            setCheminXsl(cheminXslSujets);
+            setUrlSolr(env.getProperty("urlSolrSujets"));
+            setCheminXsl(env.getProperty("cheminXsl.sujets"));
+            logger.info("env.getProperty cheminXsl.sujets = " + env.getProperty("cheminXsl.sujets"));
             setIddoc(iddoc);
-            setTef(doc);
-            if (indexerDansSolr(this.getIddoc(), this.getTef())) {
+            setTef(sujetsRepository.getTefByIddoc(iddoc));
+            if (indexerDansSolr(this.getIddoc(),this.getTef())) {
                 res = true;
             }
             logger.info("res dans indexation = " + res);
@@ -47,8 +57,8 @@ public class IndexationSolrSujet extends IndexationSolr {
 
         boolean res = false;
         try {
-            setUrlSolr(urlSolrSujets);
-            setCheminXsl(cheminXslSujets);
+            setUrlSolr(env.getProperty("urlSolrSujets"));
+            setCheminXsl(env.getProperty("cheminXsl.sujets"));
             setIddoc(iddoc);
             if (supprimerDeSolr(this.getIddoc())) {
                 res = true;

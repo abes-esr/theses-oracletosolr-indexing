@@ -1,8 +1,10 @@
 package fr.abes.indexationsolr.services;
 
+import fr.abes.indexationsolr.star.repositories.StarRepository;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 
@@ -12,11 +14,17 @@ public class IndexationSolrStar extends IndexationSolr {
     //private Logger logger = Logger.getLogger(IndexationSolrStar.class);
     private Logger logger = LogManager.getLogger(IndexationSolrStar.class);
 
-    @Value("${urlSolrStar}")
+    @Autowired
+    private Environment env;
+
+    /*@Value("${urlSolrStar}")
     private String urlSolrStar;
 
     @Value("${cheminXsl.star}")
-    private String cheminXslStar;
+    private String cheminXslStar;*/
+
+    @Autowired
+    private StarRepository starRepository;
 
 
     IndexationSolrStar() {
@@ -24,14 +32,15 @@ public class IndexationSolrStar extends IndexationSolr {
     }
 
     //@Transactional(transactionManager="starTransactionManager")
-    public boolean indexation(int iddoc, String doc) throws Exception {
+    public boolean indexation(int iddoc) throws Exception {
 
         boolean res = false;
+        String tef = "";
         try {
-            setUrlSolr(urlSolrStar);
-            setCheminXsl(cheminXslStar);
+            setUrlSolr(env.getProperty("urlSolrStar"));
+            setCheminXsl(env.getProperty("cheminXsl.star"));
             setIddoc(iddoc);
-            setTef(doc);
+            setTef(starRepository.getTefByIddoc(iddoc));
             if (indexerDansSolr(this.getIddoc(), this.getTef())) {
                 res = true;
             }
@@ -47,8 +56,8 @@ public class IndexationSolrStar extends IndexationSolr {
 
         boolean res = false;
         try {
-            setUrlSolr(urlSolrStar);
-            setCheminXsl(cheminXslStar);
+            setUrlSolr(env.getProperty("urlSolrStar"));
+            setCheminXsl(env.getProperty("cheminXsl.star"));
             if (supprimerDeSolr(iddoc)) {
                 res = true;
             }
