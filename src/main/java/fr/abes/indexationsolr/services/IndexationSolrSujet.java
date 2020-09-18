@@ -1,15 +1,18 @@
 package fr.abes.indexationsolr.services;
 
 
+import fr.abes.indexationsolr.sujets.repositories.DocIndexationRepository;
 import fr.abes.indexationsolr.sujets.repositories.SujetsRepository;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 
-@Service
+@Component("IndexationSolrSujet")
 public class IndexationSolrSujet extends IndexationSolr {
 
     private Logger logger = LogManager.getLogger(IndexationSolrSujet.class);
@@ -27,6 +30,9 @@ public class IndexationSolrSujet extends IndexationSolr {
     @Autowired
     private SujetsRepository sujetsRepository;
 
+    @Autowired
+    private DocIndexationRepository docIndexationRepository;
+
 
     IndexationSolrSujet() {
         super();
@@ -34,14 +40,14 @@ public class IndexationSolrSujet extends IndexationSolr {
 
     //@Transactional(transactionManager="sujetsTransactionManager")
     public boolean indexation() throws Exception {
-
         boolean res = false;
         try {
             logger.info(("this.getIddoc()" + this.getIddoc()));
             setUrlSolr(env.getProperty("urlSolrSujets"));
             setCheminXsl(env.getProperty("cheminXsl.sujets"));
             logger.info("env.getProperty cheminXsl.sujets = " + env.getProperty("cheminXsl.sujets"));
-            setTef(sujetsRepository.getTefByIddoc(this.getIddoc()));
+            setTef(docIndexationRepository.getTefByIddoc(this.getIddoc()));
+            logger.info(("this.getTef()" + this.getTef()));
             if (indexerDansSolr(this.getIddoc(),this.getTef())) {
                 res = true;
             }

@@ -23,7 +23,7 @@ import org.springframework.web.filter.CommonsRequestLoggingFilter;
 public class IndexationsolrApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(IndexationsolrApplication.class, args);
+        ApplicationContext ctx = SpringApplication.run(IndexationsolrApplication.class, args);
     }
 
 

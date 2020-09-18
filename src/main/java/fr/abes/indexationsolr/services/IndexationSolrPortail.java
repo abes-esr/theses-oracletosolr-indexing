@@ -55,13 +55,13 @@ public class IndexationSolrPortail extends IndexationSolr {
     public boolean indexation() throws Exception {
 
         boolean res = false;
-        String tef = "";
         try {
             setUrlSolr(env.getProperty("urlSolrPortail"));
             setUrlSolrPersonne(env.getProperty("urlSolrPersonne"));
             setUrlSolrHighlight(env.getProperty("urlSolrHighlight"));
             setCheminXsl(env.getProperty("cheminXsl.portail"));
             setTef(portailRepository.getTefByIddoc(this.getIddoc()));
+            logger.info(("this.getTef()" + this.getTef()));
             setPerimetre("tout");
             setLongueurPage(1000);
             logger.info("dateInsertion = " + this.getDateInsertion());
@@ -69,7 +69,7 @@ public class IndexationSolrPortail extends IndexationSolr {
             logger.info("urlSolrHighlight = " + env.getProperty("urlSolrHighlight"));
             logger.info("urlSolrPersonne = " +env.getProperty("urlSolrHighlight"));
 
-            if (indexerDansSolr(tef, this.getIddoc(), this.getTexte(), this.getDateInsertion() ,1, perimetre, longueurPage)) {
+            if (indexerDansSolr(this.getTef(), this.getIddoc(), this.getTexte(), this.getDateInsertion() ,1, perimetre, longueurPage)) {
                 res = true;
             }
             logger.info("res dans indexation = " + res);

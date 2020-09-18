@@ -40,6 +40,7 @@ public class IndexationSolrStar extends IndexationSolr {
             setUrlSolr(env.getProperty("urlSolrStar"));
             setCheminXsl(env.getProperty("cheminXsl.star"));
             setTef(starRepository.getTefByIddoc(this.getIddoc()));
+            logger.info(("this.getTef()" + this.getTef()));
             if (indexerDansSolr(this.getIddoc(), this.getTef())) {
                 res = true;
             }
