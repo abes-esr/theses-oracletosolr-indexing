@@ -1,3 +1,4 @@
+/*
 package fr.abes.indexationsolr.config;
 
 import fr.abes.indexationsolr.services.IndexationInterceptor;
@@ -14,6 +15,8 @@ public class InterceptorConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry)
     {
-        registry.addInterceptor(new IndexationInterceptor());
+        String pathPattern = "/LaunchingIndexationSolr/**";
+        registry.addInterceptor(new IndexationInterceptor()).excludePathPatterns(pathPattern);
     }
 }
+*/

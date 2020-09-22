@@ -1,22 +1,28 @@
 package fr.abes.indexationsolr.controller;
 
 import fr.abes.indexationsolr.services.*;
+import fr.abes.indexationsolr.sujets.repositories.SujetsRepository;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
+
+import javax.servlet.http.HttpServletResponse;
 
 
 @RestController
 @Getter
 @Setter
 public class IndexationSolrController {
+
+    //https://stackoverflow.com/questions/32072255/how-to-send-response-before-actions-in-spring-mvc
 
     private Logger logger = LogManager.getLogger(IndexationSolrController.class);
 
@@ -29,18 +35,36 @@ public class IndexationSolrController {
     @Autowired
     private IndexationSolrPortail indexationSolrPortail;
 
-    @Autowired
-    IndexationInterceptor indexationInterceptor;
+
 
 
     @PostMapping("/SetIddoc")
-    public ResponseEntity<ResponseMessage> indexation(Model model, @RequestParam("iddoc") String iddocs, @RequestParam("contexte") String contexte) throws Exception {
+    public void setIddocAndContext(@RequestParam("iddoc") String iddocsujet, @RequestParam("contexte") String contexte, HttpServletResponse response) throws Exception {
 
-        ///logger.info("indexationSolrController - indexation début " + indexation);
+
+        int code = (iddocsujet!=null && !iddocsujet.isEmpty()) ? HttpServletResponse.SC_OK
+                : HttpServletResponse.SC_NOT_FOUND;
+        if (code != HttpServletResponse.SC_OK) {
+            response.sendError(code, "ok");
+            return;
+        }
+        java.io.PrintWriter wr = response.getWriter();
+        response.setStatus(code);
+        wr.print("ok");
+        wr.flush();
+        wr.close();
+
+
+        launchingIndexationSolr(iddocsujet,contexte);
+
+
+
+
+        /*///logger.info("indexationSolrController - indexation début " + indexation);
         String message = "";
         //JSONObject indexationJson = new JSONObject(indexation);
         //String contexte = indexationJson.getString("contexte");
-        int iddoc = Integer.parseInt(iddocs);
+        int iddoc = Integer.parseInt(iddocsujet);
 
 
         logger.info("contexte = " + contexte);
@@ -51,8 +75,9 @@ public class IndexationSolrController {
 
         if(contexte.contains("sujets")) {
             logger.info("indexation contexte sujets");
-            indexationSolrSujet.setIddoc(iddoc);
-            model.addAttribute("indexationSolrSujet",indexationSolrSujet);
+            //indexationSolrSujet.setIddoc(iddoc);
+
+
             //indexationInterceptor.setContexte("sujets");
             //indexationInterceptor.setIndexationSolrSujet(indexationSolrSujet);
             //if (indexationSolrSujet.getIddoc()!=0) indexationSolrSujet.indexation();
@@ -96,15 +121,22 @@ public class IndexationSolrController {
             logger.info("indexation " + contexte + " iddoc " + iddoc + " = " + res);
             message = "setIddoc ko ";
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
-        }
+        }*/
+
     }
-    @GetMapping("/LaunchingIndexationSolr")
-    public static boolean launchingIndexationSujets(IndexationSolrSujet indexationSolrSujet) throws Exception {
+    //@GetMapping("/LaunchingIndexationSolr")
+
+    public void launchingIndexationSolr(String iddocsujet, String contexte) throws Exception {
         //logger.info("indexationSolrController - /LaunchingIndexationSolr " );
-        boolean res = false;
+        //boolean res = false;
         //logger.info("indexationSolrSujet.getIddoc() = " + indexationSolrSujet.getIddoc());
-        if (indexationSolrSujet.getIddoc()!=0) indexationSolrSujet.indexation();
-        return res;
+        logger.info("thread sleep beginning");
+        Thread.sleep(20000);
+        logger.info("thread sleep ending");
+        int iddoc = Integer.parseInt(iddocsujet);
+        indexationSolrSujet.setIddoc(iddoc);
+        indexationSolrSujet.indexation();
+        //return res;
     }
 
     @RequestMapping(method = RequestMethod.POST, value="/GetSuppressionSolr")

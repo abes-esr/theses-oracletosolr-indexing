@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 
-@Component("IndexationSolrSujet")
+@Service
 public class IndexationSolrSujet extends IndexationSolr {
 
     private Logger logger = LogManager.getLogger(IndexationSolrSujet.class);
@@ -30,8 +30,8 @@ public class IndexationSolrSujet extends IndexationSolr {
     @Autowired
     private SujetsRepository sujetsRepository;
 
-    @Autowired
-    private DocIndexationRepository docIndexationRepository;
+    /*@Autowired
+    private DocIndexationRepository docIndexationRepository;*/
 
 
     IndexationSolrSujet() {
@@ -43,11 +43,14 @@ public class IndexationSolrSujet extends IndexationSolr {
         boolean res = false;
         try {
             logger.info(("this.getIddoc()" + this.getIddoc()));
+            logger.info(env.getProperty("urlSolrSujets"));
+            logger.info(env.getProperty("cheminXsl.sujets"));
             setUrlSolr(env.getProperty("urlSolrSujets"));
             setCheminXsl(env.getProperty("cheminXsl.sujets"));
             logger.info("env.getProperty cheminXsl.sujets = " + env.getProperty("cheminXsl.sujets"));
-            setTef(docIndexationRepository.getTefByIddoc(this.getIddoc()));
-            logger.info(("this.getTef()" + this.getTef()));
+            logger.info("Tef = " + sujetsRepository.getTefByIddoc(this.getIddoc()));
+            this.setTef(sujetsRepository.getTefByIddoc(this.getIddoc()));
+
             if (indexerDansSolr(this.getIddoc(),this.getTef())) {
                 res = true;
             }
