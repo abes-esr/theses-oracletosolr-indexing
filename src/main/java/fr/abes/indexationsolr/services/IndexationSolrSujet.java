@@ -17,21 +17,12 @@ public class IndexationSolrSujet extends IndexationSolr {
 
     private Logger logger = LogManager.getLogger(IndexationSolrSujet.class);
 
-    /*@Value("${urlSolrSujets}")
-    private String urlSolrSujets;
-
-    @Value("${cheminXsl.sujets}")
-    private String cheminXslSujets;*/
-
 
     @Autowired
     private Environment env;
 
     @Autowired
     private SujetsRepository sujetsRepository;
-
-    /*@Autowired
-    private DocIndexationRepository docIndexationRepository;*/
 
 
     IndexationSolrSujet() {

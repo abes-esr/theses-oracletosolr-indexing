@@ -1,4 +1,5 @@
 /*
+
 package fr.abes.indexationsolr.config;
 
 import fr.abes.indexationsolr.services.IndexationInterceptor;
@@ -19,4 +20,5 @@ public class InterceptorConfig implements WebMvcConfigurer {
         registry.addInterceptor(new IndexationInterceptor()).excludePathPatterns(pathPattern);
     }
 }
+
 */

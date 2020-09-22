@@ -17,12 +17,6 @@ public class IndexationSolrStar extends IndexationSolr {
     @Autowired
     private Environment env;
 
-    /*@Value("${urlSolrStar}")
-    private String urlSolrStar;
-
-    @Value("${cheminXsl.star}")
-    private String cheminXslStar;*/
-
     @Autowired
     private StarRepository starRepository;
 

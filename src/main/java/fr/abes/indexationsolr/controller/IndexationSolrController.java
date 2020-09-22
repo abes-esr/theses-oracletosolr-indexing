@@ -15,6 +15,7 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 
 @RestController
@@ -35,17 +36,11 @@ public class IndexationSolrController {
     @Autowired
     private IndexationSolrPortail indexationSolrPortail;
 
-
-
-
-    @PostMapping("/SetIddoc")
-    public void setIddocAndContext(@RequestParam("iddoc") String iddocsujet, @RequestParam("contexte") String contexte, HttpServletResponse response) throws Exception {
-
-
-        int code = (iddocsujet!=null && !iddocsujet.isEmpty()) ? HttpServletResponse.SC_OK
+    public void getResponseCode(String iddocparam, String contexte, HttpServletResponse response) throws IOException {
+        int code = (iddocparam!=null && !iddocparam.isEmpty() && contexte!=null && !contexte.isEmpty()) ? HttpServletResponse.SC_OK
                 : HttpServletResponse.SC_NOT_FOUND;
         if (code != HttpServletResponse.SC_OK) {
-            response.sendError(code, "ok");
+            response.sendError(code, "ko");
             return;
         }
         java.io.PrintWriter wr = response.getWriter();
@@ -54,90 +49,84 @@ public class IndexationSolrController {
         wr.flush();
         wr.close();
 
+    }
 
-        launchingIndexationSolr(iddocsujet,contexte);
+    public void getResponseCodePortail(String iddocparam, String contexte, String texte, String dateInsertion, HttpServletResponse response) throws IOException {
+        int code = (iddocparam!=null && !iddocparam.isEmpty() && contexte!=null && !contexte.isEmpty()
+                    && texte!=null && !texte.isEmpty() && dateInsertion!=null && !dateInsertion.isEmpty())?
+                    HttpServletResponse.SC_OK: HttpServletResponse.SC_NOT_FOUND;
+        if (code != HttpServletResponse.SC_OK) {
+            response.sendError(code, "ko");
+            return;
+        }
+        java.io.PrintWriter wr = response.getWriter();
+        response.setStatus(code);
+        wr.print("ok");
+        wr.flush();
+        wr.close();
 
+    }
 
+    @PostMapping("/GetIndexationSolr")
+    public void indexation(@RequestParam("iddoc") String iddocparam, @RequestParam("contexte") String contexte,
+                           HttpServletResponse response) throws Exception {
 
+        //we give the response before looking for the tef
+        getResponseCode(iddocparam, contexte,response);
 
-        /*///logger.info("indexationSolrController - indexation début " + indexation);
-        String message = "";
-        //JSONObject indexationJson = new JSONObject(indexation);
-        //String contexte = indexationJson.getString("contexte");
-        int iddoc = Integer.parseInt(iddocsujet);
+        //we set iddoc and look for the tef
+        logger.info("thread sleep beginning => response already given");
+        Thread.sleep(20000);
+        logger.info("thread sleep ending");
+        int iddoc = Integer.parseInt(iddocparam);
 
-
-        logger.info("contexte = " + contexte);
-        logger.info("iddoc = " + iddoc);
-        //logger.info("doc = " + doc);
-
-        boolean res = false;
 
         if(contexte.contains("sujets")) {
             logger.info("indexation contexte sujets");
-            //indexationSolrSujet.setIddoc(iddoc);
-
-
-            //indexationInterceptor.setContexte("sujets");
-            //indexationInterceptor.setIndexationSolrSujet(indexationSolrSujet);
-            //if (indexationSolrSujet.getIddoc()!=0) indexationSolrSujet.indexation();
-
-            //logger.info("indexation sujets iddoc " + indexationSolrSujet.getIddoc());
-            //res = indexationSolrSujet.indexation();
-            //logger.info("indexation sujets iddoc " + iddoc + " = " + res);
-            //return res;
-            message = "setIddoc sujet Ok ";
-            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
+            indexationSolrSujet.setIddoc(iddoc);
+            indexationSolrSujet.indexation();
         }
         if(contexte.contains("star")) {
             logger.info("indexation contexte star");
             indexationSolrStar.setIddoc(iddoc);
-            //indexationSolrStar.setIddoc(iddoc);
-            //indexationInterceptor.setContexte("star");
-            //indexationInterceptor.setIndexationSolrStar(indexationSolrStar);
-            //res = indexationSolrStar.indexation();
-            logger.info("indexation star iddoc " + iddoc + " = " + res);
-            //return res;
-            message = "setIddoc star Ok ";
-            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
+            indexationSolrStar.indexation();
         }
-        if(contexte.contains("portail")) {
-            logger.info("indexation contexte portail");
-            //indexationSolrPortail.setIddoc(iddoc);
-            //String texte = indexationJson.getString("texte");
-            //String dateInsertion = indexationJson.getString("dateinsertion");
-            //logger.info("texte = " + texte);
-            //logger.info("dateInsertion = " + dateInsertion);
-           // indexationSolrPortail.setTexte(texte);
-           // indexationSolrPortail.setDateInsertion(dateInsertion);
-            //indexationInterceptor.setContexte("portail");
-            //indexationInterceptor.setIndexationSolrPortail(indexationSolrPortail);
-            //res = indexationSolrPortail.indexation();
-            logger.info("indexation portail iddoc " + iddoc + " = " + res);
-            message = "setIddoc portail Ok ";
-            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
-        }
-        else {
-            logger.info("indexation " + contexte + " iddoc " + iddoc + " = " + res);
-            message = "setIddoc ko ";
-            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
-        }*/
 
     }
-    //@GetMapping("/LaunchingIndexationSolr")
 
-    public void launchingIndexationSolr(String iddocsujet, String contexte) throws Exception {
-        //logger.info("indexationSolrController - /LaunchingIndexationSolr " );
-        //boolean res = false;
-        //logger.info("indexationSolrSujet.getIddoc() = " + indexationSolrSujet.getIddoc());
+    @PostMapping("/GetIndexationSolrPortail")
+    public void indexationPortail(@RequestParam("iddoc") String iddocparam, @RequestParam("contexte") String contexte,
+                           @RequestParam("texte") String texte, @RequestParam("dateInsertion") String dateInsertion,
+                           HttpServletResponse response) throws Exception {
+
+        //we give the response before looking for the tef
+        getResponseCodePortail(iddocparam,contexte,texte,dateInsertion,response);
+
+        //we set iddoc and look for the tef
+        logger.info("thread sleep beginning => response already given");
+        Thread.sleep(20000);
+        logger.info("thread sleep ending");
+        int iddoc = Integer.parseInt(iddocparam);
+        logger.info("indexation contexte portail");
+        indexationSolrPortail.setIddoc(iddoc);
+        indexationSolrPortail.setTexte(texte);
+        indexationSolrPortail.setDateInsertion(dateInsertion);
+        indexationSolrPortail.indexation();
+    }
+    /*
+    if we prefer using Spring Handler Interceptor instead of java solution, the method above is code empty
+    all the code above goes inside the interceptor or inside launchingIndexationSolr method
+    @GetMapping("/LaunchingIndexationSolr")
+    public void launchingIndexationSolr(@RequestParam("iddoc") String iddocsujet, @RequestParam("contexte") String contexte) throws Exception {
+        logger.info("iddoc" + iddocsujet);
+        logger.info("contexte" + contexte);
         logger.info("thread sleep beginning");
         Thread.sleep(20000);
         logger.info("thread sleep ending");
         int iddoc = Integer.parseInt(iddocsujet);
         indexationSolrSujet.setIddoc(iddoc);
         indexationSolrSujet.indexation();
-        //return res;
-    }
+    }*/
 
     @RequestMapping(method = RequestMethod.POST, value="/GetSuppressionSolr")
     public boolean suppression(@RequestBody String suppression) throws Exception {
