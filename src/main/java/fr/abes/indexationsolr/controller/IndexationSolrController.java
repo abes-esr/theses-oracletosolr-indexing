@@ -1,15 +1,10 @@
 package fr.abes.indexationsolr.controller;
 
 import fr.abes.indexationsolr.services.*;
-import fr.abes.indexationsolr.sujets.repositories.SujetsRepository;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
@@ -36,7 +31,7 @@ public class IndexationSolrController {
     @Autowired
     private IndexationSolrPortail indexationSolrPortail;
 
-    public void getResponseCode(String iddocparam, String contexte, HttpServletResponse response) throws IOException {
+    private void getResponseCode(String iddocparam, String contexte, HttpServletResponse response) throws IOException {
         int code = (iddocparam!=null && !iddocparam.isEmpty() && contexte!=null && !contexte.isEmpty()) ? HttpServletResponse.SC_OK
                 : HttpServletResponse.SC_NOT_FOUND;
         if (code != HttpServletResponse.SC_OK) {
@@ -51,7 +46,7 @@ public class IndexationSolrController {
 
     }
 
-    public void getResponseCodePortail(String iddocparam, String contexte, String dateInsertion, HttpServletResponse response) throws IOException {
+    private void getResponseCodePortail(String iddocparam, String contexte, String dateInsertion, HttpServletResponse response) throws IOException {
         int code = (iddocparam!=null && !iddocparam.isEmpty() && contexte!=null && !contexte.isEmpty()
                     && dateInsertion!=null && !dateInsertion.isEmpty())?
                     HttpServletResponse.SC_OK: HttpServletResponse.SC_NOT_FOUND;
@@ -75,9 +70,9 @@ public class IndexationSolrController {
         getResponseCode(iddocparam, contexte,response);
 
         //we set iddoc and look for the tef
-        logger.info("thread sleep beginning => response already given");
-        Thread.sleep(20000);
-        logger.info("thread sleep ending");
+        //logger.info("thread sleep beginning => response already given");
+        //Thread.sleep(20000);
+        //logger.info("thread sleep ending");
         int iddoc = Integer.parseInt(iddocparam);
 
 
@@ -103,13 +98,12 @@ public class IndexationSolrController {
         getResponseCodePortail(iddocparam,contexte,dateInsertion,response);
 
         //we set iddoc and look for the tef
-        logger.info("thread sleep beginning => response already given");
-        Thread.sleep(20000);
-        logger.info("thread sleep ending");
+        //logger.info("thread sleep beginning => response already given");
+        //Thread.sleep(20000);
+        //logger.info("thread sleep ending");
         int iddoc = Integer.parseInt(iddocparam);
         logger.info("indexation contexte portail");
         indexationSolrPortail.setIddoc(iddoc);
-        //indexationSolrPortail.setTexte(texte);
         indexationSolrPortail.setDateInsertion(dateInsertion);
         indexationSolrPortail.indexation();
     }

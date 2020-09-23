@@ -20,18 +20,6 @@ public class IndexationSolrPortail extends IndexationSolr {
     @Autowired
     private Environment env;
 
-    /*@Value("${urlSolrPortail}")
-    private String urlSolrPortailp;
-
-    @Value("${urlSolrHighlight}")
-    private String urlSolrHighlightp;
-
-    @Value("${urlSolrPersonne}")
-    private String urlSolrPersonnep;
-
-    @Value("${cheminXsl.portail}")
-    private String cheminXslPortail;*/
-
     @Autowired
     private PortailRepository portailRepository;
 
@@ -100,5 +88,4 @@ public class IndexationSolrPortail extends IndexationSolr {
         }
         return res;
     }
-
 }

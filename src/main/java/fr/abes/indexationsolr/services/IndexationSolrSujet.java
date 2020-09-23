@@ -1,14 +1,11 @@
 package fr.abes.indexationsolr.services;
 
 
-import fr.abes.indexationsolr.sujets.repositories.DocIndexationRepository;
 import fr.abes.indexationsolr.sujets.repositories.SujetsRepository;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 
@@ -38,7 +35,6 @@ public class IndexationSolrSujet extends IndexationSolr {
             logger.info(env.getProperty("cheminXsl.sujets"));
             setUrlSolr(env.getProperty("urlSolrSujets"));
             setCheminXsl(env.getProperty("cheminXsl.sujets"));
-            logger.info("env.getProperty cheminXsl.sujets = " + env.getProperty("cheminXsl.sujets"));
             logger.info("Tef = " + sujetsRepository.getTefByIddoc(this.getIddoc()));
             this.setTef(sujetsRepository.getTefByIddoc(this.getIddoc()));
 
@@ -70,5 +66,4 @@ public class IndexationSolrSujet extends IndexationSolr {
         }
         return res;
     }
-
 }

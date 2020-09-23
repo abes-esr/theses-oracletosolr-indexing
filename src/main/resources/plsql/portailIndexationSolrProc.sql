@@ -1,3 +1,8 @@
+--------------------------------------------------------------------------------
+-- if the project is in java 1.8 with tomcat8
+--------------------------------------------------------------------------------
+
+
 create or replace PROCEDURE indexationsolr(iddoc in number, docparam in xmltype, texteparam in clob, dateparam in varchar2)
 AS
 
@@ -100,5 +105,35 @@ BEGIN
     UTL_HTTP.end_response(l_http_response);
   WHEN others THEN
     UTL_HTTP.end_response (l_http_response);
+
+END;
+
+--------------------------------------------------------------------------------
+-- if the project is in java 11 with tomcat9
+--------------------------------------------------------------------------------
+
+create or replace PROCEDURE indexationsolr(iddoc in number, texteparam in clob, dateparam in varchar2)
+AS
+
+
+
+
+l_response clob;
+
+
+
+BEGIN
+
+    apex_web_service.g_request_headers(1).name := 'Content-Type';
+    apex_web_service.g_request_headers(1).value := 'application/json';
+
+    l_response := apex_web_service.make_rest_request(
+        p_url => 'http://cirse1-dev.v3.abes.fr:8128/indexationsolr/GetIndexationSolrPortail?iddoc='||iddoc||'&dateInsertion='||dateparam||'&contexte=portail',
+        p_http_method => 'POST');
+
+
+    DBMS_OUTPUT.PUT_LINE(l_response);
+
+
 
 END;

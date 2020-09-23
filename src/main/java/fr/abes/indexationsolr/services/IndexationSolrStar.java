@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class IndexationSolrStar extends IndexationSolr {
 
-    //private Logger logger = Logger.getLogger(IndexationSolrStar.class);
     private Logger logger = LogManager.getLogger(IndexationSolrStar.class);
 
     @Autowired
@@ -29,7 +28,6 @@ public class IndexationSolrStar extends IndexationSolr {
     public boolean indexation() throws Exception {
 
         boolean res = false;
-        String tef = "";
         try {
             setUrlSolr(env.getProperty("urlSolrStar"));
             setCheminXsl(env.getProperty("cheminXsl.star"));
