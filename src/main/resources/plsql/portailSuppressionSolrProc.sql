@@ -1,3 +1,8 @@
+---------------------------------------------------
+java1.8 tomcat8
+---------------------------------------------------
+
+
 create or replace PROCEDURE suppressionsolr(iddoc in number)
 AS
 
@@ -83,4 +88,31 @@ BEGIN
   THEN
      UTL_HTTP.end_response (l_http_response);
   END IF;
+END;
+
+---------------------------------------------------
+java11 tomcat9
+---------------------------------------------------
+
+create or replace PROCEDURE suppressionsolr(iddoc in number)
+AS
+
+l_response clob;
+
+
+
+BEGIN
+
+    apex_web_service.g_request_headers(1).name := 'Content-Type';
+    apex_web_service.g_request_headers(1).value := 'application/json';
+
+    l_response := apex_web_service.make_rest_request(
+        p_url => 'http://cirse1-dev.v3.abes.fr:8128/indexationsolr/GetSuppressionSolr?iddoc='||iddoc||'&contexte=portail',
+        p_http_method => 'POST');
+
+
+    DBMS_OUTPUT.PUT_LINE(l_response);
+
+
+
 END;

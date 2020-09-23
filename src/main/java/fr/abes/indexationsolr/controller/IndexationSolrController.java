@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
@@ -62,6 +64,21 @@ public class IndexationSolrController {
 
     }
 
+    private void getResponseSuppCode(boolean res, HttpServletResponse response) throws IOException {
+        int code = (res=true) ? HttpServletResponse.SC_OK
+                : HttpServletResponse.SC_NOT_FOUND;
+        if (code != HttpServletResponse.SC_OK) {
+            response.sendError(code, "ko");
+            return;
+        }
+        java.io.PrintWriter wr = response.getWriter();
+        response.setStatus(code);
+        wr.print("ok");
+        wr.flush();
+        wr.close();
+
+    }
+
     @PostMapping("/GetIndexationSolr")
     public void indexation(@RequestParam("iddoc") String iddocparam, @RequestParam("contexte") String contexte,
                            HttpServletResponse response) throws Exception {
@@ -81,7 +98,7 @@ public class IndexationSolrController {
             indexationSolrSujet.setIddoc(iddoc);
             indexationSolrSujet.indexation();
         }
-        if(contexte.contains("star")) {
+        else {
             logger.info("indexation contexte star");
             indexationSolrStar.setIddoc(iddoc);
             indexationSolrStar.indexation();
@@ -122,39 +139,29 @@ public class IndexationSolrController {
         indexationSolrSujet.indexation();
     }*/
 
-    @RequestMapping(method = RequestMethod.POST, value="/GetSuppressionSolr")
-    public boolean suppression(@RequestBody String suppression) throws Exception {
+    @PostMapping("/GetSuppressionSolr")
+    public ResponseEntity<String> suppression(@RequestParam("iddoc") String iddocparam, @RequestParam("contexte") String contexte,
+                                                      HttpServletResponse response) throws Exception {
 
-        logger.info("suppressionSolrController - suppression début " + suppression);
-
-        JSONObject supressionJson = new JSONObject(suppression);
-        String contexte = supressionJson.getString("contexte");
-        int iddoc = Integer.parseInt(supressionJson.getString("iddoc"));
-        logger.info("contexte = " + contexte);
-        logger.info("iddoc = " + iddoc);
         boolean res = false;
+
+        //we do the removing operation
+        int iddoc = Integer.parseInt(iddocparam);
 
         if(contexte.contains("sujets")) {
             logger.info("supression contexte sujets");
             res = indexationSolrSujet.suppression(iddoc);
-            logger.info("suppression sujets iddoc " + iddoc + " = " + res);
-            return res;
         }
         if(contexte.contains("star")) {
             logger.info("supression contexte star");
             res = indexationSolrStar.suppression(iddoc);
-            logger.info("suppression star iddoc " + iddoc + " = " + res);
-            return res;
         }
         if(contexte.contains("portail")){
             logger.info("supression contexte portail");
             res = indexationSolrPortail.suppression(iddoc);
-            logger.info("suppression portail iddoc " + iddoc + " = " + res);
         }
-        else {
-            logger.info("suppression " + contexte + " iddoc " + iddoc + " = " + res);
-        }
-        return res;
+        if (res = true) return ResponseEntity.status(HttpStatus.OK).body("OK");
+        else return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("KO");
     }
 
 }
