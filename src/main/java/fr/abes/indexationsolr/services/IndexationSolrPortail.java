@@ -61,7 +61,9 @@ public class IndexationSolrPortail extends IndexationSolr {
             setUrlSolrHighlight(env.getProperty("urlSolrHighlight"));
             setCheminXsl(env.getProperty("cheminXsl.portail"));
             setTef(portailRepository.getTefByIddoc(this.getIddoc()));
+            setTexte(portailRepository.getTexteByIddoc(this.getIddoc()));
             logger.info(("this.getTef()" + this.getTef()));
+            logger.info(("this.getTexte()" + this.getTexte()));
             setPerimetre("tout");
             setLongueurPage(1000);
             logger.info("dateInsertion = " + this.getDateInsertion());

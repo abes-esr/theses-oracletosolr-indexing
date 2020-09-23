@@ -17,7 +17,7 @@ public interface PortailRepository extends JpaRepository<DocumentPortail, Intege
     public String getTefByIddoc(@Param("x") int iddoc);
 
     @Query("select p.texte from DocumentPortail p where p.iddoc like :x")
-    public Clob getTexteByIddoc(@Param("x") int iddoc);
+    public String getTexteByIddoc(@Param("x") int iddoc);
 
     @Query("select case when count(p) > 0 then true else false end from DocumentPortail p where p.nnt is null and p.numsujet = :numSujet")
     boolean verifNntIsNull(@Param("numSujet") String numSujet);

@@ -51,9 +51,9 @@ public class IndexationSolrController {
 
     }
 
-    public void getResponseCodePortail(String iddocparam, String contexte, String texte, String dateInsertion, HttpServletResponse response) throws IOException {
+    public void getResponseCodePortail(String iddocparam, String contexte, String dateInsertion, HttpServletResponse response) throws IOException {
         int code = (iddocparam!=null && !iddocparam.isEmpty() && contexte!=null && !contexte.isEmpty()
-                    && texte!=null && !texte.isEmpty() && dateInsertion!=null && !dateInsertion.isEmpty())?
+                    && dateInsertion!=null && !dateInsertion.isEmpty())?
                     HttpServletResponse.SC_OK: HttpServletResponse.SC_NOT_FOUND;
         if (code != HttpServletResponse.SC_OK) {
             response.sendError(code, "ko");
@@ -96,11 +96,11 @@ public class IndexationSolrController {
 
     @PostMapping("/GetIndexationSolrPortail")
     public void indexationPortail(@RequestParam("iddoc") String iddocparam, @RequestParam("contexte") String contexte,
-                           @RequestParam("texte") String texte, @RequestParam("dateInsertion") String dateInsertion,
+                           @RequestParam("dateInsertion") String dateInsertion,
                            HttpServletResponse response) throws Exception {
 
         //we give the response before looking for the tef
-        getResponseCodePortail(iddocparam,contexte,texte,dateInsertion,response);
+        getResponseCodePortail(iddocparam,contexte,dateInsertion,response);
 
         //we set iddoc and look for the tef
         logger.info("thread sleep beginning => response already given");
@@ -109,7 +109,7 @@ public class IndexationSolrController {
         int iddoc = Integer.parseInt(iddocparam);
         logger.info("indexation contexte portail");
         indexationSolrPortail.setIddoc(iddoc);
-        indexationSolrPortail.setTexte(texte);
+        //indexationSolrPortail.setTexte(texte);
         indexationSolrPortail.setDateInsertion(dateInsertion);
         indexationSolrPortail.indexation();
     }

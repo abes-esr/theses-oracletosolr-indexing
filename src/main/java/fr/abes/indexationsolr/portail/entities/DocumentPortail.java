@@ -30,7 +30,7 @@ public class DocumentPortail implements Serializable{
     private String doc;
 
     @Column(name = "TEXTE")
-    private Clob texte;
+    private String texte;
 
     @Column(name = "CODEETAB")
     private String codeEtab;
@@ -51,7 +51,7 @@ public class DocumentPortail implements Serializable{
     private Integer envoiSolr;
 
 
-    public DocumentPortail(Integer iddoc, String nnt, String doc, Clob texte, String codeEtab, Date dateinsertion, Date datediffusion, String droits, String numsujet, Integer envoiSolr) {
+    public DocumentPortail(Integer iddoc, String nnt, String doc, String texte, String codeEtab, Date dateinsertion, Date datediffusion, String droits, String numsujet, Integer envoiSolr) {
         this.iddoc = iddoc;
         this.nnt = nnt;
         this.doc = doc;
