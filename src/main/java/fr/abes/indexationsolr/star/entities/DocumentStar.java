@@ -22,7 +22,6 @@ public class DocumentStar implements Serializable{
     @ColumnTransformer(read = "NVL2(DOC, (DOC).getClobVal(), NULL)", write = "NULLSAFE_XMLTYPE(?)")
     @Lob
     @Column(name = "DOC")
-    //@Basic(fetch = FetchType.LAZY) ==> à voir si necessaire cf:https://dzone.com/articles/50-best-performance-practices-for-hibernate-5-amp
     private String doc;
 
     @Column(name = "TEXTE")

@@ -2,7 +2,6 @@ package fr.abes.indexationsolr.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import fr.abes.indexationsolr.controller.IndexationSolrController;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,15 +70,6 @@ public class PortailConfig
         config.setLeakDetectionThreshold(40000);
         config.setValidationTimeout(2500);
         config.setConnectionTestQuery("SELECT 1 FROM DUAL");
-
-        //ces propriétés ne sont pas définies dans oracle.jdbc.pool.OracleDataSource
-        //par contre sont ok qd on utilise driver class name
-        //config.addDataSourceProperty("validationInterval", env.getProperty("portail.datasource.validationInterval"));
-        //config.addDataSourceProperty("testOnBorrow", env.getProperty("portail.datasource.testOnBorrow"));
-        //config.addDataSourceProperty("testWhileIdle", env.getProperty("portail.datasource.testWhileIdle"));
-        //config.addDataSourceProperty("testOnReturn", env.getProperty("portail.datasource.testOnReturn"));
-        //config.addDataSourceProperty("timeBetweenEvictionRunsMillis", env.getProperty("portail.datasource.timeBetweenEvictionRunsMillis"));
-        //config.addDataSourceProperty("validationQuery", env.getProperty("portail.datasource.validationQuery"));
         config.addDataSourceProperty("implicitCachingEnabled", "true"); //spec oracle
         config.addDataSourceProperty("maxStatements", "250"); //spec oracle
         return new HikariDataSource(config);

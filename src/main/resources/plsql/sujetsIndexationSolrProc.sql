@@ -129,7 +129,7 @@ BEGIN
 
     l_response := apex_web_service.make_rest_request(
         p_url => 'http://cirse1-dev.v3.abes.fr:8128/indexationsolr/GetIndexationSolr?iddoc='||iddoc||'&contexte=sujets',
-        p_http_method => 'POST');
+        p_http_method => 'GET');
 
 
     DBMS_OUTPUT.PUT_LINE(l_response);

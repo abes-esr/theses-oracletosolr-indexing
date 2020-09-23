@@ -4,10 +4,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnTransformer;
-
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Clob;
 import java.util.Date;
 
 @Entity

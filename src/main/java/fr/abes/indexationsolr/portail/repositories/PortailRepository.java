@@ -8,7 +8,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Clob;
 
 @Repository
 public interface PortailRepository extends JpaRepository<DocumentPortail, Integer> {
