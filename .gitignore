@@ -1,0 +1,33 @@
+# Default ignored files
+/.idea/workspace.xml
+
+/target/
+**/target/**
+.target
+### LOG ###
+*.log
+**/logs/**git 
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+/build/
+
+##
+#**/*.properties
+**/hibernate.cfg.xml
