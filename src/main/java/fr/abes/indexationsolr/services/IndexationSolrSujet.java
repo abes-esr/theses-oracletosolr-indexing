@@ -35,15 +35,15 @@ public class IndexationSolrSujet extends IndexationSolr {
             logger.info(env.getProperty("cheminXsl.sujets"));
             setUrlSolr(env.getProperty("urlSolrSujets"));
             setCheminXsl(env.getProperty("cheminXsl.sujets"));
-            logger.info("Tef = " + sujetsRepository.getTefByIddoc(this.getIddoc()));
             this.setTef(sujetsRepository.getTefByIddoc(this.getIddoc()));
+            logger.info(("sujets this.getTef() =" + this.getTef()));
 
             if (indexerDansSolr(this.getIddoc(),this.getTef())) {
                 res = true;
             }
-            logger.info("res dans indexation = " + res);
+            logger.info("res dans indexation sujets = " + res);
         } catch (Exception e) {
-            logger.info("Erreur dans indexation :"+e.getMessage());
+            logger.info("Erreur dans indexation sujets :"+e.getMessage());
             throw new Exception(e);
         }
         return res;
@@ -59,9 +59,9 @@ public class IndexationSolrSujet extends IndexationSolr {
             if (supprimerDeSolr(this.getIddoc())) {
                 res = true;
             }
-            logger.info("res dans suppression = " + res);
+            logger.info("res dans suppression sujets = " + res);
         } catch (Exception e) {
-            logger.info("Erreur dans suppression :"+e.getMessage());
+            logger.info("Erreur dans suppression sujets :"+e.getMessage());
             throw new Exception(e);
         }
         return res;

@@ -50,21 +50,21 @@ public class IndexationSolrPortail extends IndexationSolr {
             setCheminXsl(env.getProperty("cheminXsl.portail"));
             setTef(portailRepository.getTefByIddoc(this.getIddoc()));
             setTexte(portailRepository.getTexteByIddoc(this.getIddoc()));
-            logger.info(("this.getTef()" + this.getTef()));
-            logger.info(("this.getTexte()" + this.getTexte()));
+            logger.info(("portail this.getTef() =" + this.getTef()));
+            logger.info(("portail this.getTexte() =" + this.getTexte()));
             setPerimetre("tout");
             setLongueurPage(1000);
-            logger.info("dateInsertion = " + this.getDateInsertion());
-            logger.info("urlSolr = " + env.getProperty("urlSolrPortail"));
-            logger.info("urlSolrHighlight = " + env.getProperty("urlSolrHighlight"));
-            logger.info("urlSolrPersonne = " +env.getProperty("urlSolrHighlight"));
+            logger.info("portail dateInsertion = " + this.getDateInsertion());
+            logger.info("portail urlSolr = " + env.getProperty("urlSolrPortail"));
+            logger.info("portail urlSolrHighlight = " + env.getProperty("urlSolrHighlight"));
+            logger.info("portail urlSolrPersonne = " +env.getProperty("urlSolrHighlight"));
 
             if (indexerDansSolr(this.getTef(), this.getIddoc(), this.getTexte(), this.getDateInsertion() ,1, perimetre, longueurPage)) {
                 res = true;
             }
-            logger.info("res dans indexation = " + res);
+            logger.info("res dans indexation portail = " + res);
         } catch (Exception e) {
-            logger.info("Erreur dans indexation :"+e.getMessage());
+            logger.info("Erreur dans indexation portail:"+e.getMessage());
             throw new Exception(e);
         }
         return res;
@@ -81,9 +81,9 @@ public class IndexationSolrPortail extends IndexationSolr {
             if (supprimeDeSolr(iddoc)) {
                 res = true;
             }
-            logger.info("res dans suppression = " + res);
+            logger.info("res dans suppression portail= " + res);
         } catch (Exception e) {
-            logger.info("Erreur dans suppression :"+e.getMessage());
+            logger.info("Erreur dans suppression portail:"+e.getMessage());
             throw new Exception(e);
         }
         return res;

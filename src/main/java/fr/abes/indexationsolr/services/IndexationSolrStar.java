@@ -28,17 +28,25 @@ public class IndexationSolrStar extends IndexationSolr {
     public boolean indexation() throws Exception {
 
         boolean res = false;
+        String tef;
+        boolean tefInitialisation = false;
         try {
             setUrlSolr(env.getProperty("urlSolrStar"));
             setCheminXsl(env.getProperty("cheminXsl.star"));
-            setTef(starRepository.getTefByIddoc(this.getIddoc()));
-            logger.info(("this.getTef()" + this.getTef()));
+            do {
+                tef = starRepository.getTefByIddoc(this.getIddoc());
+                tefInitialisation = tef.contains("RECORDSTATUS=\"initialisation\"");
+            }while (tefInitialisation);
+
+            setTef(tef);
+            //logger.info(("star this.getTef() =" + this.getTef()));
+            logger.info("tef star = " + tef);
             if (indexerDansSolr(this.getIddoc(), this.getTef())) {
                 res = true;
             }
-            logger.info("res dans indexation = " + res);
+            logger.info("res dans indexation star= " + res);
         } catch (Exception e) {
-            logger.info("Erreur dans indexation :"+e.getMessage());
+            logger.info("Erreur dans indexation star :"+e.getMessage());
             throw new Exception(e);
         }
         return res;
@@ -53,9 +61,9 @@ public class IndexationSolrStar extends IndexationSolr {
             if (supprimerDeSolr(iddoc)) {
                 res = true;
             }
-            logger.info("res dans suppression = " + res);
+            logger.info("res dans suppression star = " + res);
         } catch (Exception e) {
-            logger.info("Erreur dans suppression :"+e.getMessage());
+            logger.info("Erreur dans suppression star :"+e.getMessage());
             throw new Exception(e);
         }
         return res;
