@@ -35,7 +35,7 @@ public class IndexationSolrStar extends IndexationSolr {
             setCheminXsl(env.getProperty("cheminXsl.star"));
             do {
                 tef = starRepository.getTefByIddoc(this.getIddoc());
-                tefInitialisation = tef.contains("RECORDSTATUS=\"initialisation\"");
+                tefInitialisation = (tef.contains("RECORDSTATUS=\"initialisation\"") || tef.contains("RECORDSTATUS=\"EnCours\"") || tef == null );
             }while (tefInitialisation);
 
             setTef(tef);
