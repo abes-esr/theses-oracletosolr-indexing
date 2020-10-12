@@ -29,19 +29,23 @@ public class IndexationSolrSujet extends IndexationSolr {
     //@Transactional(transactionManager="sujetsTransactionManager")
     public boolean indexation() throws Exception {
         boolean res = false;
+        String tef;
+        boolean tefInitialisation = false;
         try {
-            logger.info(("this.getIddoc()" + this.getIddoc()));
-            logger.info(env.getProperty("urlSolrSujets"));
-            logger.info(env.getProperty("cheminXsl.sujets"));
             setUrlSolr(env.getProperty("urlSolrSujets"));
             setCheminXsl(env.getProperty("cheminXsl.sujets"));
-            this.setTef(sujetsRepository.getTefByIddoc(this.getIddoc()));
-            logger.info(("sujets this.getTef() =" + this.getTef()));
+            do {
+                tef = sujetsRepository.getTefByIddoc(this.getIddoc());
+                tefInitialisation = tef.contains("RECORDSTATUS=\"initialisation\"");
+            }while (tefInitialisation);
 
-            if (indexerDansSolr(this.getIddoc(),this.getTef())) {
+            setTef(tef);
+            //logger.info(("star this.getTef() =" + this.getTef()));
+            logger.info("tef sujets = " + tef);
+            if (indexerDansSolr(this.getIddoc(), this.getTef())) {
                 res = true;
             }
-            logger.info("res dans indexation sujets = " + res);
+            logger.info("res dans indexation sujets= " + res);
         } catch (Exception e) {
             logger.info("Erreur dans indexation sujets :"+e.getMessage());
             throw new Exception(e);
