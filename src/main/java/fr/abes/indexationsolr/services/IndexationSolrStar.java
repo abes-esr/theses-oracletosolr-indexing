@@ -33,18 +33,23 @@ public class IndexationSolrStar extends IndexationSolr {
         try {
             setUrlSolr(env.getProperty("urlSolrStar"));
             setCheminXsl(env.getProperty("cheminXsl.star"));
-            do {
+            tef = starRepository.getTefByIddoc(this.getIddoc());
+            tefInitialisation = (tef.contains("RECORDSTATUS=\"initialisation\"") || tef.contains("RECORDSTATUS=\"EnCours\"") || tef == null );
+            if(tefInitialisation) {
+                logger.info("thread sleep star beginning");
+                Thread.sleep(1 * 60 * 1000);
+                logger.info("thread sleep star ending");
                 tef = starRepository.getTefByIddoc(this.getIddoc());
-                tefInitialisation = (tef.contains("RECORDSTATUS=\"initialisation\"") || tef.contains("RECORDSTATUS=\"EnCours\"") || tef == null );
-            }while (tefInitialisation);
-
-            setTef(tef);
+            }
+            else {
+                setTef(tef);
+            }
             //logger.info(("star this.getTef() =" + this.getTef()));
             logger.info("tef star = " + tef);
             if (indexerDansSolr(this.getIddoc(), this.getTef())) {
                 res = true;
             }
-            logger.info("res dans indexation star= " + res);
+            logger.info("res dans indexation star = " + res);
         } catch (Exception e) {
             logger.info("Erreur dans indexation star :"+e.getMessage());
             throw new Exception(e);

@@ -34,12 +34,17 @@ public class IndexationSolrSujet extends IndexationSolr {
         try {
             setUrlSolr(env.getProperty("urlSolrSujets"));
             setCheminXsl(env.getProperty("cheminXsl.sujets"));
-            do {
+            tef = sujetsRepository.getTefByIddoc(this.getIddoc());
+            tefInitialisation = (tef.contains("RECORDSTATUS=\"initialisation\"") || tef.contains("RECORDSTATUS=\"EnCours\"") || tef == null );
+            if(tefInitialisation) {
+                logger.info("thread sleep sujets beginning");
+                Thread.sleep(1 * 60 * 1000);
+                logger.info("thread sleep sujets ending");
                 tef = sujetsRepository.getTefByIddoc(this.getIddoc());
-                tefInitialisation = (tef.contains("RECORDSTATUS=\"initialisation\"") || tef.contains("RECORDSTATUS=\"EnCours\"") || tef == null );
-            }while (tefInitialisation);
-
-            setTef(tef);
+            }
+            else {
+                setTef(tef);
+            }
             //logger.info(("star this.getTef() =" + this.getTef()));
             logger.info("tef sujets = " + tef);
             if (indexerDansSolr(this.getIddoc(), this.getTef())) {
