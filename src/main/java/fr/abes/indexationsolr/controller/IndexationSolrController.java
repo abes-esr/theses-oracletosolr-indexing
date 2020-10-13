@@ -70,9 +70,10 @@ public class IndexationSolrController {
         getResponseCode(iddocparam, contexte,response);
 
         //we set iddoc and look for the tef
-        //logger.info("thread sleep beginning => response already given");
+        logger.info("thread sleep beginning => response already given");
         //Thread.sleep(20000);
-        //logger.info("thread sleep ending");
+        Thread.sleep(1 * 60 * 1000);
+        logger.info("thread sleep ending");
         int iddoc = Integer.parseInt(iddocparam);
 
 
