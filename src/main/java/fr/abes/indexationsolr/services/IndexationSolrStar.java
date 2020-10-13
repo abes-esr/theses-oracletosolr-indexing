@@ -34,7 +34,7 @@ public class IndexationSolrStar extends IndexationSolr {
             setUrlSolr(env.getProperty("urlSolrStar"));
             setCheminXsl(env.getProperty("cheminXsl.star"));
             tef = starRepository.getTefByIddoc(this.getIddoc());
-            tefInitialisation = (tef.contains("RECORDSTATUS=\"initialisation\"") || tef.contains("RECORDSTATUS=\"EnCours\"") || tef == null );
+            /*tefInitialisation = (tef.contains("RECORDSTATUS=\"initialisation\"") || tef.contains("RECORDSTATUS=\"EnCours\"") || tef == null );
             if(tefInitialisation) {
                 logger.info("thread sleep star beginning");
                 Thread.sleep(1 * 60 * 1000);
@@ -43,7 +43,8 @@ public class IndexationSolrStar extends IndexationSolr {
             }
             else {
                 setTef(tef);
-            }
+            }*/
+            setTef(tef);
             //logger.info(("star this.getTef() =" + this.getTef()));
             logger.info("tef star = " + tef);
             if (indexerDansSolr(this.getIddoc(), this.getTef())) {

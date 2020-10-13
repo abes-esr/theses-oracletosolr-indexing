@@ -35,7 +35,7 @@ public class IndexationSolrSujet extends IndexationSolr {
             setUrlSolr(env.getProperty("urlSolrSujets"));
             setCheminXsl(env.getProperty("cheminXsl.sujets"));
             tef = sujetsRepository.getTefByIddoc(this.getIddoc());
-            tefInitialisation = (tef.contains("RECORDSTATUS=\"initialisation\"") || tef.contains("RECORDSTATUS=\"EnCours\"") || tef == null );
+            /*tefInitialisation = (tef.contains("RECORDSTATUS=\"initialisation\"") || tef.contains("RECORDSTATUS=\"EnCours\"") || tef == null );
             if(tefInitialisation) {
                 logger.info("thread sleep sujets beginning");
                 Thread.sleep(1 * 60 * 1000);
@@ -44,7 +44,8 @@ public class IndexationSolrSujet extends IndexationSolr {
             }
             else {
                 setTef(tef);
-            }
+            }*/
+            setTef(tef);
             //logger.info(("star this.getTef() =" + this.getTef()));
             logger.info("tef sujets = " + tef);
             if (indexerDansSolr(this.getIddoc(), this.getTef())) {
