@@ -3,11 +3,9 @@ package fr.abes.indexationsolr.star.entities;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnTransformer;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -21,6 +19,10 @@ public class TempStar implements Serializable  {
     @Column(name = "IDDOC")
     private Integer iddoc;
 
+    @ColumnTransformer(read = "NVL2(DOC, (DOC).getClobVal(), NULL)", write = "NULLSAFE_XMLTYPE(?)")
+    @Lob
+    @Column(name = "DOC")
+    private String doc;
 
     public TempStar(Integer iddoc) {
         this.iddoc = iddoc;

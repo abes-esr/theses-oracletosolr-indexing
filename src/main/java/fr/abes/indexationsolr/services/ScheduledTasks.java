@@ -44,7 +44,7 @@ public class ScheduledTasks {
     public void getTefSujets() throws Exception {
         logger.info("beginning getTefSujets", dateFormat.format(new Date()));
         List<Integer> iddocs = tempSujetsRepository.iddocsFromTemp();
-        logger.info("iddocs = " + iddocs);
+        logger.info("iddocs sujets = " + iddocs);
         for (int iddoc : iddocs){
             indexationSolrSujet.setIddoc(iddoc);
             logger.info("ici");
@@ -58,6 +58,7 @@ public class ScheduledTasks {
     public void getTefStar() throws Exception {
         logger.info("beginning getTefStar", dateFormat.format(new Date()));
         List<Integer> iddocs = tempStarRepository.iddocsFromTemp();
+        logger.info("iddocs star = " + iddocs);
         for (int iddoc : iddocs){
             indexationSolrStar.setIddoc(iddoc);
             indexationSolrStar.setTef(tempStarRepository.getTefByIddoc(iddoc));
@@ -69,6 +70,7 @@ public class ScheduledTasks {
     public void getTefPortail() throws Exception {
         logger.info("beginning getTefPortail", dateFormat.format(new Date()));
         List<Integer> iddocs = tempPortailRepository.iddocsFromTemp();
+        logger.info("iddocs portail = " + iddocs);
         for (int iddoc : iddocs){
             indexationSolrPortail.setIddoc(iddoc);
             String dateInsertion = tempPortailRepository.getDateInsertionByIddoc(iddoc);

@@ -3,11 +3,9 @@ package fr.abes.indexationsolr.portail.entities;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnTransformer;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -22,10 +20,14 @@ public class TempPortail implements Serializable  {
     @Column(name = "IDDOC")
     private Integer iddoc;
 
+    @ColumnTransformer(read = "NVL2(DOC, (DOC).getClobVal(), NULL)", write = "NULLSAFE_XMLTYPE(?)")
+    @Lob
+    @Column(name = "DOC")
+    private String doc;
+
     @Column(name = "DATEINSERTION")
     private Date dateinsertion;
 
-
-    public TempPortail(Integer iddoc, Date dateinsertion) {this.iddoc = iddoc; this.dateinsertion = dateinsertion;
+    public TempPortail(Integer iddoc, String doc, Date dateinsertion) {this.iddoc = iddoc; this.doc = doc;this.dateinsertion = dateinsertion;
     }
 }

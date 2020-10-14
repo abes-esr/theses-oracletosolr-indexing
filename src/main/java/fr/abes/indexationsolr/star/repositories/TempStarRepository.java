@@ -15,7 +15,7 @@ public interface TempStarRepository extends JpaRepository<TempStar, Integer> {
     @Query("select t.iddoc from TempStar t")
     public List<Integer> iddocsFromTemp();
 
-    @Query("select s.doc from TempStar s where s.iddoc like :x")
+    @Query("select t.doc from TempStar t where t.iddoc like :x")
     public String getTefByIddoc(@Param("x") int iddoc);
 
 }

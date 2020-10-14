@@ -16,10 +16,10 @@ public interface TempPortailRepository extends JpaRepository<TempPortail, Intege
     @Query("select t.iddoc from TempPortail t")
     public List<Integer> iddocsFromTemp();
 
-    @Query("select s.doc from TempPortail s where s.iddoc like :x")
+    @Query("select t.doc from TempPortail t where t.iddoc like :x")
     public String getTefByIddoc(@Param("x") int iddoc);
 
-    @Query("select t.dateInsertion from TempPortail t where t.iddoc like :x")
+    @Query("select t.dateinsertion from TempPortail t where t.iddoc like :x")
     public String getDateInsertionByIddoc(@Param("x") int iddoc);
 
 }
