@@ -76,6 +76,7 @@ public class ScheduledTasks {
             String dateInsertion = tempPortailRepository.getDateInsertionByIddoc(iddoc);
             indexationSolrPortail.setDateInsertion(dateInsertion);
             indexationSolrPortail.indexation();
+            tempPortailRepository.deleteById(iddoc);
         }
     }
 }
