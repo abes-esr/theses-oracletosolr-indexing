@@ -1,11 +1,9 @@
 package fr.abes.indexationsolr.services;
 
 
-import fr.abes.indexationsolr.sujets.repositories.SujetsRepository;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 
@@ -14,12 +12,11 @@ public class IndexationSolrSujet extends IndexationSolr {
 
     private Logger logger = LogManager.getLogger(IndexationSolrSujet.class);
 
+    @Value("${urlSolrSujets}")
+    private String urlSolrSujets;
 
-    @Autowired
-    private Environment env;
-
-    @Autowired
-    private SujetsRepository sujetsRepository;
+    @Value("${cheminXsl.sujets}")
+    private String cheminXslSujets;
 
 
     IndexationSolrSujet() {
@@ -27,33 +24,20 @@ public class IndexationSolrSujet extends IndexationSolr {
     }
 
     //@Transactional(transactionManager="sujetsTransactionManager")
-    public boolean indexation() throws Exception {
+    public boolean indexation(int iddoc, String doc) throws Exception {
+
         boolean res = false;
-        String tef;
-        boolean tefInitialisation = false;
         try {
-            setUrlSolr(env.getProperty("urlSolrSujets"));
-            setCheminXsl(env.getProperty("cheminXsl.sujets"));
-            //tef = sujetsRepository.getTefByIddoc(this.getIddoc());
-            /*tefInitialisation = (tef.contains("RECORDSTATUS=\"initialisation\"") || tef.contains("RECORDSTATUS=\"EnCours\"") || tef == null );
-            if(tefInitialisation) {
-                logger.info("thread sleep sujets beginning");
-                Thread.sleep(1 * 60 * 1000);
-                logger.info("thread sleep sujets ending");
-                tef = sujetsRepository.getTefByIddoc(this.getIddoc());
-            }
-            else {
-                setTef(tef);
-            }*/
-            //setTef(tef);
-            //logger.info(("star this.getTef() =" + this.getTef()));
-            //logger.info("tef sujets = " + tef);
+            setUrlSolr(urlSolrSujets);
+            setCheminXsl(cheminXslSujets);
+            setIddoc(iddoc);
+            setTef(doc);
             if (indexerDansSolr(this.getIddoc(), this.getTef())) {
                 res = true;
             }
-            logger.info("res dans indexation sujets= " + res);
+            logger.info("res dans indexation = " + res);
         } catch (Exception e) {
-            logger.info("Erreur dans indexation sujets :"+e.getMessage());
+            logger.info("Erreur dans indexation :"+e.getMessage());
             throw new Exception(e);
         }
         return res;
@@ -63,17 +47,18 @@ public class IndexationSolrSujet extends IndexationSolr {
 
         boolean res = false;
         try {
-            setUrlSolr(env.getProperty("urlSolrSujets"));
-            setCheminXsl(env.getProperty("cheminXsl.sujets"));
+            setUrlSolr(urlSolrSujets);
+            setCheminXsl(cheminXslSujets);
             setIddoc(iddoc);
             if (supprimerDeSolr(this.getIddoc())) {
                 res = true;
             }
-            logger.info("res dans suppression sujets = " + res);
+            logger.info("res dans suppression = " + res);
         } catch (Exception e) {
-            logger.info("Erreur dans suppression sujets :"+e.getMessage());
+            logger.info("Erreur dans suppression :"+e.getMessage());
             throw new Exception(e);
         }
         return res;
     }
+
 }

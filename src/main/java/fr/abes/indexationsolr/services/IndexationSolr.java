@@ -38,18 +38,14 @@ public class IndexationSolr {
     private String urlSolrPersonne;
     private int iddoc;
     private String tef;
-    private String texte;
-    private String dateInsertion;
 
-    public IndexationSolr(String cheminXsl, String urlSolr, String urlSolrHighlight, String urlSolrPersonne, int iddoc, String tef, String texte, String dateInsertion) {
+    public IndexationSolr(String cheminXsl, String urlSolr, String urlSolrHighlight, String urlSolrPersonne, int iddoc, String tef) {
         this.cheminXsl = cheminXsl;
         this.urlSolr = urlSolr;
         this.urlSolrHighlight = urlSolrHighlight;
         this.urlSolrPersonne = urlSolrPersonne;
         this.iddoc = iddoc;
         this.tef = tef;
-        this.texte = texte;
-        this.dateInsertion = dateInsertion;
     }
 
     public boolean indexerDansSolr(int iddoc, String tef) throws TransformerException, IOException {

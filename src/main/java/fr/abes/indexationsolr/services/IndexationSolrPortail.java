@@ -1,12 +1,10 @@
 package fr.abes.indexationsolr.services;
 
-import fr.abes.indexationsolr.portail.repositories.PortailRepository;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 
@@ -17,11 +15,17 @@ public class IndexationSolrPortail extends IndexationSolr {
 
     private Logger logger = LogManager.getLogger(IndexationSolrPortail.class);
 
-    @Autowired
-    private Environment env;
+    @Value("${urlSolrPortail}")
+    private String urlSolrPortailp;
 
-    @Autowired
-    private PortailRepository portailRepository;
+    @Value("${urlSolrHighlight}")
+    private String urlSolrHighlightp;
+
+    @Value("${urlSolrPersonne}")
+    private String urlSolrPersonnep;
+
+    @Value("${cheminXsl.portail}")
+    private String cheminXslPortail;
 
     private int longueurPage;
 
@@ -33,38 +37,36 @@ public class IndexationSolrPortail extends IndexationSolr {
         super();
     }
 
-    public IndexationSolrPortail(String cheminXsl, String urlSolr, String urlSolrHighlight, String urlSolrPersonne, int iddoc, String tef, String texte, String dateInsertion, int longueurPage, String perimetre) {
-        super(cheminXsl, urlSolr, urlSolrHighlight, urlSolrPersonne, iddoc, tef, texte, dateInsertion);
+    public IndexationSolrPortail(String cheminXsl, String urlSolr, String urlSolrHighlight, String urlSolrPersonne, int iddoc, String tef, int longueurPage, String perimetre) {
+        super(cheminXsl, urlSolr, urlSolrHighlight, urlSolrPersonne, iddoc, tef);
         this.longueurPage = longueurPage;
         this.perimetre = perimetre;
     }
 
     //@Transactional(transactionManager="portailTransactionManager")
-    public boolean indexation() throws Exception {
+    public boolean indexation(int iddoc, String doc, String texte, String dateInsertion) throws Exception {
 
         boolean res = false;
         try {
-            setUrlSolr(env.getProperty("urlSolrPortail"));
-            setUrlSolrPersonne(env.getProperty("urlSolrPersonne"));
-            setUrlSolrHighlight(env.getProperty("urlSolrHighlight"));
-            setCheminXsl(env.getProperty("cheminXsl.portail"));
-            setTef(portailRepository.getTefByIddoc(this.getIddoc()));
-            setTexte(portailRepository.getTexteByIddoc(this.getIddoc()));
-            logger.info(("tef portail =" + this.getTef()));
-            logger.info(("texte portail =" + this.getTexte()));
+            setUrlSolr(urlSolrPortailp);
+            setUrlSolrPersonne(urlSolrPersonnep);
+            setUrlSolrHighlight(urlSolrHighlightp);
+            setCheminXsl(cheminXslPortail);
+            setIddoc(iddoc);
+            setTef(doc);
             setPerimetre("tout");
             setLongueurPage(1000);
-            logger.info("portail dateInsertion = " + this.getDateInsertion());
-            logger.info("portail urlSolr = " + env.getProperty("urlSolrPortail"));
-            logger.info("portail urlSolrHighlight = " + env.getProperty("urlSolrHighlight"));
-            logger.info("portail urlSolrPersonne = " +env.getProperty("urlSolrHighlight"));
+            logger.info("dateInsertion = " + dateInsertion);
+            logger.info("urlSolr = " + urlSolrPortailp);
+            logger.info("urlSolrHighlight = " + urlSolrHighlightp);
+            logger.info("urlSolrPersonne = " + urlSolrPersonnep);
 
-            if (indexerDansSolr(this.getTef(), this.getIddoc(), this.getTexte(), this.getDateInsertion() ,1, perimetre, longueurPage)) {
+            if (indexerDansSolr(this.getTef(), this.getIddoc(), texte, dateInsertion ,1, perimetre, longueurPage)) {
                 res = true;
             }
-            logger.info("res dans indexation portail = " + res);
+            logger.info("res dans indexation = " + res);
         } catch (Exception e) {
-            logger.info("Erreur dans indexation portail:"+e.getMessage());
+            logger.info("Erreur dans indexation :"+e.getMessage());
             throw new Exception(e);
         }
         return res;
@@ -74,18 +76,19 @@ public class IndexationSolrPortail extends IndexationSolr {
 
         boolean res = false;
         try {
-            setUrlSolr(env.getProperty("urlSolrPortail"));
-            setUrlSolrPersonne(env.getProperty("urlSolrPersonne"));
-            setUrlSolrHighlight(env.getProperty("urlSolrHighlight"));
+            setUrlSolr(urlSolrPortailp);
+            setUrlSolrPersonne(urlSolrPersonnep);
+            setUrlSolrHighlight(urlSolrHighlightp);
 
             if (supprimeDeSolr(iddoc)) {
                 res = true;
             }
-            logger.info("res dans suppression portail= " + res);
+            logger.info("res dans suppression = " + res);
         } catch (Exception e) {
-            logger.info("Erreur dans suppression portail:"+e.getMessage());
+            logger.info("Erreur dans suppression :"+e.getMessage());
             throw new Exception(e);
         }
         return res;
     }
+
 }
