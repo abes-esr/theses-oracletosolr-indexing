@@ -12,24 +12,23 @@ public class IndexationSolrSujet extends IndexationSolr {
 
     private Logger logger = LogManager.getLogger(IndexationSolrSujet.class);
 
-    @Value("${urlSolrSujets}")
+   /* @Value("${urlSolrSujets}")
     private String urlSolrSujets;
 
     @Value("${cheminXsl.sujets}")
-    private String cheminXslSujets;
+    private String cheminXslSujets;*/
 
 
     IndexationSolrSujet() {
         super();
     }
 
-    //@Transactional(transactionManager="sujetsTransactionManager")
     public boolean indexation(int iddoc, String doc) throws Exception {
 
         boolean res = false;
         try {
-            setUrlSolr(urlSolrSujets);
-            setCheminXsl(cheminXslSujets);
+            //setUrlSolr(urlSolrSujets);
+            //setCheminXsl(cheminXslSujets);
             setIddoc(iddoc);
             setTef(doc);
             if (indexerDansSolr(this.getIddoc(), this.getTef())) {
@@ -47,8 +46,8 @@ public class IndexationSolrSujet extends IndexationSolr {
 
         boolean res = false;
         try {
-            setUrlSolr(urlSolrSujets);
-            setCheminXsl(cheminXslSujets);
+            //setUrlSolr(urlSolrSujets);
+            //setCheminXsl(cheminXslSujets);
             setIddoc(iddoc);
             if (supprimerDeSolr(this.getIddoc())) {
                 res = true;

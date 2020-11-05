@@ -15,7 +15,7 @@ public class IndexationSolrPortail extends IndexationSolr {
 
     private Logger logger = LogManager.getLogger(IndexationSolrPortail.class);
 
-    @Value("${urlSolrPortail}")
+    /*@Value("${urlSolrPortail}")
     private String urlSolrPortailp;
 
     @Value("${urlSolrHighlight}")
@@ -26,7 +26,7 @@ public class IndexationSolrPortail extends IndexationSolr {
 
     @Value("${cheminXsl.portail}")
     private String cheminXslPortail;
-
+*/
     private int longueurPage;
 
     public String perimetre; //tout|principal|principalThese|principalSujet|personne|organisme|highlight
@@ -43,23 +43,22 @@ public class IndexationSolrPortail extends IndexationSolr {
         this.perimetre = perimetre;
     }
 
-    //@Transactional(transactionManager="portailTransactionManager")
     public boolean indexation(int iddoc, String doc, String texte, String dateInsertion) throws Exception {
 
         boolean res = false;
         try {
-            setUrlSolr(urlSolrPortailp);
+            /*setUrlSolr(urlSolrPortailp);
             setUrlSolrPersonne(urlSolrPersonnep);
             setUrlSolrHighlight(urlSolrHighlightp);
-            setCheminXsl(cheminXslPortail);
+            setCheminXsl(cheminXslPortail);*/
             setIddoc(iddoc);
             setTef(doc);
             setPerimetre("tout");
             setLongueurPage(1000);
             logger.info("dateInsertion = " + dateInsertion);
-            logger.info("urlSolr = " + urlSolrPortailp);
+            /*logger.info("urlSolr = " + urlSolrPortailp);
             logger.info("urlSolrHighlight = " + urlSolrHighlightp);
-            logger.info("urlSolrPersonne = " + urlSolrPersonnep);
+            logger.info("urlSolrPersonne = " + urlSolrPersonnep);*/
 
             if (indexerDansSolr(this.getTef(), this.getIddoc(), texte, dateInsertion ,1, perimetre, longueurPage)) {
                 res = true;
@@ -76,9 +75,9 @@ public class IndexationSolrPortail extends IndexationSolr {
 
         boolean res = false;
         try {
-            setUrlSolr(urlSolrPortailp);
+            /*setUrlSolr(urlSolrPortailp);
             setUrlSolrPersonne(urlSolrPersonnep);
-            setUrlSolrHighlight(urlSolrHighlightp);
+            setUrlSolrHighlight(urlSolrHighlightp);*/
 
             if (supprimeDeSolr(iddoc)) {
                 res = true;
