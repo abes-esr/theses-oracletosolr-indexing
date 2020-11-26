@@ -12,7 +12,7 @@ public class IndexationSolrSujet extends IndexationSolr {
 
     private Logger logger = LogManager.getLogger(IndexationSolrSujet.class);
 
-   /* @Value("${urlSolrSujets}")
+   /* @Value("${urlSolrSujets}") // needs @Component on the class
     private String urlSolrSujets;
 
     @Value("${cheminXsl.sujets}")
