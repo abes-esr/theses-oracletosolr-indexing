@@ -51,7 +51,7 @@ public class IndexationSolrController {
     @RequestMapping(method = RequestMethod.POST, value="/GetIndexationSolr")
     public boolean indexation(@RequestBody String indexation) throws Exception {
 
-        //logger.info("indexationSolrController - indexation début " + indexation);
+        logger.info("indexationSolrController - indexation début " + indexation);
 
         String contexte = StringUtils.substringBetween(indexation, "$contexte$\":\"", "\",\"$iddoc$");
         int iddoc = Integer.parseInt(StringUtils.substringBetween(indexation, "$iddoc$\":\"", "\",\"$doc$"));
