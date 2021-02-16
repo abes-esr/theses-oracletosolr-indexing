@@ -55,3 +55,9 @@ END;
 SELECT host, lower_port, upper_port, acl
 FROM   dba_network_acls
 ORDER BY host;
+
+SELECT value AS db_charset
+FROM nls_database_parameters
+WHERE parameter = 'NLS_CHARACTERSET';
+
+SELECT * FROM NLS_SESSION_PARAMETERS;
