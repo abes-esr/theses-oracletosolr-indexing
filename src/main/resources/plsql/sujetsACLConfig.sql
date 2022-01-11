@@ -46,3 +46,18 @@ BEGIN
                               principal_name => 'apex_040200',
                               principal_type => xs_acl.ptype_db));
 END;
+
+
+---------------------------------------------------------------------------------
+-- cmd to verify which acl are subscribing
+---------------------------------------------------------------------------------
+
+SELECT host, lower_port, upper_port, acl
+FROM   dba_network_acls
+ORDER BY host;
+
+SELECT value AS db_charset
+FROM nls_database_parameters
+WHERE parameter = 'NLS_CHARACTERSET';
+
+SELECT * FROM NLS_SESSION_PARAMETERS;

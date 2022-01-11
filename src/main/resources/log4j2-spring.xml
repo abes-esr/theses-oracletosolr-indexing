@@ -3,12 +3,12 @@
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout
-                    pattern="%style{%d{ISO8601}}{black} %highlight{%-5level }[%style{%t}{bright,blue}] %style{%C{1.}}{bright,yellow}: %msg%n%throwable" />
+                    pattern="%-4relative [%thread] %-5level %class - %msg%n" />
         </Console>
 
         <RollingFile name="RollingFile"
-                     fileName="/usr/local/tomcat9-indexationSolr/logs/indexationsolr.log"
-                     filePattern="/usr/local/tomcat9-indexationSolr/logs/$${date:yyyy-MM}/theses-oracleToSolr-indexing-log4j2-%d{-dd-MMMM-yyyy}-%i.log.gz">
+                     fileName="/usr/local/tomcat8-step/logs/indexationsolr.log"
+                     filePattern="/usr/local/tomcat8-step/logs/$${date:yyyy-MM}/theses-oracleToSolr-indexing-log4j2-%d{-dd-MMMM-yyyy}-%i.log.gz">
             <PatternLayout>
                 <pattern>%d %p %C{1.} [%t] %m%n</pattern>
             </PatternLayout>

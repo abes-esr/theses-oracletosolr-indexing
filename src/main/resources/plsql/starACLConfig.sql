@@ -34,3 +34,10 @@ BEGIN
                                 upper_port => 8100);
 END;
 
+---------------------------------------------------------------------------------
+-- cmd to verify which acl are subscribing
+---------------------------------------------------------------------------------
+
+SELECT host, lower_port, upper_port, acl
+FROM   dba_network_acls
+ORDER BY host;
