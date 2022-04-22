@@ -54,6 +54,7 @@ public class IndexationSolr {
         try {
             logger.info("indexerDansSolr pour Step ou Star");
             String docSolr = transfoXSL(tef, iddoc);
+            logger.info("DocSolr length = " + docSolr.length());
             logger.info("transfoXSL ok");
             envoieSurSolr(docSolr, urlSolr);
             logger.info("envoieSurSolr ok");
