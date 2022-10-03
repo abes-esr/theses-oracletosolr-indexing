@@ -1,9 +1,6 @@
 package fr.abes.indexationsolr.controller;
 
-import fr.abes.indexationsolr.services.IndexationSolrPortail;
-import fr.abes.indexationsolr.services.IndexationSolrStar;
-import fr.abes.indexationsolr.services.IndexationSolrSujet;
-import fr.abes.indexationsolr.services.PathsFromProperties;
+import fr.abes.indexationsolr.services.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
@@ -21,10 +18,7 @@ public class IndexationSolrController {
     private Logger logger = LogManager.getLogger(IndexationSolrController.class);
 
     @Autowired
-    private IndexationSolrSujet indexationSolrSujet;
-
-    @Autowired
-    private IndexationSolrStar indexationSolrStar;
+    private IndexationSolr indexationSolr;
 
     @Autowired
     private IndexationSolrPortail indexationSolrPortail;
@@ -33,12 +27,12 @@ public class IndexationSolrController {
     private PathsFromProperties pathsFromProperties;
 
     public void setPathsParamSujets(){
-        indexationSolrSujet.setCheminXsl(pathsFromProperties.getCheminXslSujets());
-        indexationSolrSujet.setUrlSolr(pathsFromProperties.getUrlSolrSujets());
+        indexationSolr.setCheminXsl(pathsFromProperties.getCheminXslSujets());
+        indexationSolr.setUrlSolr(pathsFromProperties.getUrlSolrSujets());
     }
     public void setPathsParamStar(){
-        indexationSolrStar.setCheminXsl(pathsFromProperties.getCheminXslStar());
-        indexationSolrStar.setUrlSolr(pathsFromProperties.getUrlSolrStar());
+        indexationSolr.setCheminXsl(pathsFromProperties.getCheminXslStar());
+        indexationSolr.setUrlSolr(pathsFromProperties.getUrlSolrStar());
     }
     public void setPathsParamPortail(){
         indexationSolrPortail.setCheminXsl(pathsFromProperties.getCheminXslPortail());
@@ -72,18 +66,18 @@ public class IndexationSolrController {
         if(contexte.contains("sujets")) {
             logger.info("indexation contexte sujets");
             setPathsParamSujets();
-            logger.info("cheminXslSujets = " + indexationSolrSujet.getCheminXsl());
-            logger.info("urlSolrSujets = " + indexationSolrSujet.getUrlSolr());
-            res = indexationSolrSujet.indexation(iddoc, doc);
+            logger.info("cheminXslSujets = " + indexationSolr.getCheminXsl());
+            logger.info("urlSolrSujets = " + indexationSolr.getUrlSolr());
+            res = indexationSolr.indexerDansSolr(iddoc, doc);
             logger.info("indexation sujets iddoc " + iddoc + " = " + res);
             return res;
         }
         if(contexte.contains("star")) {
             logger.info("indexation contexte star");
             setPathsParamStar();
-            logger.info("cheminXslStar = " + indexationSolrStar.getCheminXsl());
-            logger.info("urlSolrStar = " + indexationSolrStar.getUrlSolr());
-            res = indexationSolrStar.indexation(iddoc, doc);
+            logger.info("cheminXslStar = " + indexationSolr.getCheminXsl());
+            logger.info("urlSolrStar = " + indexationSolr.getUrlSolr());
+            res = indexationSolr.indexerDansSolr(iddoc, doc);
             logger.info("indexation star iddoc " + iddoc + " = " + res);
             return res;
         }
@@ -121,14 +115,14 @@ public class IndexationSolrController {
         if(contexte.contains("sujets")) {
             logger.info("supression contexte sujets");
             setPathsParamSujets();
-            res = indexationSolrSujet.suppression(iddoc);
+            res = indexationSolr.supprimerDeSolr(iddoc);
             logger.info("suppression sujets iddoc " + iddoc + " = " + res);
             return res;
         }
         if(contexte.contains("star")) {
             logger.info("supression contexte star");
             setPathsParamStar();
-            res = indexationSolrStar.suppression(iddoc);
+            res = indexationSolr.supprimeDeSolr(iddoc);
             logger.info("suppression star iddoc " + iddoc + " = " + res);
             return res;
         }
