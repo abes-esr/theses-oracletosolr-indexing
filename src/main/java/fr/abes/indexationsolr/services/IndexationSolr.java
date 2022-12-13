@@ -162,40 +162,70 @@ public class IndexationSolr {
     //FONCTIONS PERSONNES
     //Envoi la requete de suppression de(s) personne(s)
     public Map<String, String> deletePersonne(int iddoc) throws IOException, JSONException {
+        logger.info("debut deletepersonne........");
+        logger.info("urlSolr = " + urlSolr);
         //Recuperation de tous les ppn/id personne du TEF
         HashMap<String, String> ppnPersonne = new HashMap<>(); //Liste des ppns/personnes trouvés : sert dans le cas d'une suppression du TEF, il faut alors mettre a jour toutes les personnes concernees
         URL urlPPN = new URL(urlSolr.replace("update", "select/?q=id:") + iddoc + "&fl=auteur,auteurNP,auteurPpn,coAuteur,coAuteurPpn,coAuteurNP,directeurThese,directeurTheseNP,directeurThesePpn,rapporteur,rapporteurNP,rapporteurPpn&rows=1000&wt=json");
+        
+        logger.info("apres urlppn.....");
         JSONObject doc = getJsonObject(urlPPN).optJSONObject(0);
 
+        logger.info("apres json object");
         if (doc != null) {
+            logger.info("dans doc dif de null");
             StringBuilder ppnSuppr = new StringBuilder("<delete>");
             int indexPersonne = 0; //Permet de determiner l'id dans le cas ou on n'a pas de ppn. Construction : iddoc+"_"+i
 
             //AUTEUR
-            String auteurPpn = doc.optString("auteurPpn");
-            if (auteurPpn.equals("") || auteurPpn.contains("?")) {//Si pas ppn
-                auteurPpn = iddoc + "_" + indexPersonne; //construction : iddoc+"_"+i
-                indexPersonne++;
-            } else {
-                ppnPersonne.put(auteurPpn, doc.optString("auteur") + "-||-" + doc.optString("auteurNP"));
+            try {
+                String auteurPpn = doc.optString("auteurPpn");
+                if (auteurPpn.equals("") || auteurPpn.contains("?")) {//Si pas ppn
+                    auteurPpn = iddoc + "_" + indexPersonne; //construction : iddoc+"_"+i
+                    indexPersonne++;
+                } else {
+                    ppnPersonne.put(auteurPpn, doc.optString("auteur") + "-||-" + doc.optString("auteurNP"));
+                }
+
+                logger.info("apres ppn personne...");
+                ppnSuppr.append("<id>");
+                ppnSuppr.append(auteurPpn);
+                ppnSuppr.append("</id>");
+            } catch (NullPointerException e) {
+                logger.error("pas de auteur");
+            }
+            //COAUTEUR
+            try {
+                ppnSuppr.append(getPpnSuppr("coAuteurPpn", "coAuteur", "coAuteurNP", doc, iddoc, indexPersonne, ppnPersonne));
+            } catch (NullPointerException e) {
+                logger.error("pas de coauteur");
             }
 
-            ppnSuppr.append("<id>");
-            ppnSuppr.append(auteurPpn);
-            ppnSuppr.append("</id>");
-            //COAUTEUR
-            ppnSuppr.append(getPpnSuppr("coAuteurPpn", "coAuteur", "coAuteurNP", doc, iddoc, indexPersonne, ppnPersonne));
-
+            logger.info("apres coauteur");
+            
             //DIRECTEURTHESE
-            ppnSuppr.append(getPpnSuppr("directeurThesePpn", "directeurThese", "directeurTheseNP", doc, iddoc, indexPersonne, ppnPersonne));
+            try {
+                ppnSuppr.append(getPpnSuppr("directeurThesePpn", "directeurThese", "directeurTheseNP", doc, iddoc, indexPersonne, ppnPersonne));
+            } catch (NullPointerException e) {
+                logger.error("pas de directeur");
+            }
 
             //RAPPORTEUR
-            ppnSuppr.append(getPpnSuppr("rapporteurPpn", "rapporteur", "rapporteurNP", doc, iddoc, indexPersonne, ppnPersonne));
+            try {
+                ppnSuppr.append(getPpnSuppr("rapporteurPpn", "rapporteur", "rapporteurNP", doc, iddoc, indexPersonne, ppnPersonne));
+            } catch (NullPointerException e) {
+                logger.error("pas de rapporteur");
+            }
 
+            logger.info("apres rapporteur");
             ppnSuppr.append("</delete>");
             if (ppnSuppr.toString().contains("id")) {//Si il y a des ppns/id à supprimer
                 final StringWriter sw = new StringWriter();
+                logger.info("avaznt postdata");
+                logger.info("ppnSuppr.toString() " + ppnSuppr.toString());
+                logger.info("urlSolrPersonne  = " + urlSolrPersonne);
                 postData(new StringReader(ppnSuppr.toString()), sw, urlSolrPersonne);
+                logger.info("apres postdata");
                 if (sw.toString().indexOf("<int name=\"status\">0</int>") < 0) {
                     logger.info("unexpected reponse from solr...");
                     logger.error("unexpected response from solr...");
@@ -566,6 +596,7 @@ public class IndexationSolr {
         postData(new StringReader("<commit/>"), sw, urlSolr);
 
         // solr highlight
+        logger.info("solr highlight = " + urlSolrHighlight);
         postData(new StringReader("<delete><query>id:" + idDoc + "</query></delete>"), sw, urlSolrHighlight);
         if (sw.toString().indexOf("<int name=\"status\">0</int>") < 0) {
             logger.info("unexpected reponse from solr...");
@@ -573,9 +604,10 @@ public class IndexationSolr {
         }
         postData(new StringReader("<commit/>"), sw, urlSolrHighlight);
 
-        //Generation des docs personnes : mise a jour
+        //Generation des docs personnes : mise à jour
         addPersonne(ppnPersonne);
-
+        logger.info("ppnPersonne " + ppnPersonne.size());
+        logger.info("urlSolrPersonne " + urlSolrPersonne);
         postData(new StringReader("<commit/>"), sw, urlSolrPersonne);
         logger.info(sw.toString());
         res = true;

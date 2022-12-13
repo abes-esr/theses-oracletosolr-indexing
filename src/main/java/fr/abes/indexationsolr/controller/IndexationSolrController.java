@@ -29,10 +29,14 @@ public class IndexationSolrController {
     public void setPathsParamSujets(){
         indexationSolr.setCheminXsl(pathsFromProperties.getCheminXslSujets());
         indexationSolr.setUrlSolr(pathsFromProperties.getUrlSolrSujets());
+        indexationSolr.setUrlSolrPersonne(pathsFromProperties.getUrlSolrPersonne());
+        indexationSolr.setUrlSolrHighlight(pathsFromProperties.getUrlSolrHighlight());
     }
     public void setPathsParamStar(){
         indexationSolr.setCheminXsl(pathsFromProperties.getCheminXslStar());
         indexationSolr.setUrlSolr(pathsFromProperties.getUrlSolrStar());
+        indexationSolr.setUrlSolrPersonne(pathsFromProperties.getUrlSolrPersonne());
+        indexationSolr.setUrlSolrHighlight(pathsFromProperties.getUrlSolrHighlight());
     }
     public void setPathsParamPortail(){
         indexationSolrPortail.setCheminXsl(pathsFromProperties.getCheminXslPortail());
