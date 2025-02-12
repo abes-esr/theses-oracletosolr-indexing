@@ -8,17 +8,15 @@
 
         <RollingFile name="RollingFile"
                      fileName="/usr/local/tomcat8-step/logs/indexationsolr.log"
-                     filePattern="/usr/local/tomcat8-step/logs/$${date:yyyy-MM}/theses-oracleToSolr-indexing-log4j2-%d{-dd-MMMM-yyyy}-%i.log.gz">
+                     filePattern="/usr/local/tomcat8-step/logs/indexationsolr{-dd-MMMM-yyyy}-%i.log.gz">
             <PatternLayout>
                 <pattern>%d %p %C{1.} [%t] %m%n</pattern>
             </PatternLayout>
             <Policies>
                 <!-- rollover on startup, daily and when the file reaches
                     10 MegaBytes -->
-                <OnStartupTriggeringPolicy />
                 <SizeBasedTriggeringPolicy
                         size="10 MB" />
-                <TimeBasedTriggeringPolicy />
             </Policies>
         </RollingFile>
     </Appenders>
@@ -31,7 +29,7 @@
         </Root>
 
         <!-- LOG "fr.abes*" at TRACE level -->
-        <Logger name="fr.abes" level="trace"></Logger>
+        <Logger name="fr.abes" level="info"></Logger>
     </Loggers>
 
 </Configuration>
