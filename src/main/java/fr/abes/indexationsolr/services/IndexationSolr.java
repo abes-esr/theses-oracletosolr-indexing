@@ -84,16 +84,16 @@ public class IndexationSolr {
     }
 
 
-    public boolean supprimerDeSolr(int idDoc, String urlSolrt) throws IOException {
+    public boolean supprimerDeSolr(int idDoc, String urlSolr) throws IOException {
         boolean res = false;
         final StringWriter sw = new StringWriter();
         try
         {
-            postData(new StringReader("<delete><id>" + idDoc + "</id></delete>"), sw, urlSolrt);
+            postData(new StringReader("<delete><id>" + idDoc + "</id></delete>"), sw, urlSolr);
             if (sw.toString().indexOf("<int name=\"status\">0</int>") < 0) {
                 logger.info("unexpected response from solr...");
             }
-            postData(new StringReader("<commit/>"), sw, urlSolrt);
+            postData(new StringReader("<commit/>"), sw, urlSolr)       ;
             res = true;
         }
         catch (Exception e) {
@@ -197,6 +197,7 @@ public class IndexationSolr {
         if (sw.toString().indexOf("<int name=\"status\">0</int>") < 0) {
             logger.error("unexpected response from solr...");
         }
+        postData(new StringReader("<commit/>"), sw, urlSolr);
     }
 
 
