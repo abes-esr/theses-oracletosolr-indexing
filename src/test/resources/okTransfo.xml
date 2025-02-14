@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<add xmlns:dcterms="http://purl.org/dc/terms/"
+     xmlns:suj="http://www.theses.fr/namespace/sujets"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xmlns:mets="http://www.loc.gov/METS/"
+     xmlns:tef="http://www.abes.fr/abes/documents/tef"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:xlink="http://www.w3.org/1999/xlink">
+    <doc>
+        <field name="idxadoublon">HALSEHELOISE19871031</field>
+        <field name="idxbdoublon">HALSEHELOISE19871031</field>
+        <field name="ppn">241345251</field>
+        <field name="id">123796</field>
+        <field name="numAuto">123796</field>
+        <field name="titre">Immunopathologie des tumeurs primitives et métastatiques du foie</field>
+        <field name="titre2">The immunopathology of primary and metastatic tumors to the liver</field>
+        <field name="auteurNom">Halse</field>
+        <field name="auteurNomNaissance"/>
+        <field name="auteurPrenom">Héloïse</field>
+        <field name="auteurNationalite">FR</field>
+        <field name="auteurDateNaissance_dt">1987-10-31T23:59:59Z</field>
+        <field name="auteurDateNaissance">1987-10-31</field>
+        <field name="auteur">Halse,Héloïse,[,1987-10-31,FR]</field>
+        <field name="intervenant">Hermine,Olivier,[069884927]</field>
+        <field name="directeurThese">Hermine,Olivier</field>
+        <field name="directeursThese">Hermine Olivier</field>
+        <field name="etabSoutenance">université Paris-Saclay</field>
+        <field name="coTutelle"/>
+        <field name="coTutelleAut"/>
+        <field name="ecoleDoctorale">École doctorale Cancérologie, Biologie, Médecine, Santé</field>
+        <field name="ecoleDoctoraleAut">École doctorale Cancérologie, Biologie, Médecine, Santé,[188525238]</field>
+        <field name="partRecherche">Imagine - Institut des maladies génétiques</field>
+        <field name="partRecherche">Faculté de médecine</field>
+        <field name="partRecherche">Université Paris-Saclay. Graduate School Life Sciences and Health (2020-....)</field>
+        <field name="typePartRecherche">laboratoire</field>
+        <field name="typePartRecherche">autreType</field>
+        <field name="typePartRecherche">autreType</field>
+        <field name="partenaire">Imagine - Institut des maladies génétiques,laboratoire,</field>
+        <field name="partenaire">Faculté de médecine,autreType,</field>
+        <field name="partenaire">Université Paris-Saclay. Graduate School Life Sciences and Health (2020-....),autreType,</field>
+        <field name="partenaireAut">Imagine - Institut des maladies génétiques,laboratoire,[188538119],</field>
+        <field name="partenaireAut">Faculté de médecine,autreType,référent,[188538119],</field>
+        <field name="partenaireAut">Université Paris-Saclay. Graduate School Life Sciences and Health (2020-....),autreType,graduate school,[188538119],</field>
+        <field name="oaiSetSpec">ddc:570</field>
+        <field name="discipline">Sciences du Cancer</field>
+        <field name="subjectFR">Microenvironnement immunitaire</field>
+        <field name="subjectFR">Foie</field>
+        <field name="subjectFR">Cancer</field>
+        <field name="subjectFR">Métastases hépatiques</field>
+        <field name="subjectFR">Mastocytes</field>
+        <field name="subjectEN">Immune microenvironment</field>
+        <field name="subjectEN">Liver</field>
+        <field name="subjectEN">Cancer</field>
+        <field name="subjectEN">Liver metastasis</field>
+        <field name="subjectEN">Mast cells</field>
+        <field name="abstractFR">L'immunothérapie anti-cancéreuse permet d'obtenir des résultats sans précédent pour certains patients, mais des cancers qui se développent dans certains organes sont moins sensibles à l'immunothérapie, suggérant que l'environnement tissulaire peut déterminer la réponse au traitement. C'est le cas des patients atteints d'un cancer colorectal qui répondent très peu à l'immunothérapie. Il est donc important d'améliorer l'identification du traitement approprié par patient, tumeur et localisation. En particulier, une meilleure compréhension de l'environnement immunitaire des métastases est nécessaire. La métastase est caractérisée par la capacité des cellules tumorales à proliférer et à migrer à distance du site primaire, mais également par l'interaction avec un microenvironnement spécifique au niveau du site métastatique. Parmi les métastases viscérales, les métastases hépatiques sont le pire facteur pronostique en analyse multivariée et représentent un défi thérapeutique majeur.  La présence de métastases hépatiques a été fortement associée à une réponse réduite à l'immunothérapie dans plusieurs sous-types de cancer, y compris le cancer colorectal. Notre hypothèse de travail est que la tolérance immunitaire du foie, parmi tous les potentiels sites métastatiques, est la variable critique associée au plus mauvais pronostic.   Au cours de travaux récents, nous avons mis en évidence que les mastocytes jouent un rôle clé dans le cancer. Des augmentations de l'activation et du nombre des mastocytes ont été observées dans plusieurs pathologies hépatiques, notamment la fibrose hépatique, et le cholangiocarcinome. Une augmentation des mastocytes a été trouvée dans les régions extra- et péri-tumorales de métastases de grade supérieur d'origine digestive, y compris le cancer colorectal, et sont associées à une fibrose tumorale dans le foie après chimiothérapie néoadjuvante.    Les seules études existantes sur la densité des mastocytes dans les métastases hépatiques du cancer colorectal reposent simplement sur la coloration Immunohistochimique à la tryptase et/ou CD117+ et ajoutent une complexité à l'impact des mastocytes dans les métastases hépatiques du cancer colorectal, où leur distribution dans la tumeur ou la péri-tumeur est respectivement associée à un pronostic favorable ou défavorable du patient. Ces résultats impliquent que la localisation et la fonction des mastocytes peuvent dépendre du microenvironnement immunitaire local et des interactions cellulaires dans le foie, ce qui a un impact sur le pronostic du patient. Notre objectif est de décrire le rôle des mastocytes dans le microenvironnement immunitaire du foie dans le cancer colorectal métastatique, et leur association non seulement avec les biomarqueurs systémiques de l'inflammation mais aussi avec les paramètres cliniques disponibles, y compris la rechute de la maladie.   Dans le but de définir une signature immune, nous explorerons la localisation et activation des mastocytes dans l'architecture du foie métastatique des patients atteints de cancer colorectal et leur interaction avec les autres cellules immunitaires infiltrant les tumeurs. La caractérisation phénotypique des mastocytes et autres cellules immunitaires sera analysée par cytométrie de flux sur échantillons frais tumorales, à la marge et à distance de la tumeur. Les résultats déjà obtenus montrent la présence de mastocytes CD117+FcERI+ dans des échantillons frais de foie de patients atteints de cancer colorectal métastatique. La mesure des leucocytes, des enzymes hépatiques et des marqueurs systémiques de l'inflammation dans le sang périphérique des patients est collectée pour corréler à ce phénotypage. Cette analyse sera complétée par l'application de la coloration immunohistochimique en multiplex pour caractériser la topographie immunitaire des métastases hépatiques sur des coupes de tissus en FFPE. La caractérisation fonctionnelle des mastocytes sera entreprise par le profilage protéomique des mastocytes dans la tumeur et au niveau péri-tumoral afin de mieux caractériser ces cellules.    Afin de définir les voies d'expression génique immunitaire spécifiques au foie associées à la survie, nous visons à effectuer une analyse bioinformatique sur des biopsies hépatiques en FFPE de patients atteints d'une maladie métastatique avancée. Les données cliniques des patients et les données biologiques seront également collectées afin de corréler les signatures immunitaires à des données cliniques et biologiques plus accessibles.     Ensemble, nous visons à créer une stratification de marqueurs inflammatoires systémiques et de cellules immunitaires intratumorales qui déterminent au mieux la survie globale chez les patients atteints de métastases hépatiques et d'identifier les molécules potentielles spécifiques aux cellules qui pourraient représenter une cible thérapeutique chez ces patients et améliorer les résultats thérapeutiques, notamment avec l'immunothérapie.</field>
+        <field name="abstractEN">While anti-cancer immunotherapy provides unprecedented results for some patients, its effectiveness varies depending on the organ affected.  Patients with primary liver cancer and colorectal cancer liver metastasis often exhibit limited responses to immunotherapy. This points to the critical influence of the tissue microenvironment on treatment efficacy. The liver is an immunologically rich organ and contains a diversity of lymphoid and myeloid cells, which significantly shape how patients respond to treatment and their survival. It is therefore imperative to enhance our understanding of the immune microenvironment within primary liver and liver metastatic tumors and is the central focus of this thesis.   The first part of the thesis evaluated the immune microenvironment in a prospective cohort of N=31 colorectal cancer patients with liver metastasis (CRCLM). Despite improvements in treatment efficacy, response and survival after liver metastasis resection vary greatly. Furthermore, anti-tumor T cell responses in the liver are compromised. A less studied innate immune cell in the liver, the mast cell, bridges the gap between innate and adaptive immune responses. Their role in tumor immunity within liver metastasis is less defined. We characterized mast cells in resected CRCLM using flow cytometry, secreted mediator quantification, and multiplex immunohistochemistry. Increased mast cell infiltration, particularly in KRAS wildtype patients, correlated with improved prognosis. Tumor-infiltrating mast cells correlated with CD8+ T cell infiltration and activation but inversely with TGF-beta 2 secretion, T-regulatory cells, and neutrophil infiltration. Mast cell-rich tumors exhibited elevated histamine secretion, indicating mast cell degranulation. In vitro, lymphocytes exposed to pre-conditioned mast cells from patients with good prognosis had elevated intracellular expression of IFN-gamma and Granzyme B. Positive correlations between mast cell and T cell-specific genes were also observed in a public gene expression dataset of resected CRCLM. In summary, tumor-infiltrating mast cells can potentiate anti-tumor immunity in CRCLM.  We next explored the role of tumor-infiltrating neutrophils in CRCLM, as their impact on prognosis remains unclear. Elevated neutrophil infiltration was associated with poor response and decreased survival specifically in KRAS wildtype patients. Neutrophils were positively correlated with TNF, CXCL8 and VEGF-A secretion. They portrayed lower expression of differentiation markers CD10 and CD16, and inversely correlated with CD8+ and CD4+ T cell infiltration and activation. These results indicate that tumor-infiltrating neutrophils may hinder anti-tumor immunity in CRCLM.  The final part of the thesis centred on the immune landscape of early-stage hepatocellular carcinoma (HCC). Although immunotherapy has profoundly influenced HCC management, only 30% of patients show objective responses. We analysed the immune infiltrate, protein secretion and transcriptome from liver tissue of N=28 treatment-naïve, early-stage HCC patients who underwent curative surgical resection. Despite clinical homogeneity, we found four distinct immune clusters with variable CD8+ T, CD4+ T, NK and Myeloid cell infiltration. These clusters exhibited different activation and exhaustion profiles among lymphocytes and distinct transcriptomic profiles.  In conclusion, this thesis highlights the importance of understanding the immune microenvironment within the liver and its role in anti-tumor immunity and survival in CRCLM and HCC. These insights may guide further research to identify potential therapeutic targets, ultimately enhancing the therapeutic potential of immunotherapy and patient survival in the future.</field>
+        <field name="derogationDixAns">non</field>
+        <field name="datePremiereInscriptionDoctorat_dt">2019-10-01T23:59:59Z</field>
+        <field name="anneePremiereInscriptionDoctorat">2019</field>
+        <field name="dateInscriptionEtab_dt">2019-10-01T23:59:59Z</field>
+        <field name="contratDoctoral">non</field>
+        <field name="dateSoutenancePrevue_dt">2023-11-27T23:59:59Z</field>
+        <field name="pubSoutenance"/>
+        <field name="dateCreation_dt">2019-10-08T13:35:06T23:59:59Z</field>
+        <field name="dateModification_dt">2023-11-20T10:06:42T23:59:59Z</field>
+        <field name="melPro">step@adum.fr</field>
+        <field name="melPerso"/>
+        <field xmlns:dcs="http://purl.org/dc/elements/1.1/" name="SGcodeEtab">UPAS</field>
+        <field xmlns:dcs="http://purl.org/dc/elements/1.1/" name="SGID_SUJET">SUJET_227558</field>
+        <field xmlns:dcs="http://purl.org/dc/elements/1.1/" name="SGstepEtat">sujet</field>
+        <field xmlns:dcs="http://purl.org/dc/elements/1.1/" name="SGenProdStep">oui</field>
+        <field xmlns:dcs="http://purl.org/dc/elements/1.1/" name="SGentreeType">importMail</field>
+        <field xmlns:dcs="http://purl.org/dc/elements/1.1/" name="SGentreeDate_dt">2019-10-08T13:35:06T23:59:59Z</field>
+        <field xmlns:dcs="http://purl.org/dc/elements/1.1/" name="SGentreeDate">2019-10-08T13:35:06</field>
+        <field xmlns:dcs="http://purl.org/dc/elements/1.1/" name="SGentreeAgentImport">mireille.brenel@u-psud.fr</field>
+        <field xmlns:dcs="http://purl.org/dc/elements/1.1/" name="SGentreeCompImport">sujet</field>
+        <field xmlns:dcs="http://purl.org/dc/elements/1.1/" name="SGentreeIdSource">UPAS_ADUM_UPAS_113428</field>
+        <field xmlns:dcs="http://purl.org/dc/elements/1.1/" name="SGmajDate_dt">2023-11-20T10:06:42T23:59:59Z</field>
+        <field xmlns:dcs="http://purl.org/dc/elements/1.1/" name="SGmajDate">2023-11-20T10:06:42</field>
+        <field xmlns:dcs="http://purl.org/dc/elements/1.1/" name="SGmajImport">oui</field>
+        <field xmlns:dcs="http://purl.org/dc/elements/1.1/" name="SGderniereIntervention">importWS1</field>
+        <field xmlns:dcs="http://purl.org/dc/elements/1.1/" name="SGnntDate_dt">2023-11-09T00:00:07Z</field>
+        <field xmlns:dcs="http://purl.org/dc/elements/1.1/" name="SGnntDate">2023-11-09T00:00:07ZZ</field>
+        <field xmlns:dcs="http://purl.org/dc/elements/1.1/" name="SGnntSource"/>
+        <field xmlns:dcs="http://purl.org/dc/elements/1.1/" name="SGnntIndic">sansObjet</field>
+        <field xmlns:dcs="http://purl.org/dc/elements/1.1/" name="SGnntTrace"/>
+        <field xmlns:dcs="http://purl.org/dc/elements/1.1/" name="SGnnt"/>
+        <field xmlns:dcs="http://purl.org/dc/elements/1.1/" name="SGsudocPPN"/>
+        <field xmlns:dcs="http://purl.org/dc/elements/1.1/" name="SGsudocDate"/>
+        <field xmlns:dcs="http://purl.org/dc/elements/1.1/" name="SGsudocIndic">sansObjet</field>
+        <field xmlns:dcs="http://purl.org/dc/elements/1.1/" name="SGsudocTrace"/>
+        <field xmlns:dcs="http://purl.org/dc/elements/1.1/" name="SGstarExportrActif">oui</field>
+        <field xmlns:dcs="http://purl.org/dc/elements/1.1/" name="SGstarID_THESE">207534</field>
+        <field xmlns:dcs="http://purl.org/dc/elements/1.1/" name="SGstarDateReponse_dt">2023-11-20T10:06:43Z</field>
+        <field xmlns:dcs="http://purl.org/dc/elements/1.1/" name="SGstarDateReponse">2023-11-20T10:06:43Z</field>
+        <field xmlns:dcs="http://purl.org/dc/elements/1.1/" name="SGstarDateExport_dt">2023-11-20T10:06:43Z</field>
+        <field xmlns:dcs="http://purl.org/dc/elements/1.1/" name="SGstarDateExport">2023-11-20T10:06:43Z</field>
+        <field xmlns:dcs="http://purl.org/dc/elements/1.1/" name="SGstarIndic">OK</field>
+        <field xmlns:dcs="http://purl.org/dc/elements/1.1/" name="SGstarTrace"/>
+        <field xmlns:dcs="http://purl.org/dc/elements/1.1/" name="SGdateDemandeAttestation"/>
+        <field xmlns:dcs="http://purl.org/dc/elements/1.1/" name="SGdateEditionAttestation"/>
+        <field xmlns:dcs="http://purl.org/dc/elements/1.1/" name="SGattestationEditee">non</field>
+        <field xmlns:dcs="http://purl.org/dc/elements/1.1/" name="SGurlPerenne">http://www.theses.fr/s227558</field>
+        <field xmlns:dcs="http://purl.org/dc/elements/1.1/" name="SGinvisible">oui</field>
+        <field xmlns:dcs="http://purl.org/dc/elements/1.1/" name="SGdateInvisible_dt">2023-11-20T10:06:42Z</field>
+        <field xmlns:dcs="http://purl.org/dc/elements/1.1/" name="SGdateInvisible">2023-11-20T10:06:42Z</field>
+        <field xmlns:dcs="http://purl.org/dc/elements/1.1/" name="SGindicDiffusion">OK</field>
+        <field xmlns:dcs="http://purl.org/dc/elements/1.1/" name="SGdateDiffusion_dt">2023-11-20T11:07:07Z</field>
+        <field xmlns:dcs="http://purl.org/dc/elements/1.1/" name="SGdateDiffusion">2023-11-20T11:07:07Z</field>
+        <field xmlns:dcs="http://purl.org/dc/elements/1.1/" name="SGtraceDiffusion">suppression</field>
+        <field xmlns:dcs="http://purl.org/dc/elements/1.1/" name="SGtransfertEnCours">non</field>
+        <field xmlns:dcs="http://purl.org/dc/elements/1.1/" name="SGdateDemandeTransfert"/>
+        <field xmlns:dcs="http://purl.org/dc/elements/1.1/" name="SGdateDepartEtabOrigine"/>
+        <field xmlns:dcs="http://purl.org/dc/elements/1.1/" name="SGtransfertEtabDepart"/>
+        <field xmlns:dcs="http://purl.org/dc/elements/1.1/" name="SGtransfertEtabArrivee"/>
+        <field xmlns:dcs="http://purl.org/dc/elements/1.1/" name="SGaSubiUnTransfert">non</field>
+    </doc>
+</add>

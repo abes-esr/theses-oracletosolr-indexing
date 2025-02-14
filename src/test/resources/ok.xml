@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited ADUM (2023) -->
+<mets:mets xmlns:mets="http://www.loc.gov/METS/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:metsRights="http://cosimo.stanford.edu/sdr/metsrights/" xmlns:mads="http://www.loc.gov/mads/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:tef="http://www.abes.fr/abes/documents/tef" xmlns:suj="http://www.theses.fr/namespace/sujets" xsi:schemaLocation="http://www.loc.gov/METS/ XSDs_tef_etendu_stef_ADUM/stef_schemas.xsd">
+    <mets:metsHdr ID="ABES.STEP.SUJET_227558.METS_HEADER" CREATEDATE="2019-10-08T13:35:06" LASTMODDATE="2023-11-20T10:06:42" RECORDSTATUS="EnCours">
+        <mets:agent ROLE="CREATOR">
+            <mets:name>UPAS</mets:name>
+            <!-- code court de l'Ã©tablissement (idem STAR) : http://documentation.abes.fr/sudoc/regles/CodesUnivEtab.htm-->
+        </mets:agent>
+        <mets:agent ROLE="DISSEMINATOR">
+            <mets:name>ADUM</mets:name>
+            <mets:note>ADUM, Portail Internet d'information, de service, de communication des Doctorants et Docteurs.</mets:note>
+        </mets:agent>
+        <mets:agent ROLE="DISSEMINATOR">
+            <mets:name>ABES</mets:name>
+        </mets:agent>
+        <mets:altRecordID ID="ABES.STEP.SUJET_227558.METS_HEADER.ALTERNATE" TYPE="ADUM" />
+    </mets:metsHdr>
+    <mets:dmdSec ID="ABES.STEP.SUJET_227558.gestionSTEP">
+        <mets:mdWrap MDTYPE="OTHER" OTHERMDTYPE="tef_etendu">
+            <mets:xmlData>
+                <step_gestion codeEtab="UPAS" libEtab="université Paris-Saclay" ppnEtab="241345251" enProdStep="oui" ID_SUJET="SUJET_227558" stepEtat="sujet">
+                    <traitements>
+                        <entree type="importMail" date="2019-10-08T13:35:06" agentImport="mireille.brenel@u-psud.fr" completudeImport="sujet" idSource="UPAS_ADUM_UPAS_113428" />
+                        <maj date="2023-11-20T10:06:42" import="oui" derniereIntervention="importWS1" />
+                        <sorties>
+                            <nnt dateNnt="" sourceNnt="" indicNnt="sansObjet" trace="" />
+                            <sudoc PPN="" dateSudoc="" indicSudoc="sansObjet" trace="" />
+                            <star exportStarActif="oui" dateExportVersStar="2023-11-20T10:06:43Z" ID_THESE="207534" dateReponseStar="2023-11-20T10:06:43Z" indicStar="OK" trace="" />
+                            <attestation dateDemandeAttestation="" dateEditionAttestation="" attestationEditee="non" />
+                            <diffusion urlPerenne="http://www.theses.fr/s227558" invisible="oui" dateInvisible="2023-11-20T10:06:42Z" justificationInvisible="" indicDiffusion="OK" dateDiffusion="2023-11-20T11:07:07Z" trace="suppression" />
+                        </sorties>
+                        <transfert transfertEnCours="non" dateDemandeTransfert="" dateDepartEtabOrigine="" transfertEtabDepart="" transfertEtabArrivee="" aSubiUnTransfert="non" />
+                    </traitements>
+                </step_gestion>
+            </mets:xmlData>
+        </mets:mdWrap>
+    </mets:dmdSec>
+    <mets:dmdSec ID="ABES.STEP.SUJET_227558.DESCRIPTION_BIBLIOGRAPHIQUE">
+        <mets:mdWrap MDTYPE="OTHER" OTHERMDTYPE="tef_desc_these">
+            <mets:xmlData>
+                <tef:thesisRecord>
+                    <dc:title xml:lang="fr">Immunopathologie des tumeurs primitives et métastatiques du foie</dc:title>
+                    <!-- titre du projet de these en franÃ§ais-->
+                    <dcterms:alternative xml:lang="en">The immunopathology of primary and metastatic tumors to the liver</dcterms:alternative>
+                    <!-- titre du projet de these en anglais-->
+                    <dc:subject xml:lang="fr">Microenvironnement immunitaire</dc:subject>
+                    <dc:subject xml:lang="fr">Foie</dc:subject>
+                    <dc:subject xml:lang="fr">Cancer</dc:subject>
+                    <dc:subject xml:lang="fr">Métastases hépatiques</dc:subject>
+                    <dc:subject xml:lang="fr">Mastocytes</dc:subject>
+                    <!-- mots clÃ©s libres en franÃ§ais-->
+                    <dc:subject xml:lang="en">Immune microenvironment</dc:subject>
+                    <dc:subject xml:lang="en">Liver</dc:subject>
+                    <dc:subject xml:lang="en">Cancer</dc:subject>
+                    <dc:subject xml:lang="en">Liver metastasis</dc:subject>
+                    <dc:subject xml:lang="en">Mast cells</dc:subject>
+                    <!-- mots clÃ©s libres en anglais-->
+                    <dcterms:abstract xml:lang="fr">L'immunothérapie anti-cancéreuse permet d'obtenir des résultats sans précédent pour certains patients, mais des cancers qui se développent dans certains organes sont moins sensibles à l'immunothérapie, suggérant que l'environnement tissulaire peut déterminer la réponse au traitement. C'est le cas des patients atteints d'un cancer colorectal qui répondent très peu à l'immunothérapie. Il est donc important d'améliorer l'identification du traitement approprié par patient, tumeur et localisation. En particulier, une meilleure compréhension de l'environnement immunitaire des métastases est nécessaire. La métastase est caractérisée par la capacité des cellules tumorales à proliférer et à migrer à distance du site primaire, mais également par l'interaction avec un microenvironnement spécifique au niveau du site métastatique. Parmi les métastases viscérales, les métastases hépatiques sont le pire facteur pronostique en analyse multivariée et représentent un défi thérapeutique majeur.  La présence de métastases hépatiques a été fortement associée à une réponse réduite à l'immunothérapie dans plusieurs sous-types de cancer, y compris le cancer colorectal. Notre hypothèse de travail est que la tolérance immunitaire du foie, parmi tous les potentiels sites métastatiques, est la variable critique associée au plus mauvais pronostic.   Au cours de travaux récents, nous avons mis en évidence que les mastocytes jouent un rôle clé dans le cancer. Des augmentations de l'activation et du nombre des mastocytes ont été observées dans plusieurs pathologies hépatiques, notamment la fibrose hépatique, et le cholangiocarcinome. Une augmentation des mastocytes a été trouvée dans les régions extra- et péri-tumorales de métastases de grade supérieur d'origine digestive, y compris le cancer colorectal, et sont associées à une fibrose tumorale dans le foie après chimiothérapie néoadjuvante.    Les seules études existantes sur la densité des mastocytes dans les métastases hépatiques du cancer colorectal reposent simplement sur la coloration Immunohistochimique à la tryptase et/ou CD117+ et ajoutent une complexité à l'impact des mastocytes dans les métastases hépatiques du cancer colorectal, où leur distribution dans la tumeur ou la péri-tumeur est respectivement associée à un pronostic favorable ou défavorable du patient. Ces résultats impliquent que la localisation et la fonction des mastocytes peuvent dépendre du microenvironnement immunitaire local et des interactions cellulaires dans le foie, ce qui a un impact sur le pronostic du patient. Notre objectif est de décrire le rôle des mastocytes dans le microenvironnement immunitaire du foie dans le cancer colorectal métastatique, et leur association non seulement avec les biomarqueurs systémiques de l'inflammation mais aussi avec les paramètres cliniques disponibles, y compris la rechute de la maladie.   Dans le but de définir une signature immune, nous explorerons la localisation et activation des mastocytes dans l'architecture du foie métastatique des patients atteints de cancer colorectal et leur interaction avec les autres cellules immunitaires infiltrant les tumeurs. La caractérisation phénotypique des mastocytes et autres cellules immunitaires sera analysée par cytométrie de flux sur échantillons frais tumorales, à la marge et à distance de la tumeur. Les résultats déjà obtenus montrent la présence de mastocytes CD117+FcERI+ dans des échantillons frais de foie de patients atteints de cancer colorectal métastatique. La mesure des leucocytes, des enzymes hépatiques et des marqueurs systémiques de l'inflammation dans le sang périphérique des patients est collectée pour corréler à ce phénotypage. Cette analyse sera complétée par l'application de la coloration immunohistochimique en multiplex pour caractériser la topographie immunitaire des métastases hépatiques sur des coupes de tissus en FFPE. La caractérisation fonctionnelle des mastocytes sera entreprise par le profilage protéomique des mastocytes dans la tumeur et au niveau péri-tumoral afin de mieux caractériser ces cellules.    Afin de définir les voies d'expression génique immunitaire spécifiques au foie associées à la survie, nous visons à effectuer une analyse bioinformatique sur des biopsies hépatiques en FFPE de patients atteints d'une maladie métastatique avancée. Les données cliniques des patients et les données biologiques seront également collectées afin de corréler les signatures immunitaires à des données cliniques et biologiques plus accessibles.     Ensemble, nous visons à créer une stratification de marqueurs inflammatoires systémiques et de cellules immunitaires intratumorales qui déterminent au mieux la survie globale chez les patients atteints de métastases hépatiques et d'identifier les molécules potentielles spécifiques aux cellules qui pourraient représenter une cible thérapeutique chez ces patients et améliorer les résultats thérapeutiques, notamment avec l'immunothérapie.</dcterms:abstract>
+                    <!-- rÃ©sumÃ© du projet de these en franÃ§ais-->
+                    <dcterms:abstract xml:lang="en">While anti-cancer immunotherapy provides unprecedented results for some patients, its effectiveness varies depending on the organ affected.  Patients with primary liver cancer and colorectal cancer liver metastasis often exhibit limited responses to immunotherapy. This points to the critical influence of the tissue microenvironment on treatment efficacy. The liver is an immunologically rich organ and contains a diversity of lymphoid and myeloid cells, which significantly shape how patients respond to treatment and their survival. It is therefore imperative to enhance our understanding of the immune microenvironment within primary liver and liver metastatic tumors and is the central focus of this thesis.   The first part of the thesis evaluated the immune microenvironment in a prospective cohort of N=31 colorectal cancer patients with liver metastasis (CRCLM). Despite improvements in treatment efficacy, response and survival after liver metastasis resection vary greatly. Furthermore, anti-tumor T cell responses in the liver are compromised. A less studied innate immune cell in the liver, the mast cell, bridges the gap between innate and adaptive immune responses. Their role in tumor immunity within liver metastasis is less defined. We characterized mast cells in resected CRCLM using flow cytometry, secreted mediator quantification, and multiplex immunohistochemistry. Increased mast cell infiltration, particularly in KRAS wildtype patients, correlated with improved prognosis. Tumor-infiltrating mast cells correlated with CD8+ T cell infiltration and activation but inversely with TGF-beta 2 secretion, T-regulatory cells, and neutrophil infiltration. Mast cell-rich tumors exhibited elevated histamine secretion, indicating mast cell degranulation. In vitro, lymphocytes exposed to pre-conditioned mast cells from patients with good prognosis had elevated intracellular expression of IFN-gamma and Granzyme B. Positive correlations between mast cell and T cell-specific genes were also observed in a public gene expression dataset of resected CRCLM. In summary, tumor-infiltrating mast cells can potentiate anti-tumor immunity in CRCLM.  We next explored the role of tumor-infiltrating neutrophils in CRCLM, as their impact on prognosis remains unclear. Elevated neutrophil infiltration was associated with poor response and decreased survival specifically in KRAS wildtype patients. Neutrophils were positively correlated with TNF, CXCL8 and VEGF-A secretion. They portrayed lower expression of differentiation markers CD10 and CD16, and inversely correlated with CD8+ and CD4+ T cell infiltration and activation. These results indicate that tumor-infiltrating neutrophils may hinder anti-tumor immunity in CRCLM.  The final part of the thesis centred on the immune landscape of early-stage hepatocellular carcinoma (HCC). Although immunotherapy has profoundly influenced HCC management, only 30% of patients show objective responses. We analysed the immune infiltrate, protein secretion and transcriptome from liver tissue of N=28 treatment-naïve, early-stage HCC patients who underwent curative surgical resection. Despite clinical homogeneity, we found four distinct immune clusters with variable CD8+ T, CD4+ T, NK and Myeloid cell infiltration. These clusters exhibited different activation and exhaustion profiles among lymphocytes and distinct transcriptomic profiles.  In conclusion, this thesis highlights the importance of understanding the immune microenvironment within the liver and its role in anti-tumor immunity and survival in CRCLM and HCC. These insights may guide further research to identify potential therapeutic targets, ultimately enhancing the therapeutic potential of immunotherapy and patient survival in the future.</dcterms:abstract>
+                    <!-- rÃ©sumÃ© du projet de these en anglais-->
+                    <!-- rÃ©sumÃ© du projet de these rÃ©pÃ©table et prÃ©ciser la langue (2 caracteres) dans l'attribut xml:lang-->
+                    <dc:type>Thesis or Dissertation</dc:type>
+                    <!-- Thesis or Dissertation au lieu de Electronic Thesis or Dissertation pour STAR-->
+                    <dc:type xsi:type="dcterms:DCMIType">Text</dc:type>
+                </tef:thesisRecord>
+            </mets:xmlData>
+        </mets:mdWrap>
+    </mets:dmdSec>
+    <mets:amdSec>
+        <mets:techMD ID="ABES.STEP.SUJET_227558.ADMINISTRATION">
+            <mets:mdWrap MDTYPE="OTHER" OTHERMDTYPE="tef_admin_these">
+                <mets:xmlData>
+                    <tef:thesisAdmin>
+                        <tef:auteur>
+                            <!-- IdentitÃ© du doctorant  -->
+                            <tef:nom>Halse</tef:nom>
+                            <tef:prenom>Héloïse</tef:prenom>
+                            <tef:dateNaissance>1987-10-31</tef:dateNaissance>
+                            <tef:nationalite scheme="ISO-3166-1">FR</tef:nationalite>
+                            <!-- nationalitÃ© facultatif -->
+                            <!-- <suj:adresseDoctorant>NÂ° rue</suj:adresseDoctorant>
+                                          <suj:codePostalDoctorant>XXXXX</suj:codePostalDoctorant>
+                                          <suj:villeAdresseDoctorant>Ville</suj:villeAdresseDoctorant>
+                                          <suj:paysAdresseDoctorant>Pays</suj:paysAdresseDoctorant>
+                                          <suj:telephoneDoctorant>XXXXXXXXXX</suj:telephoneDoctorant> -->
+                            <!-- adresse facultative dans le cas des imports ADUM "boÃ®te noire"-->
+                            <tef:autoriteExterne autoriteSource="mailPro">step@adum.fr</tef:autoriteExterne>
+                            <!-- au moins un mail qualifiÃ© autoriteSource="mailPerso" ou autoriteSource="mailPro"-->
+                            <tef:autoriteExterne autoriteSource="CODE_INE">0JJ0DU03HX9</tef:autoriteExterne>
+                            <tef:autoriteExterne autoriteSource="MATRICULE_ADUM">113428</tef:autoriteExterne>
+                        </tef:auteur>
+                        <suj:vie derogationDixAns="non" commentDixAns="">
+                            <suj:soutenancePrevue>
+                                <suj:datePrevue>2023-11-27</suj:datePrevue>
+                            </suj:soutenancePrevue>
+                        </suj:vie>
+                        <!-- date de soutenance effective - date passÃ©e -->
+                        <tef:thesis.degree>
+                            <tef:thesis.degree.discipline xml:lang="fr">Sciences du Cancer</tef:thesis.degree.discipline>
+                            <!-- discipline du doctorat telle qu'elle figurera sur la page de titre de la these une fois la these soutenue (sans " - Evry)-->
+                            <tef:thesis.degree.grantor>
+                                <tef:nom>université Paris-Saclay</tef:nom>
+                                <tef:autoriteExterne autoriteSource="Sudoc">241345251</tef:autoriteExterne>
+                                <!-- IntitulÃ© et PPN issus de la table de correspondance vos Ã©tablissements / nos libellÃ©s et PPN (idem STAR)-->
+                            </tef:thesis.degree.grantor>
+                            <!--le 1er tef:thesis.degree.grantor est l'Ã©tablissement de soutenance-->
+                            <tef:thesis.degree.level>Doctorat</tef:thesis.degree.level>
+                            <suj:datePremiereInscriptionDoctorat xsi:type="dcterms:W3CDTF">2019-10-01</suj:datePremiereInscriptionDoctorat>
+                            <!-- date de premiere inscription en doctorat (dans cet Ã©tablissement ou un autre)   -->
+                            <suj:dateInscriptionEtab xsi:type="dcterms:W3CDTF">2019-10-01</suj:dateInscriptionEtab>
+                            <!-- date d'inscription dans l'Ã©tablissement de soutenance   -->
+                            <suj:contratDoctoral>non</suj:contratDoctoral>
+                            <!--contrat doctoral : Ã©lÃ©ment obligatoire ayant pour valeur oui ou non-->
+                        </tef:thesis.degree>
+                        <suj:vie derogationDixAns="non" commentDixAns="" invisible="oui">
+                            <!-- Par dÃ©rogation au principe selon lequel une these en prÃ©paration ne doit pas etre conservÃ©e pendant plus de 10 ans, permet de tagguer les exceptions a ce principe ; info exploitÃ©e par l'ABES -->
+                            <!-- Heure de soutenance, lieu, publique ou pas ...donnÃ©es facultatives qui peuvent envoyÃ©es dans une mise a jour au moment de l'organisation de la soutenance -->
+                        </suj:vie>
+                        <tef:directeurThese>
+                            <tef:nom>Hermine</tef:nom>
+                            <tef:prenom>Olivier</tef:prenom>
+                            <tef:autoriteExterne autoriteSource="DIRECTEUR_ADUM">37521</tef:autoriteExterne>
+                            <tef:autoriteExterne autoriteSource="Sudoc">069884927</tef:autoriteExterne>
+                            <!--le PPN du directeur pourra, en regle gÃ©nÃ©rale, etre rÃ©cupÃ©rÃ©via idRef (en faisont une recherche sur http://www.idref.fr/autorites/autorites.html) ou en interconnectant votre application a idRef via les API XML (documentation en ligne http://www.abes.fr/Autres-applications/IdRef-Autorites-Sudoc > http://documentation.abes.fr/aideidref/developpeur/ch02.html) -->
+                        </tef:directeurThese>
+                        <!--Ã©lÃ©ment tef:directeurThese rÃ©pÃ©table en cas de codirection-->
+                        <tef:ecoleDoctorale>
+                            <tef:nom>École doctorale Cancérologie, Biologie, Médecine, Santé</tef:nom>
+                            <tef:autoriteExterne autoriteSource="Sudoc">188525238</tef:autoriteExterne>
+                            <!--le PPN de l'Ã©cole doctorale pourra, en regle gÃ©nÃ©rale, etre rÃ©cupÃ©rÃ© via idRef (en faisont une recherche sur http://www.idref.fr/autorites/autorites.html) ou en interconnectant votre application a idRef via les API XML (documentation en ligne http://www.abes.fr/Autres-applications/IdRef-Autorites-Sudoc > http://documentation.abes.fr/aideidref/developpeur/ch02.html) -->
+                            <tef:autoriteExterne autoriteSource="Annuaire des formations doctorales et des unitÃ©s de recherche">582</tef:autoriteExterne>
+                            <!-- RÃ©fÃ©rentiel externe : EDUR = Annuaire des formations doctorales et des unitÃ©s de recherche http://appliweb.dgri.education.fr/annuaire/ -->
+                        </tef:ecoleDoctorale>
+                        <tef:partenaireRecherche type="laboratoire">
+                            <tef:nom>Imagine - Institut des maladies génétiques</tef:nom>
+                            <tef:autoriteExterne autoriteSource="Sudoc">188538119</tef:autoriteExterne>
+                            <!--le PPN du laboratoire pourra, s'il existe, etre rÃ©cupÃ©rÃ© via idRef (en faisont une recherche sur http://www.idref.fr/autorites/autorites.html) ou en interconnectant votre application a idRef via les API XML (documentation en ligne http://www.abes.fr/Autres-applications/IdRef-Autorites-Sudoc > http://documentation.abes.fr/aideidref/developpeur/ch02.html) -->
+                            <!-- <tef:autoriteExterne autoriteSource="labTEL">XXXXXXX</tef:autoriteExterne> -->
+                            <!-- si  dÃ©pÃ´t  dans TEL ou Pastel des theses soutenues : http://hal.archives-ouvertes.fr/index.php?halsid=7663sktdqjcprvdf0tkskf3963&action_todo=search_known_labo-->
+                            <!-- <suj:cifre>oui / non</suj:cifre> -->
+                            <!--cifre : Ã©lÃ©ment facultatif ayant pour valeur oui ou non, indique le type de relation que le doctorant a avec ce partenaire-->
+                        </tef:partenaireRecherche>
+                        <tef:partenaireRecherche type="autreType" autreType="référent">
+                            <tef:nom>Faculté de médecine</tef:nom>
+                            <tef:autoriteExterne autoriteSource="Sudoc">242180868</tef:autoriteExterne>
+                        </tef:partenaireRecherche>
+                        <tef:partenaireRecherche type="autreType" autreType="graduate school">
+                            <tef:nom>Université Paris-Saclay. Graduate School Life Sciences and Health (2020-....)</tef:nom>
+                            <tef:autoriteExterne autoriteSource="Sudoc">244935963</tef:autoriteExterne>
+                        </tef:partenaireRecherche>
+                        <!--
+                                        <tef:partenaireRecherche type="entreprise">
+                                        <tef:nom>Bouygues construction</tef:nom>
+                                        <tef:autoriteExterne autoriteSource="Sudoc">114434379</tef:autoriteExterne>
+                                        <suj:cifre>non</suj:cifre>
+                                        </tef:partenaireRecherche>
+                                        <tef:partenaireRecherche type="fondation">
+                                        <tef:nom>Fondation Elf</tef:nom>
+                                        <tef:autoriteExterne autoriteSource="Sudoc">031310109</tef:autoriteExterne>
+                                        <suj:cifre>oui</suj:cifre>
+                                        </tef:partenaireRecherche>
+                                        <tef:partenaireRecherche type="autreType" autreType="association">
+                                        <tef:nom>Association des dÃ©veloppeurs rÃ©unis du bÃ¢timent (France)</tef:nom>
+                                        <tef:autoriteExterne autoriteSource="Sudoc">030914191</tef:autoriteExterne>
+                                        <suj:cifre>non</suj:cifre>
+                                        </tef:partenaireRecherche>
+                                    -->
+                        <tef:oaiSetSpec>ddc:570</tef:oaiSetSpec>
+                        <!--domaine de la these = section CNU - Voir le fichier mapping_sectionCNU_oaisets qui contient le mapping entre les sections CNU et les codes OAISETS-->
+                    </tef:thesisAdmin>
+                </mets:xmlData>
+            </mets:mdWrap>
+        </mets:techMD>
+    </mets:amdSec>
+    <mets:structMap TYPE="logical">
+        <!-- le contentsIds sert a la construction du login pour les imports -->
+        <mets:div TYPE="THESE" CONTENTIDS="CONTENTIDS.ABES.STEP.SUJET_227558" DMDID="ABES.STEP.SUJET_227558.gestionSTEP ABES.STEP.SUJET_227558.DESCRIPTION_BIBLIOGRAPHIQUE" ADMID="ABES.STEP.SUJET_227558.ADMINISTRATION" />
+    </mets:structMap>
+</mets:mets>
+

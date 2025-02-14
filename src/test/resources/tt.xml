@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mets:mets xmlns:mets="http://www.loc.gov/METS/" xmlns:suj="http://www.theses.fr/namespace/sujets" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:tef="http://www.abes.fr/abes/documents/tef" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tefextension="http://www.abes.fr/abes/documents/tefextension" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:metsRights="http://cosimo.stanford.edu/sdr/metsrights/" xmlns:mads="http://www.loc.gov/mads/" xsi:schemaLocation="http://www.loc.gov/METS/ http://www.abes.fr/abes/documents/tef/recommandation/tef_schemas.xsd">
+    <mets:metsHdr ID="ABES.STAR.THESE_206009.METS_HEADER" CREATEDATE="2023-10-23T13:31:40" LASTMODDATE="2023-10-23T15:33:15" RECORDSTATUS="valide">
+        <mets:agent ROLE="CREATOR">
+            <mets:name />
+            <mets:note>Note</mets:note>
+        </mets:agent>
+        <mets:agent ROLE="DISSEMINATOR">
+            <mets:name>ABES</mets:name>
+        </mets:agent>
+
+
+        --2023-10-23T15:33:15
+        --YYYY-MM-DDTHH24:MI:SS
+        <mets:altRecordID ID="ABES.STAR.THESE_206009.METS_HEADER.ALTERNATE" TYPE="" />
+    </mets:metsHdr>
+    <mets:dmdSec ID="ABES.STAR.THESE_206009.gestionSTAR">
+        <mets:mdWrap MDTYPE="OTHER" OTHERMDTYPE="tef_gestionSTAR">
+            <mets:xmlData>
+                <star_gestion codeEtab="FOR1" libEtab="Etablissement de Formation 1" ppnEtab="012345677" enProd="non" ID_THESE="THESE_206009" scenarioEtab="cas1" etat="WFpreArchivage" xsi:noNamespaceSchemaLocation="http://www.abes.fr/abes/documents/pth/tef_gestion.xsd">
+                    <traitements scenario="cas1">
+                        <entree xmlns:local="http://www.local.univ.fr/theses" type="editeur" date="2023-10-23T13:31:40Z" agentImport="" completudeImport="sansObjet" idSource="FOR1_204891" />
+                        <step xmlns:local="http://www.local.univ.fr/theses" date="" agentImport="" idStep="" />
+                        <maj date="2023-10-23T15:33:15" import="non" SCOL="oui" BIBL="oui" FICH="oui" VALID="oui" />
+                        <facile xmlns:local="http://www.local.univ.fr/theses" date="" indicFacile="sansObjet" trace="" import="non" SCOL="non" BIBL="non" FICH="non" VALID="non" />
+                        <ctrlUrl xmlns:local="http://www.local.univ.fr/theses" indicCtrlUrl="sansObjet" erreurUrl="sansObjet" compteIndicCtrlUrlKO="0" date="" />
+                        <remonteeArchive xmlns:local="http://www.local.univ.fr/theses" indicRemonteeArchive="sansObjet" date="" trace="" />
+                        <purge xmlns:local="http://www.local.univ.fr/theses" indicPurge="sansObjet" date="" />
+                        <invalidation xmlns:local="http://www.local.univ.fr/theses" indicInvalidation="sansObjet" date="" note="" />
+                        <sorties date="">
+                            <cines xmlns:local="http://www.local.univ.fr/theses" numeroPAC="" dateCines="" indicCines="sansObjet" trace="" />
+                            <sudoc PPN="" dateSudoc="" indicSudoc="sansObjet" majSudoc="" trace="">
+                                <EPN xmlns:local="http://www.local.univ.fr/theses" />
+                            </sudoc>
+                            <diffusion urlPerenne="http://www.theses.fr/" conformitePolDiffusion="oui" typeDiffusion="internet" restrictionTemporelleType="sansObjet" restrictionTemporelleFin="" embargoFin="" confidentialiteFin="">
+                                <etabDiffuseur etabDiffuseurPolEtablissement="oui" editeurScientifiqueLieu="" editeurScientifiqueNom="">
+                                    <urlEtabDiffuseur majUrlEtabDiffuseur="">https://www.RACINE</urlEtabDiffuseur>
+                                </etabDiffuseur>
+                                <abesDiffuseur abesDiffuseurPolEtablissement="oui" FichEtabDiffAbesIntranet="non" indicAbesDiffuseur="sansObjet" dateAbesDiffuseur="" majAbesDiffuseur="" urlAbesDiffuseur="" />
+                                <ccsd ccsdDiffuseurPolEtablissement="non" pastel="non" indicCcsd="sansObjet" identifiantCcsd="" pwdCcsd="" urlCcsd="" numVersion="" dateCcsd="" majCcsd="" trace="" />
+                                <autresEtabDiffuseurs />
+                                <oai xmlns:local="http://www.local.univ.fr/theses" majOai="" dateOai="" indicOai="sansObjet" trace="" />
+                            </diffusion>
+                        </sorties>
+                    </traitements>
+                    <workflow etatWF="preEnCours">
+                        <commentaires nbCommentaires="0" />
+                        <DOCT xmlns:local="http://www.local.univ.fr/theses" interventionFicheEtablissement="non" etatDOCT="nonModifiable" majDOCT="" />
+                        <rolesMD>
+                            <SCOL xmlns:local="http://www.local.univ.fr/theses" etatMD="preEnCours" majMD="2023-10-23T13:33:15" indicBilan="sansObjet" bilan="">
+                                <notes nbNotes="0">
+                                    <note date="" contenu="" />
+                                </notes>
+                            </SCOL>
+                            <BIBL etatMD="preEnCours" majMD="2023-10-23T13:33:15" indicBilan="sansObjet" bilan="" indicTheseTravaux="sansObjet">
+                                <notes xmlns:local="http://www.local.univ.fr/theses" nbNotes="0">
+                                    <note date="" contenu="" />
+                                </notes>
+                            </BIBL>
+                            <FICH etatMD="preEnCours" majMD="2023-10-23T13:33:15" indicBilan="sansObjet" bilan="" alerteTheseTravaux="sansObjet">
+                                <notes xmlns:local="http://www.local.univ.fr/theses" nbNotes="0">
+                                    <note date="" contenu="" />
+                                </notes>
+                            </FICH>
+                        </rolesMD>
+                        <VALID xmlns:local="http://www.local.univ.fr/theses" validIndependant="oui" etatVALID="preEnAttente" majVALID="2023-10-23T13:33:15">
+                            <notes nbNotes="0">
+                                <note date="" contenu="" />
+                            </notes>
+                            <refusValidationIntermediaire nbRefus="0">
+                                <refus date="" contenu="" SCOL="non" FICH="non" BIBL="non" />
+                            </refusValidationIntermediaire>
+                        </VALID>
+                    </workflow>
+                </star_gestion>
+            </mets:xmlData>
+        </mets:mdWrap>
+    </mets:dmdSec>
+    <mets:dmdSec ID="ABES.STAR.THESE_206009.DESCRIPTION_BIBLIOGRAPHIQUE">
+        <mets:mdWrap MDTYPE="OTHER" OTHERMDTYPE="tef_desc_these">
+            <mets:xmlData>
+                <tef:thesisRecord>
+                    <dc:subject xml:lang="fr">Sdsdsdsd</dc:subject>
+                    <dc:subject xsi:type="dcterms:DDC" />
+                    <tef:sujetRameau xml:lang="fr">
+                        <tef:vedetteRameauNomCommun />
+                    </tef:sujetRameau>
+                    <dc:type>Electronic Thesis or Dissertation</dc:type>
+                    <dc:type xsi:type="dcterms:DCMIType">Text</dc:type>
+                    <dc:language xsi:type="dcterms:RFC3066">fr</dc:language>
+                </tef:thesisRecord>
+            </mets:xmlData>
+        </mets:mdWrap>
+    </mets:dmdSec>
+    <mets:dmdSec ID="ABES.STAR.THESE_206009.VERSION_COMPLETE.DESCRIPTION.EDITION_ARCHIVAGE">
+        <mets:mdWrap MDTYPE="OTHER" OTHERMDTYPE="tef_desc_edition">
+            <mets:xmlData>
+                <tef:edition>
+                    <dc:identifier xsi:type="dcterms:URI">https://www.RACINE</dc:identifier>
+                    <dc:identifier xsi:type="dcterms:URI">http://www.theses.fr//abes</dc:identifier>
+                </tef:edition>
+            </mets:xmlData>
+        </mets:mdWrap>
+    </mets:dmdSec>
+    <mets:amdSec>
+        <mets:techMD ID="ABES.STAR.THESE_206009.ADMINISTRATION">
+            <mets:mdWrap MDTYPE="OTHER" OTHERMDTYPE="tef_admin_these">
+                <mets:xmlData>
+                    <tef:thesisAdmin>
+                        <tef:auteur>
+                            <tef:nom>Dr</tef:nom>
+                            <tef:prenom>Loving</tef:prenom>
+                            <tef:nomDeNaissance>Dr</tef:nomDeNaissance>
+                            <tef:dateNaissance>1980-06-30</tef:dateNaissance>
+                            <tef:nationalite scheme="ISO-3166-1">FR</tef:nationalite>
+                        </tef:auteur>
+                        <tef:thesis.degree>
+                            <tef:thesis.degree.grantor>
+                                <tef:nom>Etablissement de Formation 1</tef:nom>
+                                <tef:autoriteExterne autoriteSource="Sudoc">012345677</tef:autoriteExterne>
+                            </tef:thesis.degree.grantor>
+                            <tef:thesis.degree.level>Doctorat</tef:thesis.degree.level>
+                            <tef:thesis.degree.name xml:lang="fr">Docteur es</tef:thesis.degree.name>
+                        </tef:thesis.degree>
+                        <tef:theseSurTravaux />
+                        <tef:avisJury>oui</tef:avisJury>
+                        <tef:directeurThese>
+                            <tef:autoriteInterne>MADS_DIRECTEUR_DE_THESE_1</tef:autoriteInterne>
+                        </tef:directeurThese>
+                        <tef:MADSAuthority authorityID="MADS_DIRECTEUR_DE_THESE_1" type="personal" />
+                    </tef:thesisAdmin>
+                </mets:xmlData>
+            </mets:mdWrap>
+        </mets:techMD>
+        <mets:rightsMD ID="ABES.STAR.THESE_206009.DROITS_UNIVERSITE">
+            <mets:mdWrap MDTYPE="OTHER" OTHERMDTYPE="tef_droits_etablissement_these">
+                <mets:xmlData>
+                    <metsRights:RightsDeclarationMD RIGHTSCATEGORY="CONTRACTUAL">
+                        <metsRights:Context CONTEXTCLASS="GENERAL PUBLIC">
+                            <metsRights:Permissions DISPLAY="true" DUPLICATE="true" PRINT="true" COPY="false" MODIFY="false" DELETE="false" />
+                        </metsRights:Context>
+                        <metsRights:Context CONTEXTCLASS="INSTITUTIONAL AFFILIATE">
+                            <metsRights:Permissions DISPLAY="true" DUPLICATE="true" PRINT="true" COPY="false" MODIFY="false" DELETE="false" />
+                        </metsRights:Context>
+                    </metsRights:RightsDeclarationMD>
+                </mets:xmlData>
+            </mets:mdWrap>
+        </mets:rightsMD>
+        <mets:rightsMD ID="ABES.STAR.THESE_206009.DROITS_DOCTORANT">
+            <mets:mdWrap MDTYPE="OTHER" OTHERMDTYPE="tef_droits_auteur_these">
+                <mets:xmlData>
+                    <metsRights:RightsDeclarationMD RIGHTSCATEGORY="CONTRACTUAL">
+                        <metsRights:Context CONTEXTCLASS="GENERAL PUBLIC">
+                            <metsRights:Permissions DISPLAY="true" DUPLICATE="true" PRINT="true" COPY="false" MODIFY="false" DELETE="false" />
+                        </metsRights:Context>
+                        <metsRights:Context CONTEXTCLASS="INSTITUTIONAL AFFILIATE">
+                            <metsRights:Permissions DISPLAY="true" DUPLICATE="true" PRINT="true" COPY="false" MODIFY="false" DELETE="false" />
+                        </metsRights:Context>
+                    </metsRights:RightsDeclarationMD>
+                </mets:xmlData>
+            </mets:mdWrap>
+        </mets:rightsMD>
+        <mets:rightsMD ID="ABES.STAR.THESE_206009.VERSION_COMPLETE.DROITS">
+            <mets:mdWrap MDTYPE="OTHER" OTHERMDTYPE="tef_droits_version">
+                <mets:xmlData>
+                    <metsRights:RightsDeclarationMD RIGHTSCATEGORY="CONTRACTUAL">
+                        <metsRights:Context CONTEXTCLASS="GENERAL PUBLIC">
+                            <metsRights:Permissions DISPLAY="true" DUPLICATE="true" PRINT="true" COPY="false" MODIFY="false" DELETE="false" />
+                        </metsRights:Context>
+                        <metsRights:Context CONTEXTCLASS="INSTITUTIONAL AFFILIATE">
+                            <metsRights:Permissions DISPLAY="true" DUPLICATE="true" PRINT="true" COPY="false" MODIFY="false" DELETE="false" />
+                        </metsRights:Context>
+                    </metsRights:RightsDeclarationMD>
+                </mets:xmlData>
+            </mets:mdWrap>
+        </mets:rightsMD>
+    </mets:amdSec>
+    <mets:structMap TYPE="logical">
+        <mets:div TYPE="THESE" CONTENTIDS="CONTENTIDS.ABES.STAR.THESE_206009" DMDID="ABES.STAR.THESE_206009.DESCRIPTION_BIBLIOGRAPHIQUE" ADMID="ABES.STAR.THESE_206009.ADMINISTRATION ABES.STAR.THESE_206009.DROITS_UNIVERSITE ABES.STAR.THESE_206009.DROITS_DOCTORANT">
+            <mets:div TYPE="VERSION_COMPLETE" CONTENTIDS="CONTENTIDS.ABES.STAR.THESE_206009.ABES.STAR.THESE_206009.VERSION_COMPLETE" ADMID="ABES.STAR.THESE_206009.VERSION_COMPLETE.DROITS">
+                <mets:div TYPE="EDITION" CONTENTIDS="CONTENTIDS.ABES.STAR.THESE_206009.VERSION_COMPLETE.EDITION_ARCHIVAGE" DMDID="ABES.STAR.THESE_206009.VERSION_COMPLETE.DESCRIPTION.EDITION_ARCHIVAGE" />
+            </mets:div>
+        </mets:div>
+    </mets:structMap>
+</mets:mets>
