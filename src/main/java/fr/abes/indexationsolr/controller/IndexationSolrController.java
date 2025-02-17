@@ -90,7 +90,7 @@ public class IndexationSolrController {
             return res;
         }
         if (contexte.contains("star")) {
-            res = indexationSolr.supprimerDeSolr(iddoc, pathsFromProperties.getUrlSolrSujets());
+            res = indexationSolr.supprimerDeSolr(iddoc, pathsFromProperties.getUrlSolrStar());
             return res;
         } else {
             logger.info("suppression " + contexte + " iddoc " + iddoc + " = " + res);
