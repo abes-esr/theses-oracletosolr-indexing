@@ -59,11 +59,11 @@ public class IndexationSolrController {
         if (contexte.contains("star")) {
             res = indexationSolr.indexerDansSolr(iddoc,
                     doc,
-                    pathsFromProperties.getCheminXslSujets(),
-                    pathsFromProperties.getUrlSolrSujets());
+                    pathsFromProperties.getCheminXslStar(),
+                    pathsFromProperties.getUrlSolrStar());
             return res;
         } else {
-            logger.info("indexation " + contexte + " iddoc " + iddoc + " = " + res);
+            logger.error("indexation " + contexte + " iddoc " + iddoc + " = " + res);
         }
         return res;
     }
