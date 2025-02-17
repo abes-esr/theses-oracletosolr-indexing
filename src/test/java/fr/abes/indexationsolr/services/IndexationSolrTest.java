@@ -1,18 +1,13 @@
 package fr.abes.indexationsolr.services;
 
-import static jdk.nashorn.internal.objects.Global.println;
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import javax.xml.transform.TransformerException;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -50,11 +45,10 @@ public class IndexationSolrTest {
     }
 
     public String selectDocDansSolr(int idDoc, String urlSolr) throws IOException {
-        HttpURLConnection urlc = null;
+        HttpURLConnection urlc;
         URL url = new URL(urlSolr + "/select/?q=id:" + idDoc);
         urlc = (HttpURLConnection) url.openConnection();
         urlc.setRequestMethod("GET");
-        System.out.println(urlc.getContent());
         BufferedReader in = new BufferedReader(new InputStreamReader(urlc.getInputStream()));
         String inputLine;
         StringBuilder response = new StringBuilder();
@@ -82,8 +76,12 @@ public class IndexationSolrTest {
         String response2 = selectDocDansSolr(iddoc, urlSolr);
         assertTrue(response2.contains("<result name=\"response\" numFound=\"1\" start=\"0\">"));
         assertTrue(response2.contains("<str name=\"id\">" + iddoc + "</str>"));
+    }
 
+    @Test
+    public void supprimerDansSolr_Success() throws Exception {
         // Supprime et vérifie
+        IndexationSolr indexer = new IndexationSolr();
         indexer.supprimerDeSolr(iddoc, urlSolr + "/update");
         String response3 = selectDocDansSolr(iddoc, urlSolr);
         assertTrue(response3.contains("<result name=\"response\" numFound=\"0\" start=\"0\"/>"));
