@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>fr.abes</groupId>
-    <artifactId>indexationsolr</artifactId>
+    <artifactId>step-star-indexation-solr</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>indexationsolr</name>
+    <name>step-star-indexation-solr</name>
     <description>Indexation Solr Step Star Portail</description>
 
     <properties>
