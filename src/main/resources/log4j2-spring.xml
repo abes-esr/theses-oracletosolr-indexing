@@ -7,8 +7,8 @@
         </Console>
 
         <RollingFile name="RollingFile"
-                     fileName="/usr/local/tomcat8-step/logs/indexationsolr.log"
-                     filePattern="/usr/local/tomcat8-step/logs/indexationsolr-%i.log.gz">
+                     fileName="/home/tomcat/theses/sujets/logs/indexationsolr.log"
+                     filePattern="/home/tomcat/theses/sujets/logs/indexationsolr-%i.log.gz">
             <PatternLayout>
                 <pattern>%d %p [%t] %C{1.} %m%n</pattern>
             </PatternLayout>
